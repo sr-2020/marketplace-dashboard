@@ -1,3 +1,7 @@
 # Зависимости
 package-lock.json
-./node_modules
+node_modules/
+
+# css файлы
+*.css
+*.css.map
