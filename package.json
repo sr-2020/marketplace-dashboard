@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@csstools/normalize.css": "github:csstools/normalize.css",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.5.0",
@@ -10,6 +11,7 @@
     "@types/node": "^12.19.8",
     "@types/react": "^16.14.2",
     "@types/react-dom": "^16.9.10",
+    "normalize.css": "^8.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
@@ -19,8 +21,8 @@
   "scripts": {
     "start": "npm run scss:build && react-scripts start & npm run scss:watch",
     "rm:temp-files": "npm run rm:css:map && npm run rm:css",
-    "rm:css:map" : "find . -name *.css.map -type f -delete",
-    "rm:css": "find . -name *.css -type f -delete",
+    "rm:css:map": "find ./src -name *.css.map -type f -delete",
+    "rm:css": "find ./src -name *.css -type f -delete",
     "scss:build": "npm run rm:temp-files && sass .",
     "scss:watch": "sass --watch .",
     "build": "npm run scss:build && react-scripts build"

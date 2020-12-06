@@ -5,3 +5,9 @@ node_modules/
 # css файлы
 *.css
 *.css.map
+
+# Builds
+build/
+
+# Другие файлы
+.eslintcache
