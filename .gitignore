@@ -11,3 +11,8 @@ build/
 
 # Другие файлы
 .eslintcache
+
+#visual studio
+*.suo
+*.dll
+*njsproj*
