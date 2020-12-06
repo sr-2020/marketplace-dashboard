@@ -1,11 +1,7 @@
-import consts from './env.const'
+import { consts, EnvVariables } from './env.const'
 
-export const ENVIRONMENT = {
-  prod: false,
+export const ENV: EnvVariables = {
+  prod: true,
   api: '',
   ...consts
-}
-
-export interface Envirnment {
-  prod: boolean
 }

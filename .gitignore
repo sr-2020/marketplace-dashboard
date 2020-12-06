@@ -12,6 +12,7 @@ dist/
 
 # Другие файлы
 .eslintcache
+env.ts
 
 #visual studio
 *.suo
