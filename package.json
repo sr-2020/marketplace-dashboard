@@ -20,13 +20,14 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "npm run scss:build && react-scripts start & npm run scss:watch",
-    "rm:temp-files": "npm run rm:css:map && npm run rm:css",
-    "rm:css:map": "find ./src -name *.css.map -type f -delete",
-    "rm:css": "find ./src -name *.css -type f -delete",
-    "scss:build": "npm run rm:temp-files && sass .",
+    "start": "npm run scss:build && npm run env:dev && react-scripts start & npm run scss:watch",
+    "start:win": "npm run scss:build && npm run env:dev:win && react-scripts start & npm run scss:watch",
+    "scss:build": "sass .",
     "scss:watch": "sass --watch .",
-    "build": "npm run scss:build && react-scripts build"
+    "env:dev": "cp env/env.dev.ts env/env.ts",
+    "env:dev:win": "copy env\\env.dev.ts env\\env.ts",
+    "env:prod": "cp env/env.dev.ts env/env.ts",
+    "build": "npm run scss:build && npm run env:prod && react-scripts build"
   },
   "eslintConfig": {
     "extends": [
