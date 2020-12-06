@@ -1,7 +1,11 @@
 import consts from './env.const'
 
-export default {
+export const ENVIRONMENT = {
   prod: false,
   api: '',
   ...consts
+}
+
+export interface Envirnment {
+  prod: boolean
 }

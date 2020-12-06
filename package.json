@@ -25,7 +25,7 @@
     "scss:build": "sass .",
     "scss:watch": "sass --watch .",
     "env:dev": "cp env/env.dev.ts env/env.ts",
-    "env:dev:win": "cp env\\env.dev.ts env\\env.ts",
+    "env:dev:win": "copy env\\env.dev.ts env\\env.ts",
     "env:prod": "cp env/env.dev.ts env/env.ts",
     "build": "npm run scss:build && npm run env:prod && react-scripts build"
   },
