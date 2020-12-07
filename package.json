@@ -22,13 +22,16 @@
   },
   "scripts": {
     "start": "npm run scss:build && npm run env:dev && react-scripts start & npm run scss:watch",
-    "start:win": "npm run scss:build && npm run env:dev:win && react-scripts start & npm run scss:watch",
+    "start:win": "npm run scss:build && npm run env:dev:win && start react-scripts start && npm run scss:watch",
     "scss:build": "sass .",
     "scss:watch": "sass --watch .",
     "env:dev": "cp env/env.dev.ts env/env.ts",
     "env:dev:win": "copy env\\env.dev.ts env\\env.ts",
     "env:prod": "cp env/env.dev.ts env/env.ts",
     "build": "npm run scss:build && npm run env:prod && react-scripts build"
+  },
+  "prettier": {
+    "semi": false
   },
   "eslintConfig": {
     "extends": [
