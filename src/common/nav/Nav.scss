@@ -1,9 +1,11 @@
 @import "../../assets/variables.scss";
 
-%f-center {
- display: flex;
- justify-content: center;
- align-items: center;
+%abstract-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 0 16px;
 }
 
 .nav {
@@ -12,31 +14,36 @@
   align-items: center;
   height: 40px;
   background-color: $primary;
-  color: white;
   font: {
     size: 20px;
     weight: bold;
   }
 
-  &__title, &__link {
-    @extend %f-center;
+  &__title,
+  &__link {
+    @extend %abstract-link;
   }
 
   &__title {
-    height: 100%;
-    padding: 0 16px;
+    color: $color-text-white;
     justify-self: flex-start;
   }
+
   &__link {
-    padding: 0 8px;
     text-decoration: none;
-    color: black;
-    height: 100%;
+    color: $color-text-main;
     min-width: 100px;
     font: {
       size: 12px;
       weight: lighter;
     }
+
+    transition: {
+      property: background-color;
+      duration: 0.3s;
+      timing-function: ease-in-out;
+    }
+
     &:hover {
       background-color: lighten($color: $primary, $amount: 5);
     }
