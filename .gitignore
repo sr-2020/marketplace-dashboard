@@ -14,9 +14,11 @@ dist/
 .eslintcache
 env.ts
 
-#visual studio
+# visual studio
 *.suo
 *.dll
 *njsproj*
 *.sln
 
+# vscode
+.vscode/
