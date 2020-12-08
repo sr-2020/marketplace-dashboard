@@ -1,20 +1,44 @@
+@import "../../assets/variables.scss";
+
+%f-center {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+
 .nav {
-  background-color: #00ba8b;
-  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  background-color: $primary;
   color: white;
   font: {
-    family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     size: 20px;
     weight: bold;
   }
-}
 
-.nav-link {
-  text-decoration: none;
-  color: black;
-  padding: 60px;
-  font: {
-    size: 13px;
-    weight: lighter;
+  &__title, &__link {
+    @extend %f-center;
+  }
+
+  &__title {
+    height: 100%;
+    padding: 0 16px;
+    justify-self: flex-start;
+  }
+  &__link {
+    padding: 0 8px;
+    text-decoration: none;
+    color: black;
+    height: 100%;
+    min-width: 100px;
+    font: {
+      size: 12px;
+      weight: lighter;
+    }
+    &:hover {
+      background-color: lighten($color: $primary, $amount: 5);
+    }
   }
 }
