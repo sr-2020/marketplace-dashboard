@@ -22,3 +22,6 @@ env.ts
 
 # vscode
 .vscode/
+
+# idea
+.idea/
