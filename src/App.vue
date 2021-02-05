@@ -1,15 +1,18 @@
 <template>
-  <div id="app">
+  <div id="app" ref="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">Home</router-link>
+      |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view />
+    <router-view/>
   </div>
 </template>
 
 <style lang="less">
+@import "assets/mixins";
 #app {
+  .colorScheme();
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -30,3 +33,25 @@
   }
 }
 </style>
+
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import { ColorTheme, THEME_DARK, THEME_LIGHT} from '@/assets/themes'
+
+@Component
+export default class App extends Vue {
+  mounted() {
+    console.log(this.$refs, 'mountedHook')
+    this._setUpColorTheme()
+  }
+
+  private _setUpColorTheme() {
+    if(!localStorage.getItem('theme')) {
+      localStorage.setItem('theme', 'light')
+    }
+    console.log(localStorage.getItem('theme'))
+  }
+
+}
+
+</script>

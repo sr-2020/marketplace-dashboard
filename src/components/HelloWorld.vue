@@ -123,6 +123,7 @@ export default class HelloWorld extends Vue {
 <style scoped lang="less">
 h3 {
   margin: 40px 0 0;
+  color: var(--alert-error);
 }
 ul {
   list-style-type: none;
