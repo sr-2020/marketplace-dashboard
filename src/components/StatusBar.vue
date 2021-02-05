@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <div class="row">
-      <div class="col-d-1"></div>
-    </div>
+
   </div>
 </template>
 
@@ -13,9 +11,5 @@ export default {
 </script>
 
 <style scoped>
-.row {
-  height: 20px;
-}
-
 
 </style>

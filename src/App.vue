@@ -7,11 +7,9 @@
 </template>
 
 <style lang="less">
-@import "assets/mixins";
 @import "assets/grid";
 
 #app {
-  .colorScheme();
   font-family: Avenir, Helvetica, Arial, sans-serif;
   text-align: center;
 }
