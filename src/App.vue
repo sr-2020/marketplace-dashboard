@@ -10,8 +10,8 @@
 @import "assets/grid";
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  text-align: center;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: normal;
 }
 </style>
 
@@ -37,7 +37,7 @@ export default class App extends Vue {
       localStorage.setItem('theme', 'light')
     }
     const currentTheme = localStorage.getItem('theme')
-    const selectedTheme = currentTheme === 'light' ? THEME_LIGHT : THEME_DARK
+    const selectedTheme = currentTheme === 'lightt' ? THEME_LIGHT : THEME_DARK
     const appRef = document.body
 
     Object.keys(selectedTheme).forEach(key => {
