@@ -1,37 +1,50 @@
 <template>
   <div id="app"
-       ref="app">
+       ref="rootOfApp">
+    <status-bar></status-bar>
     <router-view/>
   </div>
 </template>
 
 <style lang="less">
 @import "assets/mixins";
+@import "assets/grid";
 
 #app {
   .colorScheme();
   font-family: Avenir, Helvetica, Arial, sans-serif;
   text-align: center;
-  color: #2c3e50;
 }
 </style>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import StatusBar from '@/components/StatusBar.vue'
+import { THEME_DARK, THEME_LIGHT } from '@/assets/themes'
 
-@Component
+@Component({
+  components: {
+    StatusBar
+  }
+})
 export default class App extends Vue {
   @Prop() theme: 'dark' | 'light' | undefined
 
   mounted() {
-    App._setUpColorTheme()
+    this._setUpColorTheme()
   }
 
-  private static _setUpColorTheme() {
+  private _setUpColorTheme() {
     if (!localStorage.getItem('theme')) {
       localStorage.setItem('theme', 'light')
     }
-    localStorage.getItem('theme')
+    const currentTheme = localStorage.getItem('theme')
+    const selectedTheme = currentTheme === 'light' ? THEME_LIGHT : THEME_DARK
+    const appRef = document.body
+
+    Object.keys(selectedTheme).forEach(key => {
+      appRef.style.setProperty(key, selectedTheme[key])
+    })
   }
 }
 
