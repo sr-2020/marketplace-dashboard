@@ -2,6 +2,10 @@
   <div id="app"
        ref="rootOfApp">
     <status-bar></status-bar>
+    <nav-bar></nav-bar>
+    <div class="container">
+
+    </div>
     <router-view/>
   </div>
 </template>
@@ -19,9 +23,11 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import StatusBar from '@/components/StatusBar.vue'
 import { THEME_DARK, THEME_LIGHT } from '@/assets/themes'
+import NavBar from '@/components/NavBar.vue'
 
 @Component({
   components: {
+    NavBar,
     StatusBar
   }
 })

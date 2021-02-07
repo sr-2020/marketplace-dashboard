@@ -5,13 +5,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    navBarState: 'hidden',
     colorTheme: 'light'
   },
   mutations: {
     changeTheme(state, payload: 'light' | 'dark') {
       state.colorTheme = payload
-    }
+    },
+
   },
-  actions: {},
+  actions: {
+  },
   modules: {}
 })
