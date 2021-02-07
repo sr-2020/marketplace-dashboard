@@ -12,14 +12,16 @@
 
 <style lang="less">
 @import "assets/grid";
-
+#app {
+  overflow-x: hidden;
+}
 .content-wrapper {
   padding-top: 8px;
   transition: filter .3s ease-in-out;
   pointer-events: none;
 
   &.blur {
-    filter: blur(2px);
+    filter: blur(6px);
   }
 }
 </style>

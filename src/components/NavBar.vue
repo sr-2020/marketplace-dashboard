@@ -11,8 +11,7 @@
               @click="hideNavbar">
          <router-link v-for="l in links"
                       :to="l.link"
-                      :key="l.name"
-         >
+                      :key="l.name" >
            {{ l.name }}
          </router-link>
         </span>
@@ -76,6 +75,9 @@ export default class NavBar extends Vue {
 .navbar {
   padding-top: 0.5em;
   font-size: 12px;
+  position: relative;
+
+
   @media screen and (min-width: 1024px) {
     font-size: 20px;
   }
@@ -86,11 +88,28 @@ export default class NavBar extends Vue {
     display: inline-block;
     overflow: hidden;
     width: 100%;
-    transition: width .3s ease-in-out;
+    transition-property: width, height;
+    transition-duration: .3s;
+    transition-timing-function: ease-in-out;
+
+
+    @media screen and (max-width: 414px) {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      height: 50vh;
+      a {
+        margin: 12px 0;
+      }
+      &.hidden {
+        height: 0 !important;
+        width: 100% !important;
+      }
+    }
 
     &.hidden {
       width: 0;
-
+      height: 100%;
     }
   }
 
