@@ -4,7 +4,7 @@
       <nav class="navbar col-m-3">
         <span class="selected-link"
               @click="hideNavbar">
-          {{ currentLinkName }}
+          {{ selectedLink }}
         </span>
         <span class="link-list"
               :class="{ hidden }"
@@ -12,7 +12,7 @@
          <router-link v-for="l in links"
                       :to="l.link"
                       :key="l.name"
-                      >
+         >
            {{ l.name }}
          </router-link>
         </span>
@@ -24,13 +24,18 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Route } from 'vue-router'
+import { RootMutations } from '@/store/mutations'
 
 @Component
 export default class NavBar extends Vue {
-  private selectedLink__: string = ''
+  private SELECTED_LINK: string = ''
 
-  get currentLinkName() {
-    return this.selectedLink__
+  set selectedLink(name: string) {
+    this.SELECTED_LINK = name
+  }
+
+  get selectedLink() {
+    return this.SELECTED_LINK
   }
 
   links = [
@@ -42,19 +47,17 @@ export default class NavBar extends Vue {
     { name: 'Всякое', link: '/others' }
   ]
 
-  private navBarHidden__ = true
-
-  get hidden() {
-    return this.navBarHidden__
+  get hidden(): boolean {
+    return this.$store.state.navbarState
   }
 
-  set hidden(state) {
-    this.navBarHidden__ = state
+  set hidden(state: boolean) {
+    this.$store.commit(RootMutations.NAVBAR_TOGGLE, state)
   }
 
   @Watch('$route', { immediate: true, deep: true })
   onRouterChange(newVal: Route) {
-    this.selectedLink__ = newVal.name ?? ''
+    this.selectedLink = newVal.name ?? ''
   }
 
   hideNavbar() {
@@ -62,7 +65,7 @@ export default class NavBar extends Vue {
   }
 
   mounted() {
-    this.selectedLink__ = this.$route.name ?? ''
+    this.selectedLink = this.$route.name ?? ''
   }
 
 }
