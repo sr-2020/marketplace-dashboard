@@ -1,17 +1,15 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
+import Vuex, { StoreOptions } from 'vuex'
+import { RootState } from '@/store/types'
+import { mutations } from '@/store/mutations'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store: StoreOptions<RootState> = {
   state: {
-    colorTheme: 'light'
+    navbarState: false
   },
-  mutations: {
-    changeTheme(state, payload: 'light' | 'dark') {
-      state.colorTheme = payload
-    }
-  },
-  actions: {},
-  modules: {}
-})
+  mutations
+}
+
+export default new Vuex.Store<RootState>(store)
