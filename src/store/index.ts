@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 const store: StoreOptions<RootState> = {
   state: {
-    navbarState: false
+    navbarState: true
   },
   mutations
 }
