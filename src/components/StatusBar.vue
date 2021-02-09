@@ -27,11 +27,11 @@
         </div>
 
         <div v-if="!isMobile"
-             class="cos-m-1 col-t-1 col-d-2 item-wrap">
+             class="cos-m-1 col-t-1 col-d-3 item-wrap">
           Игра: Online <span class="status"></span>
 
         </div>
-        <div class="col-m-1 col-t-1 col-d-1 item-wrap --f-end">
+        <div class="col-m-1 col-t-1 col-d-2 item-wrap --f-end">
           <div class="icon-wrapper">
             <svg width="20"
                  height="20"
