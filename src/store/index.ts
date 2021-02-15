@@ -3,12 +3,14 @@ import Vuex, { StoreOptions } from 'vuex'
 import { RootState } from '@/store/types'
 import { mutations } from '@/store/mutations'
 import { user } from '@/store/user'
+import { ThemeSwitcher } from '@/utils/themeSwitcher'
 
 Vue.use(Vuex)
 
 const store: StoreOptions<RootState> = {
   state: {
-    navbarState: true
+    navbarState: true,
+    theme: new ThemeSwitcher(window, document)
   },
   mutations,
   modules: {

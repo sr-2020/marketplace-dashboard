@@ -18,7 +18,7 @@
           </div>
         </div>
 
-        <div class="col-m-1 col-t-2 col-d-2 item-wrap"
+        <div class="col-m-1 col-t-2 col-d-3 item-wrap"
              :class="{'--centered': isMobile}">
           {{ status }}
           <span v-if="isMobile"
@@ -27,12 +27,13 @@
         </div>
 
         <div v-if="!isMobile"
-             class="cos-m-1 col-t-1 col-d-3 item-wrap">
+             class="cos-m-1 col-t-1 col-d-2 item-wrap">
           Игра: Online <span class="status"></span>
 
         </div>
         <div class="col-m-1 col-t-1 col-d-2 item-wrap --f-end">
-          <div class="icon-wrapper">
+          <div class="icon-wrapper"
+               @click="changeTheme">
             <svg width="20"
                  height="20"
                  viewBox="0 0 20 20"
@@ -52,6 +53,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { RootMutations } from '@/store/mutations'
 
 @Component
 export default class SideBar extends Vue {
@@ -96,6 +98,10 @@ export default class SideBar extends Vue {
 
   private resizeEventHandler = () => {
     this.resized()
+  }
+
+  changeTheme() {
+    this.$store.commit(RootMutations.CHANGE_THEME)
   }
 
   resized() {
