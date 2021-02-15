@@ -7,11 +7,11 @@ export interface Organisation extends BaseNamedEntity {
 }
 
 //its immutable entity
-export interface Corporation extends BaseNamedEntity {
+export interface Corporation extends Organisation {
     logoUrl: string
 }
 
-export interface Shop extends BaseNamedEntity {
+export interface Shop extends Organisation {
     lifestyle: string
     balance: number
     specialisations?: number[]
