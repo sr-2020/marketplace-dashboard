@@ -12,9 +12,11 @@
 
 <style lang="less">
 @import "assets/grid";
+
 #app {
   overflow-x: hidden;
 }
+
 .content-wrapper {
   padding-top: 8px;
   transition: filter .3s ease-in-out;
@@ -29,7 +31,6 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import StatusBar from '@/components/StatusBar.vue'
-import { THEME_DARK, THEME_LIGHT } from '@/assets/themes'
 import NavBar from '@/components/NavBar.vue'
 
 @Component({
@@ -42,23 +43,6 @@ export default class App extends Vue {
 
   get navBarHidden() {
     return this.$store.state.navbarState
-  }
-
-  mounted() {
-    this._setUpColorTheme()
-  }
-
-  private _setUpColorTheme() {
-    if (!localStorage.getItem('theme')) {
-      localStorage.setItem('theme', 'light')
-    }
-    const currentTheme = localStorage.getItem('theme')
-    const selectedTheme = currentTheme === 'lightt' ? THEME_LIGHT : THEME_DARK
-    const appRef = document.body
-
-    Object.keys(selectedTheme).forEach(key => {
-      appRef.style.setProperty(key, selectedTheme[key])
-    })
   }
 }
 

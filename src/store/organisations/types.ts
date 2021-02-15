@@ -1,15 +1,16 @@
-import { BaseNamedEntity } from '../types';
-import { User } from '../user/types';
+import { BaseNamedEntity } from '../types'
+import { UserState } from '../user/types'
 
 export interface Organisation extends BaseNamedEntity {
-    owner?: User
+    owner?: UserState
 
 }
 
-//Это неизменяемая сущность
+//its immutable entity
 export interface Corporation extends BaseNamedEntity {
     logoUrl: string
-    owner?: User
+    ownerId: number
+    owner?: UserState
 }
 
 export interface Shop extends BaseNamedEntity {

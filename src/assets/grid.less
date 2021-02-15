@@ -66,16 +66,18 @@ each(range(3), {
   .col-d-6,
   .col-d-7,
   .col-d-8,
-  .col-d-9 {
+  .col-d-9,
+  .col-d-10
+  {
     padding-right: 12px;
     height: 100%;
     padding-left: 12px;
   }
 
-  each(range(9), {
+  each(range(10), {
     .col-d-@{value} {
-      flex-basis: calc((@value / 9) * 100%);
-      max-width: calc((@value / 9) * 100%);
+      flex-basis: calc((@value / 10) * 100%);
+      max-width: calc((@value / 10) * 100%);
     }
   })
 }
