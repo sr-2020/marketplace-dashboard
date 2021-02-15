@@ -9,8 +9,6 @@ export interface Organisation extends BaseNamedEntity {
 //its immutable entity
 export interface Corporation extends BaseNamedEntity {
     logoUrl: string
-    ownerId: number
-    owner?: UserState
 }
 
 export interface Shop extends BaseNamedEntity {
