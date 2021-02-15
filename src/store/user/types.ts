@@ -14,5 +14,4 @@ export enum Roles {
     Root = 'root',
     Master = 'master',
     Junior = 'junior'
-
 }

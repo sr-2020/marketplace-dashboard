@@ -5,9 +5,11 @@ export interface RootState {
 export interface BaseEntity {
     id: number
 }
+
 export interface BaseNamedEntity extends BaseEntity {
     name: string
 }
+
 export enum LifeStyles {
     Wood = 'wood',
     Bronze = 'bronze',

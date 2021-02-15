@@ -1,5 +1,6 @@
 import { BaseNamedEntity, LifeStyles } from '../types';
 import { Corporation } from '../organisations/types';
+
 //Это неизменяемая сущность
 export interface ProductType extends BaseNamedEntity {
     alias: string
