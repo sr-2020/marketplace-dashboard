@@ -19,5 +19,5 @@ export enum LifeStyles {
   Silver = 'silver',
   Gold = 'gold',
   Platinum = 'platinum',
-  Irridium = 'irridium'
+  Iridium = 'iridium'
 }
