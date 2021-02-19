@@ -14,16 +14,18 @@
 @import "assets/grid";
 
 #app {
+  min-height: 100vh;
   overflow-x: hidden;
 }
 
 .content-wrapper {
   padding-top: 8px;
   transition: filter .3s ease-in-out;
-  pointer-events: none;
 
   &.blur {
+    min-height: 100%;
     filter: blur(6px);
+    pointer-events: none;
   }
 }
 </style>

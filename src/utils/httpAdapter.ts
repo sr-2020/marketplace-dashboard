@@ -9,8 +9,7 @@ interface ResponseModel<Model> {
   message: string | null
 }
 
-export class HttpAdapter {
-
+export default class HttpAdapter {
   static get<Response>(endPoint: string): Observable<ResponseModel<Response>> {
     return fromPromise(axios.get<ResponseModel<Response>>(endPoint, { ...this.getOptions() }))
       .pipe(pluck('data'))

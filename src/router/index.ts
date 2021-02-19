@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '../views/Home.vue'
+import ShopList from '@/views/ShopList.vue'
 
 Vue.use(VueRouter)
 
@@ -13,7 +14,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/shops',
     name: 'Магазины',
-    component: Home
+    component: ShopList
   },
   {
     path: '/corps',
@@ -34,7 +35,7 @@ const routes: Array<RouteConfig> = [
     path: '/others',
     name: 'Всякое',
     component: Home
-  },
+  }
 ]
 
 const router = new VueRouter({
