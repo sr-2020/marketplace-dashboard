@@ -1,49 +1,52 @@
 <template>
   <div class="container">
     <div class="row">
-      <ShopListItem class="col-m-3 list-item"
-                    v-for="i in shopList"
-                    :key="i.id"
-                    :i="i"/>
+      <ShopListItem
+        class="col-m-3 list-item"
+        v-for="i in shopList"
+        :key="i.id"
+        :i="i"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import HttpAdapter from '@/utils/httpAdapter'
-import ShopListItem from '@/components/Shops/ShopListItem.vue'
-import { Shop } from '@/store/organisations/types'
+import { Component, Vue } from "vue-property-decorator";
+import HttpAdapter from "@/utils/httpAdapter";
+import ShopListItem from "@/components/Shops/ShopListItem.vue";
+import { Shop } from "@/store/organisations/types";
 
 @Component({
   components: { ShopListItem }
 })
 export default class ShopList extends Vue {
-  private shopList_: Shop[] = []
+  private shopList_: Shop | Shop[] = [];
 
-  set shopList(list: Shop[]) {
-    this.shopList_ = list
+  set shopList(list: Shop | Shop[]) {
+    this.shopList_ = list;
   }
 
-  get shopList(): Shop[] {
-    return this.shopList_
+  get shopList(): Shop | Shop[] {
+    return this.shopList_;
   }
 
   mounted() {
-    HttpAdapter.get<Shop[] | Shop>('https://billing.evarun.ru/a-shops').subscribe(({ data }) => this.shopList = data)
+    HttpAdapter.get<Shop>("https://billing.evarun.ru/a-shops").subscribe(
+      ({ data }) => (this.shopList = data)
+    );
   }
 }
 </script>
 
-<style scoped
-       lang="less">
+<style scoped lang="less">
 .list-item {
   border: 2px solid var(--border);
   border-radius: 4px;
   margin-bottom: 12px;
   background: var(--bg);
   cursor: pointer;
-  transition: background-color .3s ease;
+  transition: background-color 0.3s ease;
 
   &:hover {
     background: var(--accent);
