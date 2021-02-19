@@ -1,0 +1,83 @@
+.container {
+  width: 100%;
+  margin: auto;
+
+  @media screen and (min-width: 1024px) {
+    width: 1024px;
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  padding-right: 10px;
+  padding-left: 10px;
+  @media screen and (min-width: 1024px) {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+}
+
+.col-m-1,
+.col-m-2,
+.col-m-3 {
+  height: 100%;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+each(range(3), {
+  .col-m-@{value} {
+    flex-basis: calc((@value / 3) * 100%);
+    max-width: calc((@value / 3) * 100%);
+  }
+})
+
+@media screen and (min-width: 667px) {
+  .col-t-1,
+  .col-t-2,
+  .col-t-3,
+  .col-t-4,
+  .col-t-5,
+  .col-t-6 {
+    padding-right: 10px;
+    height: 100%;
+    padding-left: 10px;
+  }
+
+  each(range(6), {
+    .col-t-@{value} {
+      flex-basis: calc((@value / 6) * 100%);
+      max-width: calc((@value / 6) * 100%);
+    }
+  })
+}
+
+@media screen and (min-width: 1024px) {
+  .col-d-1,
+  .col-d-2,
+  .col-d-3,
+  .col-d-4,
+  .col-d-5,
+  .col-d-6,
+  .col-d-7,
+  .col-d-8,
+  .col-d-9,
+  .col-d-10
+  {
+    padding-right: 12px;
+    height: 100%;
+    padding-left: 12px;
+  }
+
+  each(range(10), {
+    .col-d-@{value} {
+      flex-basis: calc((@value / 10) * 100%);
+      max-width: calc((@value / 10) * 100%);
+    }
+  })
+}
