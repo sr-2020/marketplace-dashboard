@@ -2,7 +2,6 @@
   <div id="app" ref="rootOfApp">
     <status-bar></status-bar>
     <nav-bar></nav-bar>
-    <div @click="onClick">File button</div>
     <div class="content-wrapper" :class="{ blur: !navBarHidden }">
       <router-view />
     </div>
@@ -33,7 +32,6 @@
 import { Component, Vue } from "vue-property-decorator";
 import StatusBar from "@/components/StatusBar.vue";
 import NavBar from "@/components/NavBar.vue";
-import CsvParser from "@/utils/csvParser";
 
 @Component({
   components: {
@@ -44,15 +42,6 @@ import CsvParser from "@/utils/csvParser";
 export default class App extends Vue {
   get navBarHidden() {
     return this.$store.state.navbarState;
-  }
-
-  onClick() {
-    const test = new CsvParser([{ name: "name", type: "string" }]);
-    test.selectFile();
-
-    test.onError = err => {
-      console.log(err);
-    };
   }
 }
 </script>

@@ -32,7 +32,7 @@ export default class ShopList extends Vue {
   }
 
   mounted() {
-    HttpAdapter.get<Shop>("https://billing.evarun.ru/a-shops").subscribe(
+    HttpAdapter.get<Shop>(["a-shops"]).subscribe(
       ({ data }) => (this.shopList = data)
     );
   }
