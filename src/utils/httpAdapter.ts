@@ -4,7 +4,7 @@ import { pluck } from 'rxjs/operators'
 import axios, { AxiosRequestConfig } from 'axios'
 
 interface ResponseModel<Model> {
-  data: Model | Model[],
+  data: Model
   status: boolean,
   message: string | null
 }
