@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '../views/Home.vue'
 import ShopList from '@/views/ShopList.vue'
+import SpecialisationList from "@/views/SpecialisationList.vue";
 
 Vue.use(VueRouter)
 
@@ -29,7 +30,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/specs',
     name: 'Специализации',
-    component: Home
+    component: SpecialisationList
   },
   {
     path: '/others',
