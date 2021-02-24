@@ -1,9 +1,11 @@
 <template>
   <div class="item-wrapper">
     <div class="item">
-      <Lifestyle :lifestyle="i.lifestyle"/>
-      <div>Название: {{ i.name }}</div>
-      <div>Баланс: {{ i.balance }}</div>
+      <div>Тип скидки: {{ i.discountType }}</div>
+      <div>Номер продукта: {{ i.productTypeId }}</div>
+      <div>Название продукта: {{ i.productTypeName }}</div>
+      <div>Номер специализации: {{ i.specialisationId }}</div>
+      <div>Название специализации: {{ i.specialisationName }}</div>
       </div>
   </div>
 </template>
@@ -11,11 +13,9 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Specialisation } from '@/store/products/types'
-import Lifestyle from '@/components/Shared/Lifestyle.vue'
 
-@Component({
-  components: { Lifestyle }
-})
+
+@Component({})
 export default class SpecialisationListItem extends Vue {
   @Prop() i!: Specialisation
 
