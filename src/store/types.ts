@@ -13,11 +13,7 @@ export interface BaseNamedEntity extends BaseEntity {
   name: string
 }
 
-export enum LifeStyles {
-  Wood = 'wood',
-  Bronze = 'bronze',
-  Silver = 'silver',
-  Gold = 'gold',
-  Platinum = 'platinum',
-  Iridium = 'iridium'
+export interface LifeStyle {
+  id: number
+  name: string
 }
