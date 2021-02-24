@@ -4,6 +4,7 @@ export interface UserState extends BaseNamedEntity {
   name: string
   modelId: number
   rights?: UserRights
+  balance?: number
 }
 
 export interface UserRights extends BaseEntity {
@@ -14,5 +15,4 @@ export enum Roles {
     Root = 'root',
     Master = 'master',
     Junior = 'junior'
-
 }

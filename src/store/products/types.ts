@@ -1,4 +1,4 @@
-import { BaseNamedEntity, LifeStyles } from '../types'
+import { BaseNamedEntity, LifeStyle } from '../types'
 import { Corporation } from '../organisations/types'
 //its immutable entity
 export interface ProductType extends BaseNamedEntity {
@@ -6,28 +6,27 @@ export interface ProductType extends BaseNamedEntity {
   discountType: 1 | 2
 }
 
-export interface Specialisation extends BaseNamedEntity {
-  productType?: ProductType
-  productTypeId: number
+export interface Specialisation extends ProductType {
+  specialisationName: string
+  specialisationId: number
 }
 
-export interface Nomenklatura extends BaseNamedEntity {
+export interface Nomenklatura extends Specialisation {
+  nomenklaturaId: number
+  nomenklaturaName: string
   code: string
-  lifestyle: LifeStyles
+  lifestyleId: number
   basePrice: number
   baseCount: number
   description: string
   pictureUrl: string
   secret: string
-  specialisation?: Specialisation
-  specialisationId: number
 }
 
-export interface Sku extends BaseNamedEntity {
+export interface Sku extends Nomenklatura {
+  skuId: number
+  skuName: string
   count: number
-  corporation?: Corporation
   corporationId: number
-  nomenklatura?: Nomenklatura
-  nomenklaturaId: number
   enabled: boolean
 }
