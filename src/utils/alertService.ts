@@ -1,21 +1,21 @@
-import {BehaviorSubject} from "rxjs";
+import {Subject} from "rxjs";
 
 export interface AlertMsg {
     id: number;
     title: string;
-    msg: string;
+    msg?: string;
     type: AlertMsgType;
 }
 
 export type AlertMsgType = "error" | "warning" | "success" | "info";
 
 export default class AlertService {
-    public alertTrigger = new BehaviorSubject<AlertMsg | null>(null);
+    public alert = new Subject<AlertMsg | null>();
     private _counter = 0;
 
     public addAlert(title: string, msg: string, type: AlertMsgType) {
         this._counter++
-        this.alertTrigger.next({
+        this.alert.next({
             id: this._counter, title, msg, type
         });
     }

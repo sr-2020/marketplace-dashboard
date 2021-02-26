@@ -1,17 +1,46 @@
 <template>
   <div class="alert-wrapper">
-    <div class="alert">
-      <div class="title">Some title</div>
-      <div class="description"></div>
+    <div class="alert" @click="removeAlert(l.id)" v-for="l in list" :key="l.id">
+      <div class="title">{{ l.title }}</div>
+      <div class="description">{{ l.msg }}</div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { AlertMsg } from "@/utils/alertService";
 
 @Component
-export default class Alert extends Vue {}
+export default class Alert extends Vue {
+  private list_: AlertMsg[] = [];
+
+  set list(list: AlertMsg[]) {
+    this.list_ = list;
+  }
+
+  get list(): AlertMsg[] {
+    return this.list_;
+  }
+
+  removeAlert(id: number) {
+    this.list = this.list.filter(el => id !== el.id);
+  }
+
+  constructor() {
+    super();
+  }
+
+  mounted() {
+    this.$store.state.alertService.alert.subscribe((el: AlertMsg) => {
+      if (!el) {
+        return;
+      }
+      const { id, title, type, msg } = el;
+      this.list = [...this.list, { id, title, type, msg }];
+    });
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -27,7 +56,7 @@ export default class Alert extends Vue {}
   border-radius: 8px;
   color: var(--font-prim);
   background-color: var(--alert-warn);
-  opacity: 0.5;
+  opacity: 0.8;
 
   &.error {
     background-color: var(--alert-error);

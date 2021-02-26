@@ -5,7 +5,7 @@ import { AlertMsgType } from "@/utils/alertService";
 export enum RootMutations {
   NAVBAR_TOGGLE = "NAVBAR_TOGGLE",
   CHANGE_THEME = "CHANGE_THEME",
-  ADD_ALERT_MSG = "ADD_ALERT_MSG "
+  ADD_ALERT_MSG = "ADD_ALERT_MSG"
 }
 
 export const mutations: MutationTree<RootState> = {
