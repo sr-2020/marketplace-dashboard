@@ -30,8 +30,8 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import StatusBar from "@/components/StatusBar.vue";
-import NavBar from "@/components/NavBar.vue";
+import StatusBar from "@/components/common/StatusBar.vue";
+import NavBar from "@/components/common/NavBar.vue";
 
 @Component({
   components: {

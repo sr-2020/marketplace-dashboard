@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
+      <Loader text="Загрузка" v-if="isLoading"></Loader>
       <ShopListItem
         class="col-m-3 list-item"
         v-for="i in shopList"
@@ -16,12 +17,22 @@ import { Component, Vue } from "vue-property-decorator";
 import HttpAdapter from "@/utils/httpAdapter";
 import ShopListItem from "@/components/Shops/ShopListItem.vue";
 import { Shop } from "@/store/organisations/types";
+import Loader from "@/components/shared/Loader.vue";
 
 @Component({
-  components: { ShopListItem }
+  components: { Loader, ShopListItem }
 })
 export default class ShopList extends Vue {
   private shopList_: Shop | Shop[] = [];
+  private isLoading = true;
+
+  set loading(loading: boolean) {
+    this.isLoading = loading;
+  }
+
+  get loading(): boolean {
+    return this.isLoading;
+  }
 
   set shopList(list: Shop | Shop[]) {
     this.shopList_ = list;
@@ -32,9 +43,10 @@ export default class ShopList extends Vue {
   }
 
   mounted() {
-    HttpAdapter.get<Shop>(["a-shops"]).subscribe(
-      ({ data }) => (this.shopList = data)
-    );
+    HttpAdapter.get<Shop>(["a-shops"]).subscribe(({ data }) => {
+      this.loading = false;
+      this.shopList = data;
+    });
   }
 }
 </script>

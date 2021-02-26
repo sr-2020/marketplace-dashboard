@@ -2,32 +2,33 @@
   <div class="container">
     <div class="row">
       <nav class="navbar col-m-3">
-        <span class="selected-link"
-              :class="{ 'rotated-icon': hidden }"
-              @click="hideNavbar">
+        <span
+          class="selected-link"
+          :class="{ 'rotated-icon': hidden }"
+          @click="hideNavbar"
+        >
           {{ selectedLink }}
 
-          <svg width="20"
-               height="20"
-               viewBox="0 0 18 11"
-               fill="none"
-               xmlns="http://www.w3.org/2000/svg"
-               :class="{ hidden }">
-            <path fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M16.293 0.292908L17.7072 1.70712L9.00008 10.4142L0.292969 1.70712L1.70718 0.292908L9.00008 7.5858L16.293 0.292908Z"
-                  fill="white"/>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 18 11"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            :class="{ hidden }"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M16.293 0.292908L17.7072 1.70712L9.00008 10.4142L0.292969 1.70712L1.70718 0.292908L9.00008 7.5858L16.293 0.292908Z"
+              fill="white"
+            />
           </svg>
-
         </span>
-        <span class="link-list"
-              :class="{ hidden }"
-              @click="hideNavbar">
-         <router-link v-for="l in links"
-                      :to="l.link"
-                      :key="l.name">
-           {{ l.name }}
-         </router-link>
+        <span class="link-list" :class="{ hidden }" @click="hideNavbar">
+          <router-link v-for="l in links" :to="l.link" :key="l.name">
+            {{ l.name }}
+          </router-link>
         </span>
       </nav>
     </div>
@@ -35,57 +36,55 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { Route } from 'vue-router'
-import { RootMutations } from '@/store/mutations'
+import { Component, Vue, Watch } from "vue-property-decorator";
+import { Route } from "vue-router";
+import { RootMutations } from "@/store/mutations";
 
 @Component
 export default class NavBar extends Vue {
-  private SELECTED_LINK: string = ''
+  private SELECTED_LINK = "";
 
   set selectedLink(name: string) {
-    this.SELECTED_LINK = name
+    this.SELECTED_LINK = name;
   }
 
   get selectedLink() {
-    return this.SELECTED_LINK
+    return this.SELECTED_LINK;
   }
 
   links = [
-    { name: 'Действия', link: '/' },
-    { name: 'Магазины', link: '/shops' },
-    { name: 'Корпорации', link: '/corps' },
-    { name: 'Товары', link: '/goods' },
-    { name: 'Специализации', link: '/specs' },
-    { name: 'Всякое', link: '/others' }
-  ]
+    { name: "Действия", link: "/" },
+    { name: "Магазины", link: "/shops" },
+    { name: "Корпорации", link: "/corps" },
+    { name: "Товары", link: "/goods" },
+    { name: "Специализации", link: "/specs" },
+    { name: "Всякое", link: "/others" }
+  ];
 
   get hidden(): boolean {
-    return this.$store.state.navbarState
+    return this.$store.state.navbarState;
   }
 
   set hidden(state: boolean) {
-    this.$store.commit(RootMutations.NAVBAR_TOGGLE, state)
+    this.$store.commit(RootMutations.NAVBAR_TOGGLE, state);
   }
 
-  @Watch('$route', { immediate: true, deep: true })
+  @Watch("$route", { immediate: true, deep: true })
   onRouterChange(newVal: Route) {
-    this.selectedLink = newVal.name ?? ''
+    this.selectedLink = newVal.name ?? "";
   }
 
   hideNavbar() {
-    this.hidden = !this.hidden
+    this.hidden = !this.hidden;
   }
 
   mounted() {
-    this.selectedLink = this.$route.name ?? ''
+    this.selectedLink = this.$route.name ?? "";
   }
-
 }
 </script>
 
-<style scoped
-       lang="less">
+<style scoped lang="less">
 .navbar {
   display: flex;
   align-items: center;
@@ -107,7 +106,7 @@ export default class NavBar extends Vue {
     overflow: hidden;
     width: 100%;
     transition-property: width, height;
-    transition-duration: .3s;
+    transition-duration: 0.3s;
     transition-timing-function: ease-in-out;
 
     @media screen and (max-width: 500px) {
@@ -137,13 +136,13 @@ export default class NavBar extends Vue {
     margin-right: 0.3em;
 
     svg {
-      transition: transform .3s ease-in-out;
+      transition: transform 0.3s ease-in-out;
       transform: rotate(90deg);
       @media screen and (max-width: 1024px) {
         width: 12px;
       }
       @media screen and (max-width: 500px) {
-        transform: rotate(180deg)
+        transform: rotate(180deg);
       }
 
       path {
@@ -154,7 +153,7 @@ export default class NavBar extends Vue {
     &.rotated-icon svg {
       transform: rotate(-90deg);
       @media screen and (max-width: 500px) {
-        transform: rotate(0deg)
+        transform: rotate(0deg);
       }
     }
   }
@@ -163,7 +162,7 @@ export default class NavBar extends Vue {
     color: var(--font-prim);
     text-decoration: unset;
     transition-property: color, font-size;
-    transition-duration: .3s;
+    transition-duration: 0.3s;
     transition-timing-function: ease-in-out;
     margin-right: 0.3em;
 
@@ -176,11 +175,12 @@ export default class NavBar extends Vue {
     }
 
     &:hover {
-      color: var(--accent)
+      color: var(--accent);
     }
   }
 
-  .selected-link, a:hover {
+  .selected-link,
+  a:hover {
     font-size: 2em;
   }
 }
