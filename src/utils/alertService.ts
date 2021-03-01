@@ -10,13 +10,14 @@ export interface AlertMsg {
 export type AlertMsgType = "error" | "warning" | "success" | "info";
 
 export class AlertService {
-    public alert = new Subject<AlertMsg | null>();
+    public alert = new Subject<AlertMsg>();
     private _counter = 0;
 
     public addAlert(title: string, msg: string, type: AlertMsgType) {
         this._counter++
         this.alert.next({
-            id: this._counter, title, msg, type
+            id: this._counter,
+            title, msg, type
         });
     }
 }

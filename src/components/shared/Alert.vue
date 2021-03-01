@@ -18,19 +18,19 @@
 import { Component, Vue } from "vue-property-decorator";
 import { AlertController, AlertMsg } from "@/utils/alertService";
 
+interface SelfDestructiveAlertMsg extends AlertMsg {
+  timer: number;
+}
+
 @Component
 export default class Alert extends Vue {
-  private list_: AlertMsg[] = [];
-
-  set list(list: AlertMsg[]) {
-    this.list_ = list;
-  }
-
-  get list(): AlertMsg[] {
-    return this.list_;
-  }
+  list: SelfDestructiveAlertMsg[] = [];
 
   removeAlert(id: number) {
+    const listItem = this.list.find(el => id === el.id);
+    if (listItem) {
+      clearInterval(listItem.timer);
+    }
     this.list = this.list.filter(el => id !== el.id);
   }
 
@@ -40,11 +40,17 @@ export default class Alert extends Vue {
 
   mounted() {
     AlertController.alert.subscribe(el => {
-      if (!el) {
-        return;
-      }
       const { id, title, type, msg } = el;
-      this.list = [...this.list, { id, title, type, msg }];
+      this.list = [
+        ...this.list,
+        {
+          id,
+          title,
+          type,
+          msg,
+          timer: setInterval(() => this.removeAlert(id), 3000)
+        }
+      ];
     });
   }
 }
