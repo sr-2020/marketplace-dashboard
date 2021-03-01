@@ -2,6 +2,7 @@
   <div id="app" ref="rootOfApp">
     <status-bar></status-bar>
     <nav-bar></nav-bar>
+    <alert></alert>
     <div class="content-wrapper" :class="{ blur: !navBarHidden }">
       <router-view />
     </div>
@@ -30,11 +31,13 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import StatusBar from "@/components/StatusBar.vue";
-import NavBar from "@/components/NavBar.vue";
+import StatusBar from "@/components/common/StatusBar.vue";
+import NavBar from "@/components/common/NavBar.vue";
+import Alert from "@/components/shared/Alert.vue";
 
 @Component({
   components: {
+    Alert,
     NavBar,
     StatusBar
   }
