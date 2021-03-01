@@ -1,15 +1,22 @@
 <template>
   <div class="alert-wrapper">
-    <div class="alert" @click="removeAlert(l.id)" v-for="l in list" :key="l.id">
-      <div class="title">{{ l.title }}</div>
-      <div class="description">{{ l.msg }}</div>
-    </div>
+    <transition-group name="fade" tag="p">
+      <div
+        class="alert"
+        @click="removeAlert(l.id)"
+        v-for="l in list"
+        :key="l.id"
+      >
+        <div class="title">{{ l.title }}</div>
+        <div class="description">{{ l.msg }}</div>
+      </div>
+    </transition-group>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { AlertMsg } from "@/utils/alertService";
+import { AlertController, AlertMsg } from "@/utils/alertService";
 
 @Component
 export default class Alert extends Vue {
@@ -32,7 +39,7 @@ export default class Alert extends Vue {
   }
 
   mounted() {
-    this.$store.state.alertService.alert.subscribe((el: AlertMsg) => {
+    AlertController.alert.subscribe(el => {
       if (!el) {
         return;
       }
@@ -57,6 +64,7 @@ export default class Alert extends Vue {
   color: var(--font-prim);
   background-color: var(--alert-warn);
   opacity: 0.8;
+  transform: translateX(0px);
 
   &.error {
     background-color: var(--alert-error);
@@ -87,5 +95,15 @@ export default class Alert extends Vue {
     width: 300px;
     position: fixed;
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

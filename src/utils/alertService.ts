@@ -9,7 +9,7 @@ export interface AlertMsg {
 
 export type AlertMsgType = "error" | "warning" | "success" | "info";
 
-export default class AlertService {
+export class AlertService {
     public alert = new Subject<AlertMsg | null>();
     private _counter = 0;
 
@@ -20,3 +20,5 @@ export default class AlertService {
         });
     }
 }
+
+export const AlertController = new AlertService()
