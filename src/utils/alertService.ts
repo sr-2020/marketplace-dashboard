@@ -1,13 +1,5 @@
 import {Subject} from "rxjs";
-
-export interface AlertMsg {
-    id: number;
-    title: string;
-    msg?: string;
-    type: AlertMsgType;
-}
-
-export type AlertMsgType = "error" | "warning" | "success" | "info";
+import {AlertMsg, AlertMsgType} from "@/store/log/types";
 
 export class AlertService {
     public alert = new Subject<AlertMsg>();

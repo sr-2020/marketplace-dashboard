@@ -16,7 +16,8 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { AlertController, AlertMsg } from "@/utils/alertService";
+import { AlertController } from "@/utils/alertService";
+import { AlertMsg } from "@/store/log/types";
 
 interface SelfDestructiveAlertMsg extends AlertMsg {
   timer: number;
