@@ -4,6 +4,7 @@ export interface AlertMsg {
   id: number;
   title: string;
   msg?: string;
+  timestamp: number;
   type: AlertMsgType;
 }
 

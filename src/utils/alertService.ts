@@ -9,6 +9,7 @@ export class AlertService {
         this._counter++
         this.alert.next({
             id: this._counter,
+            timestamp: new Date().getTime(),
             title, msg, type
         });
     }
