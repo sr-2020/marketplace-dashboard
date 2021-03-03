@@ -1,39 +1,17 @@
-<template>
-  <div class="container">
-    <div class="row">
-      <CorporationListItem
-        class="col-m-3 list-item"
-        v-for="i in corporationList"
-        :key="i.id"
-        :i="i"
-      />
-    </div>
-  </div>
-</template>
-
 <script lang="ts">
 import HttpAdapter from "@/utils/httpAdapter";
-import { Component, Vue } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import { Corporation } from "@/store/organisations/types";
 import CorporationListItem from "@/components/Corporation/CorporationListItem.vue";
+import List from "@/components/common/list/List.vue";
 
 @Component({
   components: { CorporationListItem }
 })
-export default class CorporationList extends Vue {
-  private corporationList_: Corporation | Corporation[] = [];
-
-  set corporationList(list: Corporation | Corporation[]) {
-    this.corporationList_ = list;
-  }
-
-  get corporationList(): Corporation | Corporation[] {
-    return this.corporationList_;
-  }
-
+export default class CorporationList extends List<Corporation> {
   mounted() {
-    HttpAdapter.get<Corporation>(["a-corporations"]).subscribe(
-      ({ data }) => (this.corporationList = data)
+    HttpAdapter.get<Corporation[]>(["a-corporations"]).subscribe(
+      ({ data }) => (this.list = data)
     );
   }
 }
