@@ -12,7 +12,7 @@ import { Specialisation } from "@/store/products/types";
 import ListItem from "@/components/common/list/ListItem.vue";
 
 @Component({})
-export default class SpecialisationListItem extends ListItem<Specialisation> {}
+export default class SpecialisationsListItem extends ListItem<Specialisation> {}
 </script>
 
 <style scoped lang="less">

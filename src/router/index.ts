@@ -1,10 +1,10 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
-import ShopList from "@/views/Shops/ShopList.vue";
-import SpecialisationList from "@/views/Specialisations/SpecialisationList.vue";
-import CorporationList from "@/views/Corporations/CorporationList.vue";
 import Logs from "@/views/Logs/Logs.vue";
+import Corporations from "@/views/Corporations/Corporations.vue";
+import Shops from "@/views/Shops/Shops.vue";
+import Specialisations from "@/views/Specialisations/Specialisations.vue";
 
 Vue.use(VueRouter);
 
@@ -17,12 +17,12 @@ const routes: Array<RouteConfig> = [
   {
     path: "/shops",
     name: "Магазины",
-    component: ShopList
+    component: Shops
   },
   {
     path: "/corps",
     name: "Корпорации",
-    component: CorporationList
+    component: Corporations
   },
   {
     path: "/goods",
@@ -32,7 +32,7 @@ const routes: Array<RouteConfig> = [
   {
     path: "/specs",
     name: "Специализации",
-    component: SpecialisationList
+    component: Specialisations
   },
   {
     path: "/logs",

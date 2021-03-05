@@ -1,5 +1,7 @@
 <template>
-  <LogsList></LogsList>
+  <div class="container">
+    <logs-list />
+  </div>
 </template>
 
 <script lang="ts">
