@@ -16,7 +16,9 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { AlertController, AlertMsg } from "@/utils/alertService";
+import { AlertController } from "@/utils/alertService";
+import { LogsMutations } from "@/store/log/mutations";
+import { AlertMsg } from "@/store/log/types";
 
 interface SelfDestructiveAlertMsg extends AlertMsg {
   timer: number;
@@ -40,18 +42,22 @@ export default class Alert extends Vue {
 
   mounted() {
     AlertController.alert.subscribe(el => {
-      const { id, title, type, msg } = el;
+      this.logAlert(el);
       this.list = [
         ...this.list,
         {
-          id,
-          title,
-          type,
-          msg,
-          timer: setInterval(() => this.removeAlert(id), 3000)
+          ...el,
+          timer: setInterval(
+            () => this.removeAlert(el.id),
+            el.type === "error" ? 5000 : 1000
+          )
         }
       ];
     });
+  }
+
+  logAlert(msg: AlertMsg) {
+    this.$store.commit(LogsMutations.LOG_ALERT, msg);
   }
 }
 </script>

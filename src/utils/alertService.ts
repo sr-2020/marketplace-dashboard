@@ -1,13 +1,5 @@
 import {Subject} from "rxjs";
-
-export interface AlertMsg {
-    id: number;
-    title: string;
-    msg?: string;
-    type: AlertMsgType;
-}
-
-export type AlertMsgType = "error" | "warning" | "success" | "info";
+import {AlertMsg, AlertMsgType} from "@/store/log/types";
 
 export class AlertService {
     public alert = new Subject<AlertMsg>();
@@ -17,6 +9,7 @@ export class AlertService {
         this._counter++
         this.alert.next({
             id: this._counter,
+            timestamp: new Date().getTime(),
             title, msg, type
         });
     }

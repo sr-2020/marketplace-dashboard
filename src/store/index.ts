@@ -4,6 +4,7 @@ import { RootState } from "@/store/types";
 import { mutations } from "@/store/mutations";
 import { user } from "@/store/user";
 import { ThemeSwitcher } from "@/utils/themeSwitcher";
+import {logs} from "@/store/log";
 
 Vue.use(Vuex);
 
@@ -14,7 +15,8 @@ const store: StoreOptions<RootState> = {
   },
   mutations,
   modules: {
-    user
+    user,
+    logs
   }
 };
 
