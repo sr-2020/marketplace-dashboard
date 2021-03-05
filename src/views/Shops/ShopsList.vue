@@ -2,11 +2,11 @@
 import { Component } from "vue-property-decorator";
 import { Shop } from "@/store/organisations/types";
 import List from "@/components/common/list/List.vue";
-import ShopListItem from "@/views/Shops/ShopListItem.vue";
+import ShopsListItem from "./ShopsListItem.vue";
 
 @Component({})
-export default class ShopList extends List<Shop> {
-  listItem = ShopListItem;
+export default class ShopsList extends List<Shop> {
+  listItem = ShopsListItem;
 
   mounted() {
     this.grabData(["a-shops"]);

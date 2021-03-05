@@ -1,12 +1,11 @@
 <template>
-  <div class="container" v-if="list.length && listItem">
-    <div class="row">
-      <div class="col-m-3">
-        <component v-for="i in list" :key="i.id" :is="listItem" :item="i">
-        </component>
-      </div>
+  <div class="row" v-if="list.length && listItem">
+    <div class="col-m-3">
+      <component v-for="i in list" :key="i.id" :is="listItem" :item="i">
+      </component>
     </div>
   </div>
+
   <loader v-else></loader>
 </template>
 
