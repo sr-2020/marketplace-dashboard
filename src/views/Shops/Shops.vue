@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <shops-list />
+    <router-view />
   </div>
 </template>
 

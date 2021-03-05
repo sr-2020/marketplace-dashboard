@@ -11,7 +11,7 @@ import { Component, Vue } from "vue-property-decorator";
 import { AlertController } from "@/utils/alertService";
 
 @Component({})
-export default class Home extends Vue {
+export default class Actions extends Vue {
   addError() {
     AlertController.addAlert(
       Math.random().toString(),

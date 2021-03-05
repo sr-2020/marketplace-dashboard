@@ -7,6 +7,7 @@ import LogsListItem from "@/views/Logs/LogsListItem.vue";
 @Component({})
 export default class LogsList extends List<AlertMsg> {
   listItem = LogsListItem;
+  preventNavigation = true;
   list = this.$store.state.logs.alerts;
 }
 </script>
