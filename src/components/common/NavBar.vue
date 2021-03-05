@@ -52,13 +52,12 @@ export default class NavBar extends Vue {
     return this.SELECTED_LINK;
   }
 
-  links = [
+  private p_links = [
     { name: "Действия", link: "/" },
     { name: "Магазины", link: "/shops" },
     { name: "Корпорации", link: "/corps" },
     { name: "Товары", link: "/goods" },
-    { name: "Специализации", link: "/specs" },
-    { name: "Всякое", link: "/others" }
+    { name: "Специализации", link: "/specs" }
   ];
 
   get hidden(): boolean {
@@ -67,6 +66,13 @@ export default class NavBar extends Vue {
 
   set hidden(state: boolean) {
     this.$store.commit(RootMutations.NAVBAR_TOGGLE, state);
+  }
+
+  get links() {
+    if (this.$store.state.logs.alerts.length > 0) {
+      return [...this.p_links, { name: "Логирование", link: "/logs" }];
+    }
+    return this.p_links;
   }
 
   @Watch("$route", { immediate: true, deep: true })
