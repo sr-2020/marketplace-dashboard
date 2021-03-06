@@ -2,30 +2,7 @@
   <div class="container">
     <div class="row">
       <nav class="navbar col-m-3">
-        <span
-          class="selected-link"
-          :class="{ 'rotated-icon': hidden }"
-          @click="hideNavbar"
-        >
-          {{ selectedLink }}
-
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 18 11"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            :class="{ hidden }"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M16.293 0.292908L17.7072 1.70712L9.00008 10.4142L0.292969 1.70712L1.70718 0.292908L9.00008 7.5858L16.293 0.292908Z"
-              fill="white"
-            />
-          </svg>
-        </span>
-        <span class="link-list" :class="{ hidden }" @click="hideNavbar">
+        <span class="link-list">
           <router-link v-for="l in links" :to="l.link" :key="l.name">
             {{ l.name }}
           </router-link>
@@ -36,22 +13,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
-import { Route } from "vue-router";
-import { RootMutations } from "@/store/mutations";
+import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class NavBar extends Vue {
-  private SELECTED_LINK = "";
-
-  set selectedLink(name: string) {
-    this.SELECTED_LINK = name;
-  }
-
-  get selectedLink() {
-    return this.SELECTED_LINK;
-  }
-
   private p_links = [
     { name: "Действия", link: "/" },
     { name: "Магазины", link: "/shops" },
@@ -60,38 +25,19 @@ export default class NavBar extends Vue {
     { name: "Специализации", link: "/specs" }
   ];
 
-  get hidden(): boolean {
-    return this.$store.state.navbarState;
-  }
-
-  set hidden(state: boolean) {
-    this.$store.commit(RootMutations.NAVBAR_TOGGLE, state);
-  }
-
   get links() {
     if (this.$store.state.logs.alerts.length > 0) {
-      return [...this.p_links, { name: "Логирование", link: "/logs" }];
+      return [...this.p_links, { name: "Logs", link: "/logs" }];
     }
     return this.p_links;
-  }
-
-  @Watch("$route", { immediate: true, deep: true })
-  onRouterChange(newVal: Route) {
-    this.selectedLink = newVal.name ?? "";
-  }
-
-  hideNavbar() {
-    this.hidden = !this.hidden;
-  }
-
-  mounted() {
-    this.selectedLink = this.$route.name ?? "";
   }
 }
 </script>
 
 <style scoped lang="less">
 .navbar {
+  //TODO(dzu, arival): Возможно стоит схллопнуть классы .navbar и .link-list
+  //Я убрал анимацию (она сложно поддерживается) так что враппер не так нужен
   display: flex;
   align-items: center;
   padding-top: 0.5em;
@@ -108,7 +54,9 @@ export default class NavBar extends Vue {
   }
 
   .link-list {
-    display: inline-block;
+    display: inline-flex;
+    align-items: baseline;
+    flex-wrap: wrap;
     overflow: hidden;
     width: 100%;
     transition-property: width, height;
@@ -124,43 +72,6 @@ export default class NavBar extends Vue {
       a {
         margin: 12px 0;
       }
-
-      &.hidden {
-        height: 0 !important;
-        width: 100% !important;
-      }
-    }
-
-    &.hidden {
-      width: 0;
-      height: 100%;
-    }
-  }
-
-  .selected-link {
-    cursor: pointer;
-    margin-right: 0.3em;
-
-    svg {
-      transition: transform 0.3s ease-in-out;
-      transform: rotate(90deg);
-      @media screen and (max-width: 1024px) {
-        width: 12px;
-      }
-      @media screen and (max-width: 500px) {
-        transform: rotate(180deg);
-      }
-
-      path {
-        fill: var(--font-prim);
-      }
-    }
-
-    &.rotated-icon svg {
-      transform: rotate(-90deg);
-      @media screen and (max-width: 500px) {
-        transform: rotate(0deg);
-      }
     }
   }
 
@@ -173,7 +84,8 @@ export default class NavBar extends Vue {
     margin-right: 0.3em;
 
     &.router-link-exact-active {
-      display: none;
+      order: -1;
+      font-size: 2em;
     }
 
     &:visited {
@@ -185,7 +97,6 @@ export default class NavBar extends Vue {
     }
   }
 
-  .selected-link,
   a:hover {
     font-size: 2em;
   }

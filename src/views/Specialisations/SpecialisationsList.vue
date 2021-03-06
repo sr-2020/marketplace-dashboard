@@ -7,6 +7,7 @@ import SpecialisationsListItem from "./SpecialisationsListItem.vue";
 @Component({})
 export default class SpecialisationsList extends List<Specialisation> {
   listItem = SpecialisationsListItem;
+  preventNavigation = true;
 
   mounted() {
     this.grabData(["a-specialisations"]);
