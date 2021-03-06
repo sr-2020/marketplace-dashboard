@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <specialisations-list />
+    <router-view />
   </div>
 </template>
 
