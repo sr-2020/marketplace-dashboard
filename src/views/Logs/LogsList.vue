@@ -8,6 +8,9 @@ import { Options } from "vue-class-component";
 export default class LogsList extends List<AlertMsg> {
   listItem = LogsListItem;
   preventNavigation = true;
-  list = this.$store.state.logs.alerts;
+
+  mounted() {
+    this.list = this.$store.state.logs.alerts;
+  }
 }
 </script>

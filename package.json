@@ -36,7 +36,6 @@
     "prettier": "^1.19.1",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
-    "typescript": "~3.9.3",
-    "vue-cli-plugin-vue-next": "~0.1.4"
+    "typescript": "~3.9.3"
   }
 }
