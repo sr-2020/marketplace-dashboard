@@ -20,7 +20,7 @@ import Loader from "@/components/shared/Loader.vue";
 import HttpAdapter from "@/utils/httpAdapter";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import { Options, Vue } from "vue-class-component/dist/vue-class-component";
+import { Options, Vue } from "vue-class-component";
 
 @Options({
   components: { Loader }

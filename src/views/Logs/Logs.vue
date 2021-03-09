@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import LogsList from "@/views/Logs/LogsList.vue";
-import { Options, Vue } from "vue-class-component/dist/vue-class-component";
+import { Options, Vue } from "vue-class-component";
 
 @Options({
   components: { LogsList }

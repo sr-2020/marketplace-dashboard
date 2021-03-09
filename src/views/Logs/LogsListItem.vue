@@ -8,7 +8,7 @@
 <script lang="ts">
 import ListItem from "../../components/common/list/ListItem.vue";
 import { AlertMsg } from "@/store/log/types";
-import { Options } from "vue-class-component/dist/vue-class-component";
+import { Options } from "vue-class-component";
 
 @Options({})
 export default class LogsListItem extends ListItem<AlertMsg> {}

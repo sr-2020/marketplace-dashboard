@@ -13,9 +13,9 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component/dist/vue-class-component";
+import { Options, Vue } from "vue-class-component";
 
-@Options({ name: "NavBar" })
+@Options({})
 export default class NavBar extends Vue {
   private p_links = [
     { name: "Действия", link: "/" },

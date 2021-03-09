@@ -58,7 +58,7 @@
 
 <script lang="ts">
 import { RootMutations } from "@/store/mutations";
-import { Options, Vue } from "vue-class-component/dist/vue-class-component";
+import { Options, Vue } from "vue-class-component";
 
 @Options({})
 export default class StatusBar extends Vue {

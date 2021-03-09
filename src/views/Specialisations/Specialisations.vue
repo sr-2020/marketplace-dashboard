@@ -7,7 +7,7 @@
 <script lang="ts">
 import ListItem from "@/components/common/list/ListItem.vue";
 import SpecialisationsList from "./SpecialisationsList.vue";
-import { Options, Vue } from "vue-class-component/dist/vue-class-component";
+import { Options, Vue } from "vue-class-component";
 
 @Options({
   components: { SpecialisationsList, ListItem }

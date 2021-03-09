@@ -18,7 +18,7 @@
 import { AlertController } from "@/utils/alertService";
 import { LogsMutations } from "@/store/log/mutations";
 import { AlertMsg } from "@/store/log/types";
-import { Options, Vue } from "vue-class-component/dist/vue-class-component";
+import { Options, Vue } from "vue-class-component";
 
 interface SelfDestructiveAlertMsg extends AlertMsg {
   timer: number;

@@ -33,7 +33,7 @@
 import StatusBar from "@/components/common/StatusBar.vue";
 import NavBar from "@/components/common/NavBar.vue";
 import Alert from "@/components/shared/Alert.vue";
-import { Options, Vue } from "vue-class-component/dist/vue-class-component";
+import { Options, Vue } from "vue-class-component";
 
 @Options({
   components: {

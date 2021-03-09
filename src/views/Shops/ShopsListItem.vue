@@ -9,7 +9,7 @@
 <script lang="ts">
 import { Shop } from "@/store/organisations/types";
 import ListItem from "@/components/common/list/ListItem.vue";
-import { Options } from "vue-class-component/dist/vue-class-component";
+import { Options } from "vue-class-component";
 
 @Options({})
 export default class ShopsListItem extends ListItem<Shop> {}
