@@ -1,9 +1,9 @@
 <script lang="ts">
 import Page from "../../components/common/Page.vue";
 import { Corporation } from "@/store/organisations/types";
-import { Component } from "vue-property-decorator";
+import { Options } from "vue-class-component/dist/vue-class-component";
 
-@Component({})
+@Options({})
 export default class CorporationPage extends Page<Corporation> {
   pageName = "Корпорация";
 

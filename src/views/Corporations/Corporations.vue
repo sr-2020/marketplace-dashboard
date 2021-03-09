@@ -5,11 +5,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
 import ListItem from "@/components/common/list/ListItem.vue";
 import CorporationList from "./CorporationList.vue";
+import { Options, Vue } from "vue-class-component/dist/vue-class-component";
 
-@Component({
+@Options({
   components: { CorporationList, ListItem }
 })
 export default class Corporations extends Vue {}

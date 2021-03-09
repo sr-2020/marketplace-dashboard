@@ -1,9 +1,9 @@
 <script lang="ts">
 import Page from "@/components/common/Page.vue";
 import { Specialisation } from "@/store/products/types";
-import { Component } from "vue-property-decorator";
+import {Options} from "vue-class-component/dist/vue-class-component";
 
-@Component({})
+@Options({})
 export default class SpecialisationPage extends Page<Specialisation> {
   pageName = "Специализация";
 }

@@ -7,11 +7,11 @@
 </template>
 
 <script lang="ts">
-import { Component } from "vue-property-decorator";
 import { Shop } from "@/store/organisations/types";
 import ListItem from "@/components/common/list/ListItem.vue";
+import { Options } from "vue-class-component/dist/vue-class-component";
 
-@Component({})
+@Options({})
 export default class ShopsListItem extends ListItem<Shop> {}
 </script>
 

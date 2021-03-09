@@ -6,11 +6,11 @@
   <loader v-else />
 </template>
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
 import Loader from "@/components/shared/Loader.vue";
 import HttpAdapter from "@/utils/httpAdapter";
+import { Options, Vue } from "vue-class-component/dist/vue-class-component";
 
-@Component({
+@Options({
   components: { Loader }
 })
 export default class Page<T> extends Vue {

@@ -50,7 +50,7 @@ export class ThemeSwitcher {
   }
 
   private _generateThemeString(theme: ColorTheme) {
-    let keys = Object.keys(theme);
+    const keys = Object.keys(theme);
     return keys.reduce((acc, key) => {
       return `${acc}${key}: ${theme[key]}; `;
     }, "");

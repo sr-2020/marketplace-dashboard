@@ -6,9 +6,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Options, Vue } from "vue-class-component/dist/vue-class-component";
+import { Prop } from "vue-property-decorator";
 
-@Component
+@Options({})
 export default class Loader extends Vue {
   @Prop({ default: "Loading" }) text!: string;
 }

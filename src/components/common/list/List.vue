@@ -6,7 +6,7 @@
         :key="i.id"
         :is="listItem"
         :item="i"
-        @click.native="navigateToItem(i.id)"
+        @click="navigateToItem(i.id)"
       >
       </component>
     </div>
@@ -16,13 +16,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
 import Loader from "@/components/shared/Loader.vue";
 import HttpAdapter from "@/utils/httpAdapter";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { Options, Vue } from "vue-class-component/dist/vue-class-component";
 
-@Component({
+@Options({
   components: { Loader }
 })
 export default class List<DataType> extends Vue {

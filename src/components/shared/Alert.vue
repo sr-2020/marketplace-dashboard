@@ -15,16 +15,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
 import { AlertController } from "@/utils/alertService";
 import { LogsMutations } from "@/store/log/mutations";
 import { AlertMsg } from "@/store/log/types";
+import { Options, Vue } from "vue-class-component/dist/vue-class-component";
 
 interface SelfDestructiveAlertMsg extends AlertMsg {
   timer: number;
 }
 
-@Component
+@Options({})
 export default class Alert extends Vue {
   list: SelfDestructiveAlertMsg[] = [];
 
@@ -34,10 +34,6 @@ export default class Alert extends Vue {
       clearInterval(listItem.timer);
     }
     this.list = this.list.filter(el => id !== el.id);
-  }
-
-  constructor() {
-    super();
   }
 
   mounted() {
