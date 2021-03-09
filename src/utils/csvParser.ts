@@ -72,7 +72,7 @@ export default class CsvParser<T = null> {
       this._headers.forEach(({ name }, idx) => {
         obj[name] = row[idx];
       });
-      return obj as unknown as T;
+      return (obj as unknown) as T;
     });
   }
 

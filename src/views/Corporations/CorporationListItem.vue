@@ -6,11 +6,11 @@
 </template>
 
 <script lang="ts">
-import { Component } from "vue-property-decorator";
 import { Corporation } from "@/store/organisations/types";
 import ListItem from "@/components/common/list/ListItem.vue";
+import { Options } from "vue-class-component";
 
-@Component({})
+@Options({})
 export default class CorporationListItem extends ListItem<Corporation> {}
 </script>
 

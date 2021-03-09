@@ -57,19 +57,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
 import { RootMutations } from "@/store/mutations";
+import { Options, Vue } from "vue-class-component";
 
-@Component
-export default class SideBar extends Vue {
+@Options({})
+export default class StatusBar extends Vue {
   name = "Марьяна (Мастер) Шадоуран";
   private status_ = "";
-  private isMobile_: boolean;
-
-  constructor() {
-    super();
-    this.isMobile_ = window.innerHeight < 667;
-  }
+  private isMobile_ = false;
 
   set isMobile(bool: boolean) {
     this.isMobile_ = bool;
@@ -93,6 +88,7 @@ export default class SideBar extends Vue {
   };
 
   created() {
+    this.isMobile_ = window.innerHeight < 667;
     window.addEventListener("resize", this.resizeEventHandler.bind(this));
     this.resized();
   }

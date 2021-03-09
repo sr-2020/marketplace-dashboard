@@ -5,10 +5,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
 import LogsList from "@/views/Logs/LogsList.vue";
+import { Options, Vue } from "vue-class-component";
 
-@Component({
+@Options({
   components: { LogsList }
 })
 export default class Logs extends Vue {}

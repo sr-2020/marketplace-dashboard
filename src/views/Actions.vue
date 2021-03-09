@@ -7,10 +7,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
 import { AlertController } from "@/utils/alertService";
+import { Options, Vue } from "vue-class-component";
 
-@Component({})
+@Options({})
 export default class Actions extends Vue {
   addError() {
     AlertController.addAlert(

@@ -30,12 +30,12 @@
 </style>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
 import StatusBar from "@/components/common/StatusBar.vue";
 import NavBar from "@/components/common/NavBar.vue";
 import Alert from "@/components/shared/Alert.vue";
+import { Options, Vue } from "vue-class-component";
 
-@Component({
+@Options({
   components: {
     Alert,
     NavBar,

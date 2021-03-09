@@ -1,5 +1,4 @@
-import Vue from "vue";
-import VueRouter, { RouteConfig } from "vue-router";
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Logs from "@/views/Logs/Logs.vue";
 import Corporations from "@/views/Corporations/Corporations.vue";
 import Shops from "@/views/Shops/Shops.vue";
@@ -13,9 +12,25 @@ import SpecialisationPage from "@/views/Specialisations/SpecialisationPage.vue";
 import CorporationPage from "@/views/Corporations/CorporationPage.vue";
 import ShopPage from "@/views/Shops/ShopPage.vue";
 
-Vue.use(VueRouter);
+function getChildRoutes(list: any, page: any): RouteRecordRaw[] {
+  return [
+    {
+      path: "",
+      component: list
+    },
+    {
+      path: "add",
+      meta: { add: true },
+      component: page
+    },
+    {
+      path: ":id",
+      component: page
+    }
+  ];
+}
 
-const routes: Array<RouteConfig> = [
+const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     component: Actions
@@ -52,25 +67,8 @@ const routes: Array<RouteConfig> = [
   }
 ];
 
-function getChildRoutes(list: unknown, page: unknown) {
-  return [
-    {
-      path: "",
-      component: list
-    },
-    {
-      path: "add",
-      meta: { add: true },
-      component: page
-    },
-    {
-      path: ":id",
-      component: page
-    }
-  ];
-}
-
-const router = new VueRouter({
+const router = createRouter({
+  history: createWebHashHistory(),
   routes
 });
 

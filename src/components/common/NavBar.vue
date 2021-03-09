@@ -13,9 +13,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Options, Vue } from "vue-class-component";
 
-@Component
+@Options({})
 export default class NavBar extends Vue {
   private p_links = [
     { name: "Действия", link: "/" },

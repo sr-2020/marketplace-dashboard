@@ -1,13 +1,16 @@
 <script lang="ts">
-import { Component } from "vue-property-decorator";
 import List from "../../components/common/list/List.vue";
 import { AlertMsg } from "@/store/log/types";
 import LogsListItem from "@/views/Logs/LogsListItem.vue";
+import { Options } from "vue-class-component";
 
-@Component({})
+@Options({})
 export default class LogsList extends List<AlertMsg> {
   listItem = LogsListItem;
   preventNavigation = true;
-  list = this.$store.state.logs.alerts;
+
+  mounted() {
+    this.list = this.$store.state.logs.alerts;
+  }
 }
 </script>
