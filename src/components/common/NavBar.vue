@@ -13,23 +13,24 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import { Options, Vue } from 'vue-class-component'
 
 @Options({})
 export default class NavBar extends Vue {
   private p_links = [
-    { name: "Действия", link: "/" },
-    { name: "Магазины", link: "/shops" },
-    { name: "Корпорации", link: "/corps" },
-    { name: "Товары", link: "/goods" },
-    { name: "Специализации", link: "/specs" }
-  ];
+    { name: 'Действия', link: '/' },
+    { name: 'Магазины', link: '/shops' },
+    { name: 'Корпорации', link: '/corps' },
+    { name: 'Товары', link: '/goods' },
+    { name: 'Специализации', link: '/specs' },
+    { name: 'Номеклатура', link: '/nomenklaturas' }
+  ]
 
   get links() {
     if (this.$store.state.logs.alerts.length > 0) {
-      return [...this.p_links, { name: "Logs", link: "/logs" }];
+      return [...this.p_links, { name: 'Logs', link: '/logs' }]
     }
-    return this.p_links;
+    return this.p_links
   }
 }
 </script>
