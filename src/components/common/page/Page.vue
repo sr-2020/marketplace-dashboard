@@ -17,7 +17,7 @@ export default class Page<T> extends Vue {
   pageName = "";
   item = {};
   editMode = false;
-  isAdd = !!this.$route.meta?.add;
+  isAdd = !!this.$route?.meta?.add;
   isLoading = true;
 
   grabDataById<T>(commands: string[], keyName: string) {
