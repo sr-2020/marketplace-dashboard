@@ -10,7 +10,7 @@ interface ResponseModel<Model> {
 }
 
 export default class HttpAdapter {
-  private static readonly _endpoint: string = "https://billing.evarun.ru/";
+  private static readonly _endpoint: string = process.env.VUE_APP_API_URL;
 
   static get<R>(
     commands: string[],
