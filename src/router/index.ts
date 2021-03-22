@@ -14,6 +14,9 @@ import ShopPage from "@/views/Shops/ShopPage.vue";
 import Nomenklaturas from "@/views/Nomenklaturas/Nomenklaturas.vue"
 import NomenklaturasList from "@/views/Nomenklaturas/NomenklaturasList.vue"
 import NomenklaturaPage from "@/views/Nomenklaturas/NomenklaturaPage.vue"
+import Skus from "@/views/Skus/Skus.vue"
+import SkusList from "@/views/Skus/SkusList.vue"
+import SkuPage from "@/views/Skus/SkuPage.vue"
 
 function getChildRoutes(list: any, page: any): RouteRecordRaw[] {
   return [
@@ -48,9 +51,11 @@ const routes: Array<RouteRecordRaw> = [
     component: Corporations,
     children: getChildRoutes(CorporationList, CorporationPage)
   },
-  // {
-  //   path: "/goods",
-  // },
+  {
+    path: "/skus",
+    component: Skus,
+    children: getChildRoutes(SkusList, SkuPage)
+  },
   {
     path: "/specs",
     component: Specialisations,
