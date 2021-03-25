@@ -6,15 +6,15 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import { Options, Vue } from 'vue-class-component'
 
 @Options({
   prop: {
-    text: String
-  }
+    text: String,
+  },
 })
 export default class Loader extends Vue {
-  text = "Loading";
+  text = 'Loading'
 }
 </script>
 

@@ -57,59 +57,59 @@
 </template>
 
 <script lang="ts">
-import { RootMutations } from "@/store/mutations";
-import { Options, Vue } from "vue-class-component";
+import { RootMutations } from '@/store/mutations'
+import { Options, Vue } from 'vue-class-component'
 
 @Options({})
 export default class StatusBar extends Vue {
-  name = "Марьяна (Мастер) Шадоуран";
-  private status_ = "";
-  private isMobile_ = false;
+  name = 'Марьяна (Мастер) Шадоуран'
+  private status_ = ''
+  private isMobile_ = false
 
   set isMobile(bool: boolean) {
-    this.isMobile_ = bool;
+    this.isMobile_ = bool
   }
 
   get isMobile() {
-    return this.isMobile_;
+    return this.isMobile_
   }
 
   set status(str: string) {
-    this.status_ = str;
+    this.status_ = str
   }
 
   get status() {
-    return this.status_;
+    return this.status_
   }
 
   cycle = {
     p: 2,
-    c: 10
-  };
+    c: 10,
+  }
 
   created() {
-    this.isMobile_ = window.innerHeight < 667;
-    window.addEventListener("resize", this.resizeEventHandler.bind(this));
-    this.resized();
+    this.isMobile_ = window.innerHeight < 667
+    window.addEventListener('resize', this.resizeEventHandler.bind(this))
+    this.resized()
   }
 
   destroyed() {
-    window.removeEventListener("resize", this.resizeEventHandler.bind(this));
+    window.removeEventListener('resize', this.resizeEventHandler.bind(this))
   }
 
   private resizeEventHandler = () => {
-    this.resized();
-  };
+    this.resized()
+  }
 
   changeTheme() {
-    this.$store.commit(RootMutations.CHANGE_THEME);
+    this.$store.commit(RootMutations.CHANGE_THEME)
   }
 
   resized() {
-    this.isMobile = window.innerWidth < 667;
+    this.isMobile = window.innerWidth < 667
     this.status = this.isMobile
       ? `П: ${this.cycle.p} Ц: ${this.cycle.c}`
-      : `Период: ${this.cycle.p} Цикл ${this.cycle.c}`;
+      : `Период: ${this.cycle.p} Цикл ${this.cycle.c}`
   }
 }
 </script>

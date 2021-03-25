@@ -10,7 +10,7 @@
 </template>
 
 <style lang="less">
-@import "assets/grid";
+@import 'assets/grid';
 
 #app {
   min-height: 100vh;
@@ -30,21 +30,21 @@
 </style>
 
 <script lang="ts">
-import StatusBar from "@/components/common/StatusBar.vue";
-import NavBar from "@/components/common/NavBar.vue";
-import Alert from "@/components/shared/Alert.vue";
-import { Options, Vue } from "vue-class-component";
+import StatusBar from '@/components/common/StatusBar.vue'
+import NavBar from '@/components/common/NavBar.vue'
+import Alert from '@/components/shared/Alert.vue'
+import { Options, Vue } from 'vue-class-component'
 
 @Options({
   components: {
     Alert,
     NavBar,
-    StatusBar
-  }
+    StatusBar,
+  },
 })
 export default class App extends Vue {
   get navBarHidden() {
-    return this.$store.state.navbarState;
+    return this.$store.state.navbarState
   }
 }
 </script>

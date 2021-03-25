@@ -7,16 +7,16 @@
 </template>
 
 <script lang="ts">
-import { Specialisation } from "@/store/products/types";
-import ListItem from "@/components/common/list/ListItem.vue";
-import { Options } from "vue-class-component";
+import { Specialisation } from '@/store/products/types'
+import ListItem from '@/components/common/list/ListItem.vue'
+import { Options } from 'vue-class-component'
 
 @Options({})
 export default class SpecialisationsListItem extends ListItem<Specialisation> {}
 </script>
 
 <style scoped lang="less">
-@import "~@/assets/components/list-item";
+@import '~@/assets/components/list-item';
 
 .list__item {
   .list-item();

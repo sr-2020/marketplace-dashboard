@@ -6,29 +6,29 @@
   <loader v-else />
 </template>
 <script lang="ts">
-import Loader from "@/components/shared/Loader.vue";
-import HttpAdapter from "@/utils/httpAdapter";
-import { Options, Vue } from "vue-class-component";
+import Loader from '@/components/shared/Loader.vue'
+import HttpAdapter from '@/utils/httpAdapter'
+import { Options, Vue } from 'vue-class-component'
 
 @Options({
-  components: { Loader }
+  components: { Loader },
 })
 export default class Page<T> extends Vue {
-  pageName = "";
-  item = {};
-  editMode = false;
-  isAdd = !!this.$route.meta?.add;
-  isLoading = true;
+  pageName = ''
+  item = {}
+  editMode = false
+  isAdd = !!this.$route.meta?.add
+  isLoading = true
 
   grabDataById<T>(commands: string[], keyName: string) {
-    const id = this.$route.params.id;
+    const id = this.$route.params.id
     if (!id) {
-      return;
+      return
     }
-    HttpAdapter.get(commands, { [keyName]: id }).subscribe(el => {
-      this.item = el;
-      this.isLoading = false;
-    });
+    HttpAdapter.get(commands, { [keyName]: id }).subscribe((el) => {
+      this.item = el
+      this.isLoading = false
+    })
   }
 }
 </script>

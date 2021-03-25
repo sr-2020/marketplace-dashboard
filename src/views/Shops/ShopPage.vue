@@ -1,14 +1,14 @@
 <script lang="ts">
-import Page from "@/components/common/Page.vue";
-import { Shop } from "@/store/organisations/types";
-import { Options } from "vue-class-component";
+import Page from '@/components/common/Page.vue'
+import { Shop } from '@/store/organisations/types'
+import { Options } from 'vue-class-component'
 
 @Options({})
 export default class ShopPage extends Page<Shop> {
-  pageName = "Магазин";
+  pageName = 'Магазин'
 
   mounted() {
-    this.grabDataById(["a-shop"], "shopid");
+    this.grabDataById(['a-shop'], 'shopid')
   }
 }
 </script>
