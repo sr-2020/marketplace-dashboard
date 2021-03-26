@@ -5,11 +5,11 @@
 </template>
 
 <script lang="ts">
-import LogsList from "@/views/Logs/LogsList.vue";
-import { Options, Vue } from "vue-class-component";
+import LogsList from '@/views/Logs/LogsList.vue'
+import { Options, Vue } from 'vue-class-component'
 
 @Options({
-  components: { LogsList }
+  components: { LogsList },
 })
 export default class Logs extends Vue {}
 </script>

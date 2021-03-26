@@ -36,8 +36,10 @@ each(range(3), {
     max-width: calc((@value / 3) * 100%);
   }
 })
-
-@media screen and (min-width: 667px) {
+  @media
+  screen
+  and
+  (min-width: 667px) {
   .col-t-1,
   .col-t-2,
   .col-t-3,
@@ -54,7 +56,7 @@ each(range(3), {
       flex-basis: calc((@value / 6) * 100%);
       max-width: calc((@value / 6) * 100%);
     }
-  })
+  });
 }
 
 @media screen and (min-width: 1024px) {
@@ -67,8 +69,7 @@ each(range(3), {
   .col-d-7,
   .col-d-8,
   .col-d-9,
-  .col-d-10
-  {
+  .col-d-10 {
     padding-right: 12px;
     height: 100%;
     padding-left: 12px;
@@ -79,5 +80,5 @@ each(range(3), {
       flex-basis: calc((@value / 10) * 100%);
       max-width: calc((@value / 10) * 100%);
     }
-  })
+  });
 }

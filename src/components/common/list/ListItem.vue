@@ -1,12 +1,12 @@
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import { Options, Vue } from 'vue-class-component'
 
 @Options({
   props: {
-    item: null
-  }
+    item: null,
+  },
 })
 export default class ListItem<T> extends Vue {
-  item!: T;
+  item!: T
 }
 </script>

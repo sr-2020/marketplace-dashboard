@@ -21,9 +21,9 @@ export default class NavBar extends Vue {
     { name: 'Действия', link: '/' },
     { name: 'Магазины', link: '/shops' },
     { name: 'Корпорации', link: '/corps' },
-    { name: 'Товары', link: '/goods' },
+    { name: 'Товары', link: '/skus' },
     { name: 'Специализации', link: '/specs' },
-    { name: 'Номеклатура', link: '/nomenklaturas' }
+    { name: 'Номеклатура', link: '/nomenklaturas' },
   ]
 
   get links() {

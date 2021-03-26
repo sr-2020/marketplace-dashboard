@@ -1,12 +1,12 @@
-import { Observable } from "rxjs";
-import { fromPromise } from "rxjs/internal-compatibility";
-import { pluck } from "rxjs/operators";
-import axios, { AxiosRequestConfig } from "axios";
+import { Observable } from 'rxjs'
+import { fromPromise } from 'rxjs/internal-compatibility'
+import { pluck } from 'rxjs/operators'
+import axios, { AxiosRequestConfig } from 'axios'
 
 interface ResponseModel<Model> {
-  data: Model;
-  status: boolean;
-  message: string | null;
+  data: Model
+  status: boolean
+  message: string | null
 }
 
 export default class HttpAdapter {
@@ -19,9 +19,9 @@ export default class HttpAdapter {
     return fromPromise(
       axios.get<ResponseModel<R>>(HttpAdapter._convertCommandsToUri(commands), {
         ...this.getOptions(),
-        params
+        params,
       })
-    ).pipe(pluck("data"));
+    ).pipe(pluck('data'))
   }
 
   static delete<R>(
@@ -32,10 +32,10 @@ export default class HttpAdapter {
       axios.delete<ResponseModel<R>>(
         HttpAdapter._convertCommandsToUri(commands),
         {
-          params
+          params,
         }
       )
-    ).pipe(pluck("data"));
+    ).pipe(pluck('data'))
   }
 
   static patch<P, R>(
@@ -47,7 +47,7 @@ export default class HttpAdapter {
         HttpAdapter._convertCommandsToUri(commands),
         payload
       )
-    ).pipe(pluck("data"));
+    ).pipe(pluck('data'))
   }
 
   static post<P, R>(
@@ -59,17 +59,17 @@ export default class HttpAdapter {
         HttpAdapter._convertCommandsToUri(commands),
         payload
       )
-    ).pipe(pluck("data"));
+    ).pipe(pluck('data'))
   }
 
   private static getOptions(): AxiosRequestConfig {
     const header = {
-      "x-user-id": "44043"
-    };
-    return { ...header, withCredentials: true };
+      'x-user-id': '44043',
+    }
+    return { ...header, withCredentials: true }
   }
 
   private static _convertCommandsToUri(commands: string[]): string {
-    return HttpAdapter._endpoint + commands.join("/");
+    return HttpAdapter._endpoint + commands.join('/')
   }
 }

@@ -15,45 +15,45 @@
 </template>
 
 <script lang="ts">
-import { AlertController } from "@/utils/alertService";
-import { LogsMutations } from "@/store/log/mutations";
-import { AlertMsg } from "@/store/log/types";
-import { Options, Vue } from "vue-class-component";
+import { AlertController } from '@/utils/alertService'
+import { LogsMutations } from '@/store/log/mutations'
+import { AlertMsg } from '@/store/log/types'
+import { Options, Vue } from 'vue-class-component'
 
 interface SelfDestructiveAlertMsg extends AlertMsg {
-  timer: number;
+  timer: number
 }
 
 @Options({})
 export default class Alert extends Vue {
-  list: SelfDestructiveAlertMsg[] = [];
+  list: SelfDestructiveAlertMsg[] = []
 
   removeAlert(id: number) {
-    const listItem = this.list.find(el => id === el.id);
+    const listItem = this.list.find((el) => id === el.id)
     if (listItem) {
-      clearInterval(listItem.timer);
+      clearInterval(listItem.timer)
     }
-    this.list = this.list.filter(el => id !== el.id);
+    this.list = this.list.filter((el) => id !== el.id)
   }
 
   mounted() {
-    AlertController.alert.subscribe(el => {
-      this.logAlert(el);
+    AlertController.alert.subscribe((el) => {
+      this.logAlert(el)
       this.list = [
         ...this.list,
         {
           ...el,
           timer: setInterval(
             () => this.removeAlert(el.id),
-            el.type === "error" ? 5000 : 1000
-          )
-        }
-      ];
-    });
+            el.type === 'error' ? 5000 : 1000
+          ),
+        },
+      ]
+    })
   }
 
   logAlert(msg: AlertMsg) {
-    this.$store.commit(LogsMutations.LOG_ALERT, msg);
+    this.$store.commit(LogsMutations.LOG_ALERT, msg)
   }
 }
 </script>

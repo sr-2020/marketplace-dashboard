@@ -6,16 +6,16 @@
 </template>
 
 <script lang="ts">
-import { Corporation } from "@/store/organisations/types";
-import ListItem from "@/components/common/list/ListItem.vue";
-import { Options } from "vue-class-component";
+import { Corporation } from '@/store/organisations/types'
+import ListItem from '@/components/common/list/ListItem.vue'
+import { Options } from 'vue-class-component'
 
 @Options({})
 export default class CorporationListItem extends ListItem<Corporation> {}
 </script>
 
 <style scoped lang="less">
-@import "~@/assets/components/list-item";
+@import '~@/assets/components/list-item';
 
 .list__item {
   .list-item();

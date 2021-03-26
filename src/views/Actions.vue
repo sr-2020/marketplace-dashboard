@@ -7,8 +7,8 @@
 </template>
 
 <script lang="ts">
-import { AlertController } from "@/utils/alertService";
-import { Options, Vue } from "vue-class-component";
+import { AlertController } from '@/utils/alertService'
+import { Options, Vue } from 'vue-class-component'
 
 @Options({})
 export default class Actions extends Vue {
@@ -16,8 +16,8 @@ export default class Actions extends Vue {
     AlertController.addAlert(
       Math.random().toString(),
       Math.random().toString(),
-      "error"
-    );
+      'error'
+    )
   }
 }
 </script>

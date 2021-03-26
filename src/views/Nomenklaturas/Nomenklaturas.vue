@@ -10,7 +10,7 @@ import NomenklaturasList from './NomenklaturasList.vue'
 import { Options, Vue } from 'vue-class-component'
 
 @Options({
-  components: { NomenklaturasList, ListItem }
+  components: { NomenklaturasList, ListItem },
 })
 export default class Nomenklaturas extends Vue {}
 </script>

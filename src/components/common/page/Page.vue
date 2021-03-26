@@ -9,13 +9,13 @@
 import Loader from "@/components/shared/Loader.vue";
 import HttpAdapter from "@/utils/httpAdapter";
 import { Options, Vue } from "vue-class-component";
-
 @Options({
   components: { Loader }
 })
 export default class Page<T> extends Vue {
   pageName = "";
   item = {};
+
   editMode = false;
   isAdd = !!this.$route?.meta?.add;
   isLoading = true;
