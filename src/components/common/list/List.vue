@@ -1,5 +1,5 @@
 <template>
-  <div class="row" v-if="list.length && listItem">
+  <div class="row" v-if="list.length > 0 && listItem">
     <div class="col-m-3">
       <component
         v-for="i in list"
@@ -11,7 +11,11 @@
       </component>
     </div>
   </div>
-
+  <div class="row" v-else-if="list.length === 0">
+    <div class="col-m-3">
+      Данные отстутствуют
+    </div>
+  </div>
   <loader v-else></loader>
 </template>
 
@@ -23,7 +27,7 @@ import { takeUntil } from 'rxjs/operators'
 import { Options, Vue } from 'vue-class-component'
 
 @Options({
-  components: { Loader },
+  components: { Loader }
 })
 export default class List<DataType> extends Vue {
   listItem!: unknown // TODO: Разобраться с типом и переписать позже

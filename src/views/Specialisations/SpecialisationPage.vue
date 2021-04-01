@@ -6,5 +6,9 @@ import { Options } from 'vue-class-component'
 @Options({})
 export default class SpecialisationPage extends Page<Specialisation> {
   pageName = 'Специализация'
+
+  mounted() {
+    this.grabDataById(['a-specialisations'], 'specialisationid')
+  }
 }
 </script>
