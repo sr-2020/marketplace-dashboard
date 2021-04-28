@@ -7,7 +7,6 @@ import { Options } from 'vue-class-component'
 @Options({})
 export default class ShopsList extends List<Shop> {
   listItem = ShopsListItem
-
   mounted() {
     this.grabData(['a-shops'])
   }
