@@ -2,10 +2,22 @@
   <div class="row"
        v-if="!isLoading">
     <h1 class="col-m-3">{{ pageName }}</h1>
-    <div class="col-m-1"><button>Изменить</button></div>
-    <div class="col-m-3" v-if="!isAdd">
-      <component v-if="viewComponent" :item="item" :is="viewComponent" />
+    <div class="col-m-1" v-if="isModifiable">
+      <button @click="isEdit = !isEdit">Изменить</button>
     </div>
+    <div class="col-m-3"
+         v-if="isEditable">
+      <component v-if="editComponent"
+                 :is="editComponent"
+                 :item="item" />
+    </div>
+    <div class="col-m-3"
+         v-else>
+      <component v-if="viewComponent"
+                 :item="item"
+                 :is="viewComponent" />
+    </div>
+
   </div>
   <loader v-else />
 </template>
@@ -19,17 +31,18 @@ import { Options, Vue } from 'vue-class-component'
 })
 export default class Page<T> extends Vue {
   pageName = ''
-  item = {}
+  item: any = null
   isAdd = false
+  isEdit = false
+  canBeModified = true
   isLoading = true
-  canBeModified = false
   editComponent: unknown = null
   viewComponent: unknown = null
 
-
-  mounted() {
+  beforeCreate() {
     this.isAdd = !!this.$route?.meta?.add
   }
+
 
   grabDataById<T>(commands: string[], keyName: string) {
     const id = this.$route.params.id
@@ -40,6 +53,12 @@ export default class Page<T> extends Vue {
       this.item = el
       this.isLoading = false
     })
+  }
+  get isModifiable() {
+    return this.canBeModified && !this.isAdd
+  }
+  get isEditable() {
+    return this.isAdd || this.isEdit
   }
 }
 </script>

@@ -15,7 +15,7 @@ export class ShopDTO {
     return this._specialisations
   }
 
-  get owner(): UserState | undefined {
+  get owner(): UserState | null{
     return this._owner
   }
 
@@ -29,17 +29,27 @@ export class ShopDTO {
 
   _id: number
   _name: string
-  _owner?: UserState
+  _owner: UserState | null
   _specialisations?: number[]
-  _lifestyle?: string
+  _lifestyle: string
   _balance: number
 
   constructor({ data }: ResponseModel<Shop>) {
-    this._id = data.id
-    this._name = data.name
-    this._owner = data.owner
-    this._balance = data.balance
-    this._lifestyle = data.lifestyle
-    this._specialisations = data.specialisations
+    this._id = data.id || 0
+    this._name = data.name || ''
+    this._owner = data.owner || null
+    this._balance = data.balance || 0
+    this._lifestyle = data.lifestyle || ''
+    this._specialisations = data.specialisations || []
   }
+
+  // public getChangeDto() {
+  //
+  // }
+  //
+  // public getAddDto() {
+  //   return {
+  //     name: this.name
+  //   }
+  // }
 }

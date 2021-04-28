@@ -8,6 +8,7 @@ import ShopView from "@/views/Shops/Shop/ShopView.vue";
 export default class ShopPage extends Page<Shop> {
   pageName = 'Магазин'
   viewComponent = ShopView
+
   mounted() {
     if(this.isAdd) {
       this.isLoading = false
