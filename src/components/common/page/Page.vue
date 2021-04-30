@@ -1,10 +1,13 @@
 <template>
   <div class="row"
        v-if="!isLoading">
-    <h1 class="col-m-3">{{ pageName }}</h1>
-    <div class="col-m-1" v-if="isModifiable">
-      <button @click="isEdit = !isEdit">Изменить</button>
-    </div>
+    <h1 class="col-m-3 title">
+      {{ pageName }}
+      <button v-if="isModifiable"
+              @click="isEdit = !isEdit">Изменить
+      </button>
+    </h1>
+
     <div class="col-m-3"
          v-if="isEditable">
       <component v-if="editComponent"
@@ -14,10 +17,9 @@
     <div class="col-m-3"
          v-else>
       <component v-if="viewComponent"
-                 :item="item"
-                 :is="viewComponent" />
+                 :is="viewComponent"
+                 :item="item" />
     </div>
-
   </div>
   <loader v-else />
 </template>
@@ -43,7 +45,6 @@ export default class Page<T> extends Vue {
     this.isAdd = !!this.$route?.meta?.add
   }
 
-
   grabDataById<T>(commands: string[], keyName: string) {
     const id = this.$route.params.id
     if (!id) {
@@ -54,13 +55,36 @@ export default class Page<T> extends Vue {
       this.isLoading = false
     })
   }
+
   get isModifiable() {
     return this.canBeModified && !this.isAdd
   }
+
   get isEditable() {
     return this.isAdd || this.isEdit
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped
+       lang="less">
+.title {
+  display: flex;
+  justify-content: space-between;
+}
+button {
+  height: 32px;
+  color: var(--font-prim);
+  border: 1px solid var(--accent-sec);
+  border-radius: 4px;
+  background: var(--accent);
+  cursor: pointer;
+
+  &:disabled {
+    color: var(--font-tet);
+    border-color: var(--font-sec);
+    background: var(--font-sec);
+    cursor: unset;
+  }
+}
+</style>

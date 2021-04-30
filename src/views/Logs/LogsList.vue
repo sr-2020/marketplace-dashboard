@@ -7,6 +7,7 @@ import { Options } from 'vue-class-component'
 @Options({})
 export default class LogsList extends List<AlertMsg> {
   listItem = LogsListItem
+  listName = 'Логи'
   preventNavigation = true
 
   mounted() {

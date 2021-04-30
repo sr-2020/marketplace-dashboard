@@ -1,0 +1,16 @@
+.button() {
+  button {
+    height: 32px;
+    color: var(--font-prim);
+    border: 1px solid var(--accent-sec);
+    border-radius: 4px;
+    background: var(--accent);
+    cursor: pointer;
+    &:disabled {
+      color: var(--font-tet);
+      border-color: var(--font-sec);
+      background: var(--font-sec);
+      cursor: unset;
+    }
+  }
+}

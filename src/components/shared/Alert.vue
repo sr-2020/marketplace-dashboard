@@ -1,5 +1,5 @@
 <template>
-  <div class="alert-wrapper">
+  <div class="alert-wrapper" v-if="list.length !== 0">
     <transition-group name="fade" tag="p">
       <div
         class="alert"
@@ -21,7 +21,7 @@ import { AlertMsg } from '@/store/log/types'
 import { Options, Vue } from 'vue-class-component'
 
 interface SelfDestructiveAlertMsg extends AlertMsg {
-  timer: number
+  timer: number;
 }
 
 @Options({})

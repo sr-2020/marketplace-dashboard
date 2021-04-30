@@ -3,6 +3,8 @@ import { Shop } from '@/store/organisations/types'
 import { UserState } from '@/store/user/types'
 
 export class ShopDTO {
+  rawData: Shop | undefined
+
   get balance(): number | undefined {
     return this._balance
   }
@@ -27,20 +29,29 @@ export class ShopDTO {
     return this._id
   }
 
-  _id: number
-  _name: string
-  _owner: UserState | null
-  _specialisations?: number[]
-  _lifestyle: string
-  _balance: number
+  _id = 0
+  _name = ''
+  _owner: UserState | null = null
+  _specialisations?: number[] = []
+  _lifestyle = ''
+  _balance = 0
 
-  constructor({ data }: ResponseModel<Shop>) {
-    this._id = data.id || 0
-    this._name = data.name || ''
-    this._owner = data.owner || null
-    this._balance = data.balance || 0
-    this._lifestyle = data.lifestyle || ''
-    this._specialisations = data.specialisations || []
+  constructor( resp: ResponseModel<Shop> | undefined) {
+    this.rawData = resp?.data
+    this.setFields(this.rawData)
+  }
+
+  private setFields(data: Shop | undefined) {
+    this._id = data?.id || 0
+    this._name = data?.name || ''
+    this._owner = data?.owner || null
+    this._balance = data?.balance || 0
+    this._lifestyle = data?.lifestyle || ''
+    this._specialisations = data?.specialisations || []
+  }
+
+  public reset() {
+    this.setFields(this.rawData)
   }
 
   // public getChangeDto() {

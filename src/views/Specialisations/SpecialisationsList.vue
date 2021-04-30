@@ -7,6 +7,7 @@ import { Options } from 'vue-class-component'
 @Options({})
 export default class SpecialisationsList extends List<Specialisation> {
   listItem = SpecialisationsListItem
+  listName = 'Специализации'
   preventNavigation = true
 
   mounted() {
