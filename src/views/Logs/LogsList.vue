@@ -12,6 +12,7 @@ export default class LogsList extends List<AlertMsg> {
 
   mounted() {
     this.list = this.$store.state.logs.alerts
+    this.loading = false
   }
 }
 </script>

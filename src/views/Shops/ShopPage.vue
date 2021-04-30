@@ -8,6 +8,7 @@ import ShopEdit from "@/views/Shops/Shop/ShopEdit.vue";
 @Options({})
 export default class ShopPage extends Page<Shop> {
   pageName = 'Магазин'
+  canBeModified = true
   viewComponent = ShopView
   editComponent = ShopEdit
 

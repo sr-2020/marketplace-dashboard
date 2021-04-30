@@ -36,7 +36,7 @@ export default class Page<T> extends Vue {
   item: any = null
   isAdd = false
   isEdit = false
-  canBeModified = true
+  canBeModified = false
   isLoading = true
   editComponent: unknown = null
   viewComponent: unknown = null

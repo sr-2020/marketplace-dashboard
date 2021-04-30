@@ -3,6 +3,7 @@
     <transition-group name="fade" tag="p">
       <div
         class="alert"
+        :class="[l.type]"
         @click="removeAlert(l.id)"
         v-for="l in list"
         :key="l.id"

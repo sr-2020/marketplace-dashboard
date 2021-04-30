@@ -37,6 +37,7 @@ import { Shop } from '@/store/organisations/types'
 import { ShopDTO } from '@/views/Shops/Shop/ShopDTO'
 import { Options } from 'vue-class-component'
 import DeleteWarn from '@/components/shared/DeleteWarn.vue'
+import { AlertController } from "@/utils/alertService";
 
 @Options({
   components: { DeleteWarn }
@@ -51,6 +52,8 @@ export default class ShopEdit extends Vue {
   }
 
   deleteShop() {
+    AlertController.addAlert('Успешно', `Магазин с ID: ${this.dto?.id} удален`, 'success')
+    this.delInit = false
     // Раскомментить как можно будет создавать
     // if(this.dto) {
     //   HttpAdapter.delete(['a-shop-delete'], { shopid: this.dto.id})
