@@ -3,7 +3,7 @@ import { fromPromise } from 'rxjs/internal-compatibility'
 import { pluck } from 'rxjs/operators'
 import axios, { AxiosRequestConfig } from 'axios'
 
-interface ResponseModel<Model> {
+export interface ResponseModel<Model> {
   data: Model
   status: boolean
   message: string | null

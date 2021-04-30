@@ -1,0 +1,27 @@
+@import "button";
+
+.edit-style() {
+  .button();
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+    margin-bottom: 8px;
+
+    label:not(:last-child) {
+      margin-bottom: 8px;
+    }
+
+    input {
+      border: 2px solid var(--accent-sec);
+      outline: none;
+      background: var(--bg);
+      padding: 4px 12px;
+      border-radius: 4px;
+      color: var(--font-prim);
+      max-width: 360px;
+      height: 32px;
+    }
+  }
+
+}

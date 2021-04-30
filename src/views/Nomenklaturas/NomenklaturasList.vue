@@ -7,6 +7,7 @@ import { Options } from 'vue-class-component'
 @Options({})
 export default class NomenklaturasList extends List<Nomenklatura> {
   listItem = NomenklaturasListItem
+  listName = 'Номенклатуры'
 
   mounted() {
     this.grabData(['a-nomenklaturas'])

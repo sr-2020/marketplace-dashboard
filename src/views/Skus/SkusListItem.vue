@@ -8,9 +8,7 @@
 <script lang="ts">
 import { Sku } from '@/store/products/types'
 import ListItem from '@/components/common/list/ListItem.vue'
-import { Options } from 'vue-class-component'
 
-@Options({})
 export default class SkusListItem extends ListItem<Sku> {}
 </script>
 
