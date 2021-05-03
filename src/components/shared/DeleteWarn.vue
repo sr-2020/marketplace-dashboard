@@ -27,6 +27,10 @@ export default class DeleteWarn extends Vue {
 .warning {
   background: var(--alert-warn);
   width: max-content;
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+  
   input {
     margin: 12px 0;
     border: 2px solid var(--accent-sec);

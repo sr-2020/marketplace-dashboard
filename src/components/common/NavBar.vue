@@ -37,8 +37,6 @@ export default class NavBar extends Vue {
 
 <style scoped lang="less">
 .navbar {
-  //TODO(dzu, arival): Возможно стоит схллопнуть классы .navbar и .link-list
-  //Я убрал анимацию (она сложно поддерживается) так что враппер не так нужен
   display: flex;
   align-items: center;
   padding-top: 0.5em;
@@ -65,13 +63,11 @@ export default class NavBar extends Vue {
     transition-timing-function: ease-in-out;
 
     @media screen and (max-width: 500px) {
-      position: absolute;
       display: flex;
-      flex-direction: column;
       top: 40px;
-      height: 50vh;
+      height: fit-content;
       a {
-        margin: 12px 0;
+        margin: 0 12px;
       }
     }
   }
@@ -85,7 +81,7 @@ export default class NavBar extends Vue {
     margin-right: 0.3em;
 
     &.router-link-exact-active {
-      order: -1;
+      display: none;
       font-size: 2em;
     }
 

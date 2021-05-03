@@ -22,7 +22,8 @@
 
     <div class="actions">
       <button v-if="item && !delInit"
-              @click="delInit = true">Удалить
+              @click="delInit = true">
+              Удалить
       </button>
       <button v-if="item">Изменить</button>
       <button v-else>Добавить</button>
