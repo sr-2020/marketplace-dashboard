@@ -1,6 +1,5 @@
 <template>
-  <div class="edit-window"
-       v-if="dto">
+  <div class="edit-window" v-if="dto">
     <h2 v-if="!item">Добавление магазина</h2>
 
     <div class="form-field">
@@ -12,6 +11,11 @@
       <input v-model="dto._name" />
     </div>
 
+    <div class="form-field">
+      <label>Autocomplete: </label>
+      <sr-autocomplete />
+    </div>
+
     <delete-warn
       v-if="delInit"
       :dto="dto"
@@ -19,11 +23,9 @@
       @accept="deleteShop"
       @decline="delInit = false"
     />
-
     <div class="actions">
-      <button v-if="item && !delInit"
-              @click="delInit = true">
-              Удалить
+      <button v-if="item && !delInit" @click="delInit = true">
+        Удалить
       </button>
       <button v-if="item">Изменить</button>
       <button v-else>Добавить</button>
@@ -38,10 +40,11 @@ import { Shop } from '@/store/organisations/types'
 import { ShopDTO } from '@/views/Shops/Shop/ShopDTO'
 import { Options } from 'vue-class-component'
 import DeleteWarn from '@/components/shared/DeleteWarn.vue'
-import { AlertController } from "@/utils/alertService";
+import SrAutocomplete from '@/components/shared/Autocomplete.vue'
+import { AlertController } from '@/utils/alertService'
 
 @Options({
-  components: { DeleteWarn }
+  components: { DeleteWarn, SrAutocomplete }
 })
 export default class ShopEdit extends Vue {
   @Prop() item!: ResponseModel<Shop>
@@ -53,7 +56,11 @@ export default class ShopEdit extends Vue {
   }
 
   deleteShop() {
-    AlertController.addAlert('Успешно', `Магазин с ID: ${this.dto?.id} удален`, 'success')
+    AlertController.addAlert(
+      'Успешно',
+      `Магазин с ID: ${this.dto?.id} удален`,
+      'success'
+    )
     this.delInit = false
     // Раскомментить как можно будет создавать
     // if(this.dto) {
@@ -63,8 +70,7 @@ export default class ShopEdit extends Vue {
 }
 </script>
 
-<style lang="less"
-       scoped>
+<style lang="less" scoped>
 @import '~@/assets/components/edit-styles';
 
 .edit-window {
