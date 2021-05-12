@@ -1,5 +1,6 @@
 <template>
-  <div class="edit-window" v-if="dto">
+  <div class="edit-window"
+       v-if="dto">
     <h2 v-if="!item">Добавление магазина</h2>
 
     <div class="form-field">
@@ -12,8 +13,23 @@
     </div>
 
     <div class="form-field">
-      <label>Autocomplete: </label>
-      <sr-autocomplete />
+      <label>Баланс: </label>
+      <input v-model="dto._balance" />
+    </div>
+
+    <div class="form-field">
+      <label>Лайфстайл: </label>
+      <input>
+    </div>
+
+    <div class="form-field">
+      <label>Специализации: </label>
+      <sr-autocomplete
+        :value="dto._specialisations"
+        @change="dto._specialisations = $event"
+        :options="specialisations"
+        id-key="specialisationId"
+      />
     </div>
 
     <delete-warn
@@ -24,7 +40,8 @@
       @decline="delInit = false"
     />
     <div class="actions">
-      <button v-if="item && !delInit" @click="delInit = true">
+      <button v-if="item && !delInit"
+              @click="delInit = true">
         Удалить
       </button>
       <button v-if="item">Изменить</button>
@@ -35,13 +52,14 @@
 
 <script lang="ts">
 import { Prop, Vue } from 'vue-property-decorator'
-import { ResponseModel } from '@/utils/httpAdapter'
+import HttpAdapter, { ResponseModel } from '@/utils/httpAdapter'
 import { Shop } from '@/store/organisations/types'
 import { ShopDTO } from '@/views/Shops/Shop/ShopDTO'
 import { Options } from 'vue-class-component'
 import DeleteWarn from '@/components/shared/DeleteWarn.vue'
 import SrAutocomplete from '@/components/shared/Autocomplete.vue'
 import { AlertController } from '@/utils/alertService'
+import { Specialisation } from '@/store/products/types'
 
 @Options({
   components: { DeleteWarn, SrAutocomplete }
@@ -50,15 +68,24 @@ export default class ShopEdit extends Vue {
   @Prop() item!: ResponseModel<Shop>
   delInit = false
   dto: null | ShopDTO = null
+  specialisations: Specialisation[] = []
 
   mounted() {
     this.dto = new ShopDTO(this?.item)
+    const storeSpecialisations = this.$store.state.specialisations
+    const storeLifestyles = this.$store.state.lifestyles
+    const storeUsers = this.$store.state.users
+
+    console.log(storeLifestyles, storeSpecialisations, storeUsers)
+    HttpAdapter.get<Specialisation[]>(['a-specialisations']).subscribe(
+      ({ data }) => (this.specialisations = data)
+    )
   }
 
   deleteShop() {
     AlertController.addAlert(
       'Успешно',
-      `Магазин с ID: ${this.dto?.id} удален`,
+      `Магазин с ID: ${ this.dto?.id } удален`,
       'success'
     )
     this.delInit = false
@@ -70,7 +97,8 @@ export default class ShopEdit extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less"
+       scoped>
 @import '~@/assets/components/edit-styles';
 
 .edit-window {
