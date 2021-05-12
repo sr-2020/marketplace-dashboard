@@ -9,6 +9,9 @@ const store: StoreOptions<RootState> = {
   state: {
     navbarState: true,
     theme: new ThemeSwitcher(window, document),
+    users: [],
+    specialisations: [],
+    lifestyles: []
   },
   mutations,
   modules: {

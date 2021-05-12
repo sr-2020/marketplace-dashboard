@@ -12,6 +12,43 @@
       <input v-model="dto._name" />
     </div>
 
+    <div class="form-field">
+      <label>Баланс: </label>
+      <input v-model="dto._balance" />
+    </div>
+
+    <div class="form-field">
+      <label>Лайфстайл: </label>
+      <sr-autocomplete
+        :options="lifestyles"
+        :single="true"
+        id-key="id"
+        :value="dto._lifestyle"
+        @change="dto._lifestyle = $event"
+      />
+    </div>
+
+    <div class="form-field">
+      <label>Владелец: </label>
+      <sr-autocomplete
+        :single="true"
+        :options="users"
+        :value="dto._owner"
+        id-key="modelId"
+        @change="dto._owner = $event"
+      />
+    </div>
+
+    <div class="form-field">
+      <label>Специализации: </label>
+      <sr-autocomplete
+        :value="dto._specialisations"
+        @change="dto._specialisations = $event"
+        :options="specialisations"
+        id-key="specialisationId"
+      />
+    </div>
+
     <delete-warn
       v-if="delInit"
       :dto="dto"
@@ -19,45 +56,121 @@
       @accept="deleteShop"
       @decline="delInit = false"
     />
-
     <div class="actions">
       <button v-if="item && !delInit"
-              @click="delInit = true">Удалить
+              @click="delInit = true">
+        Удалить
       </button>
-      <button v-if="item">Изменить</button>
-      <button v-else>Добавить</button>
+      <button v-if="item" @click="editShop">Изменить</button>
+      <button v-else @click="addShop" :disabled='processing'>Добавить</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Prop, Vue } from 'vue-property-decorator'
-import { ResponseModel } from '@/utils/httpAdapter'
+import HttpAdapter, { ResponseModel } from '@/utils/httpAdapter'
 import { Shop } from '@/store/organisations/types'
 import { ShopDTO } from '@/views/Shops/Shop/ShopDTO'
 import { Options } from 'vue-class-component'
 import DeleteWarn from '@/components/shared/DeleteWarn.vue'
-import { AlertController } from "@/utils/alertService";
+import SrAutocomplete from '@/components/shared/Autocomplete.vue'
+import { AlertController } from '@/utils/alertService'
+import { Specialisation } from '@/store/products/types'
+import { RootMutations } from '@/store/mutations'
+import { LifeStyle } from '@/store/types'
+import { User } from '@/store/user/types'
 
 @Options({
-  components: { DeleteWarn }
+  components: { DeleteWarn, SrAutocomplete }
 })
 export default class ShopEdit extends Vue {
   @Prop() item!: ResponseModel<Shop>
   delInit = false
   dto: null | ShopDTO = null
+  processing = false
 
   mounted() {
     this.dto = new ShopDTO(this?.item)
+    const storeSpecialisations = this.$store.state.specialisations
+    const storeLifestyles = this.$store.state.lifestyles
+    const storeUsers = this.$store.state.users
+
+    if (storeSpecialisations.length === 0) {
+      HttpAdapter.get<Specialisation[]>([
+        'a-specialisations'
+      ]).subscribe(({ data }) =>
+        this.$store.commit(RootMutations.SET_SPECIALISATIONS, data)
+      )
+    }
+
+    if (storeLifestyles.length === 0) {
+      HttpAdapter.get<LifeStyle[]>(['a-lifestyles']).subscribe(({ data }) =>
+        this.$store.commit(RootMutations.SET_LIFESTYLES, data)
+      )
+    }
+
+    if (storeUsers.length === 0) {
+      HttpAdapter.get<User[]>(['a-users']).subscribe(({ data }) =>
+        this.$store.commit(RootMutations.SET_USERS, data)
+      )
+    }
   }
 
+  get specialisations(): Specialisation[] {
+    return this.$store.state.specialisations
+  }
+
+  get lifestyles(): LifeStyle[] {
+    return this.$store.state.lifestyles
+  }
+
+  get users(): User[] {
+    return this.$store.state.users
+  }
+
+  addShop() {
+    this.processing = true
+    HttpAdapter.post(['a-add-shop'], this.dto?.getAddDto()).subscribe(
+      () => {
+        this.processing = false
+        AlertController.addAlert('Магазин добавлен успешно', '', 'success')
+        this.$router.push('/shops')
+      },
+      this.errorHandler
+    )
+  }
+
+  editShop() {
+    this.processing = true
+    HttpAdapter.patch(['a-edit-shop'], this.dto?.getChangeDto()).subscribe(
+      () => {
+        this.processing = false
+        AlertController.addAlert('Магазин изменен успешно', '', 'success')
+        this.$router.push(`/shops`)
+      },
+      this.errorHandler
+    )
+  }
   deleteShop() {
-    AlertController.addAlert('Успешно', `Магазин с ID: ${this.dto?.id} удален`, 'success')
-    this.delInit = false
-    // Раскомментить как можно будет создавать
-    // if(this.dto) {
-    //   HttpAdapter.delete(['a-shop-delete'], { shopid: this.dto.id})
-    // }
+    if(this.dto) {
+      HttpAdapter.delete(['a-del-shop'], { shopid: this.dto.id}).subscribe(
+        () => {
+          AlertController.addAlert(
+            'Успешно',
+            `Магазин с ID: ${ this.dto?.id } удален`,
+            'success'
+          )
+          this.delInit = false
+        },
+      this.errorHandler
+      )
+    }
+  }
+
+  errorHandler(err: ResponseModel<any>) {
+    AlertController.addAlert('Ошибка', err.message as string, 'error')
+    this.processing = false
   }
 }
 </script>
