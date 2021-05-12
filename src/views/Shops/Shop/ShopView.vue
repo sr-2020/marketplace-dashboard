@@ -12,12 +12,12 @@
 
     <div class="field-row">
       <div class="title">Лайфстайл:</div>
-      <div class="value">{{ dto.lifestyle }}</div>
+      <div class="value">{{ dto.lifestyle?.name }}</div>
     </div>
 
     <div class="field-row">
       <div class="title">Владелец:</div>
-      <div class="value">{{ getOwner(dto.owner) }}</div>
+      <div class="value">{{ getOwner(dto.owner.name) }}</div>
     </div>
 
     <div class="field-row"

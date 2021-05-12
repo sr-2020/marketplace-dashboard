@@ -4,7 +4,7 @@
            v-model="filter"
            @focus="open = true" />
     <div class="selected-list"
-         v-show="value.length > 0 && !single">
+         v-show="value?.length > 0 && !single">
       <span
         class="selected-list__chip"
         v-for="li of selectedList"
@@ -40,7 +40,7 @@ export default class SrAutocomplete extends Vue {
   @Prop({ default: false }) single!: boolean
   @Prop({ default: [] }) options!: any[]
   @Prop({ default: '' }) idKey!: string
-  @Prop({ default: [] }) value!: number[] | { [key: string]: any }
+  @Prop({ default: [] }) value!: number[] | { [key: string]: any } | null
 
   open = false
   filter = ''
@@ -55,13 +55,14 @@ export default class SrAutocomplete extends Vue {
   }
 
   mounted() {
-    if (this.single && 'name' in this.value) {
+    if (this.value !== null && this.single && 'name' in this.value) {
       this.filter = this.value.name
     }
   }
 
   onItemSelect(item: any) {
     if (this.single) {
+      console.log(item)
       this.$emit('change', item)
       this.open = false
       if ('name' in item) {
@@ -89,7 +90,7 @@ export default class SrAutocomplete extends Vue {
     if (this.value instanceof Array) {
       return this.value.indexOf(id) !== -1
     }
-    if (this.idKey in this.value) {
+    if (this.value !== null && this.idKey in this.value) {
       return this.value[this.idKey] === id
     }
   }

@@ -55,13 +55,24 @@ export class ShopDTO {
     this.setFields(this.rawData)
   }
 
-  // public getChangeDto() {
-  //
-  // }
-  //
-  // public getAddDto() {
-  //   return {
-  //     name: this.name
-  //   }
-  // }
+  public getChangeDto() {
+    return {
+      shopId: this.id,
+      name: this.name,
+      balance: this.balance,
+      owner: Number(this.owner?.modelId) || null,
+      lifestyle: this.lifestyle?.id || null,
+      specialisations: this.specialisations
+    }
+  }
+
+  public getAddDto() {
+    return {
+      name: this.name,
+      balance: this.balance,
+      owner: this.owner?.modelId || null,
+      lifestyle: this.lifestyle?.id || null,
+      specialisations: this.specialisations
+    }
+  }
 }

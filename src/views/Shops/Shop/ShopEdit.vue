@@ -22,6 +22,7 @@
       <sr-autocomplete
         :options="lifestyles"
         :single="true"
+        id-key="id"
         :value="dto._lifestyle"
         @change="dto._lifestyle = $event"
       />
@@ -33,6 +34,7 @@
         :single="true"
         :options="users"
         :value="dto._owner"
+        id-key="modelId"
         @change="dto._owner = $event"
       />
     </div>
@@ -59,8 +61,8 @@
               @click="delInit = true">
         Удалить
       </button>
-      <button v-if="item">Изменить</button>
-      <button v-else>Добавить</button>
+      <button v-if="item" @click="editShop">Изменить</button>
+      <button v-else @click="addShop" :disabled='processing'>Добавить</button>
     </div>
   </div>
 </template>
@@ -86,6 +88,7 @@ export default class ShopEdit extends Vue {
   @Prop() item!: ResponseModel<Shop>
   delInit = false
   dto: null | ShopDTO = null
+  processing = false
 
   mounted() {
     this.dto = new ShopDTO(this?.item)
@@ -126,17 +129,48 @@ export default class ShopEdit extends Vue {
     return this.$store.state.users
   }
 
-  deleteShop() {
-    AlertController.addAlert(
-      'Успешно',
-      `Магазин с ID: ${ this.dto?.id } удален`,
-      'success'
+  addShop() {
+    this.processing = true
+    HttpAdapter.post(['a-add-shop'], this.dto?.getAddDto()).subscribe(
+      () => {
+        this.processing = false
+        AlertController.addAlert('Магазин добавлен успешно', '', 'success')
+        this.$router.push('/shops')
+      },
+      this.errorHandler
     )
-    this.delInit = false
-    // Раскомментить как можно будет создавать
-    // if(this.dto) {
-    //   HttpAdapter.delete(['a-shop-delete'], { shopid: this.dto.id})
-    // }
+  }
+
+  editShop() {
+    this.processing = true
+    HttpAdapter.patch(['a-edit-shop'], this.dto?.getChangeDto()).subscribe(
+      () => {
+        this.processing = false
+        AlertController.addAlert('Магазин изменен успешно', '', 'success')
+        this.$router.push(`/shops`)
+      },
+      this.errorHandler
+    )
+  }
+  deleteShop() {
+    if(this.dto) {
+      HttpAdapter.delete(['a-del-shop'], { shopid: this.dto.id}).subscribe(
+        () => {
+          AlertController.addAlert(
+            'Успешно',
+            `Магазин с ID: ${ this.dto?.id } удален`,
+            'success'
+          )
+          this.delInit = false
+        },
+      this.errorHandler
+      )
+    }
+  }
+
+  errorHandler(err: ResponseModel<any>) {
+    AlertController.addAlert('Ошибка', err.message as string, 'error')
+    this.processing = false
   }
 }
 </script>
