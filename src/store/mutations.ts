@@ -18,11 +18,11 @@ export const mutations: MutationTree<RootState> = {
   CHANGE_THEME(state) {
     state.theme.changeTheme()
   },
-  SET_SPECIALISATIONS(state, payload: LifeStyle[]) {
-    state.lifestyles = payload
-  },
-  SET_LIFESTYLES(state, payload: Specialisation[]) {
+  SET_SPECIALISATIONS(state, payload: Specialisation[]) {
     state.specialisations = payload
+  },
+  SET_LIFESTYLES(state, payload: LifeStyle[]) {
+    state.lifestyles = payload
   },
   SET_USERS(state, payload: User[]) {
     state.users = payload

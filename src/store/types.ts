@@ -19,6 +19,6 @@ export interface BaseNamedEntity extends BaseEntity {
 }
 
 export interface LifeStyle {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
 }

@@ -19,7 +19,22 @@
 
     <div class="form-field">
       <label>Лайфстайл: </label>
-      <input>
+      <sr-autocomplete
+        :options="lifestyles"
+        :single="true"
+        :value="dto._lifestyle"
+        @change="dto._lifestyle = $event"
+      />
+    </div>
+
+    <div class="form-field">
+      <label>Владелец: </label>
+      <sr-autocomplete
+        :single="true"
+        :options="users"
+        :value="dto._owner"
+        @change="dto._owner = $event"
+      />
     </div>
 
     <div class="form-field">
@@ -60,6 +75,9 @@ import DeleteWarn from '@/components/shared/DeleteWarn.vue'
 import SrAutocomplete from '@/components/shared/Autocomplete.vue'
 import { AlertController } from '@/utils/alertService'
 import { Specialisation } from '@/store/products/types'
+import { RootMutations } from '@/store/mutations'
+import { LifeStyle } from '@/store/types'
+import { User } from '@/store/user/types'
 
 @Options({
   components: { DeleteWarn, SrAutocomplete }
@@ -68,7 +86,6 @@ export default class ShopEdit extends Vue {
   @Prop() item!: ResponseModel<Shop>
   delInit = false
   dto: null | ShopDTO = null
-  specialisations: Specialisation[] = []
 
   mounted() {
     this.dto = new ShopDTO(this?.item)
@@ -76,10 +93,37 @@ export default class ShopEdit extends Vue {
     const storeLifestyles = this.$store.state.lifestyles
     const storeUsers = this.$store.state.users
 
-    console.log(storeLifestyles, storeSpecialisations, storeUsers)
-    HttpAdapter.get<Specialisation[]>(['a-specialisations']).subscribe(
-      ({ data }) => (this.specialisations = data)
-    )
+    if (storeSpecialisations.length === 0) {
+      HttpAdapter.get<Specialisation[]>([
+        'a-specialisations'
+      ]).subscribe(({ data }) =>
+        this.$store.commit(RootMutations.SET_SPECIALISATIONS, data)
+      )
+    }
+
+    if (storeLifestyles.length === 0) {
+      HttpAdapter.get<LifeStyle[]>(['a-lifestyles']).subscribe(({ data }) =>
+        this.$store.commit(RootMutations.SET_LIFESTYLES, data)
+      )
+    }
+
+    if (storeUsers.length === 0) {
+      HttpAdapter.get<User[]>(['a-users']).subscribe(({ data }) =>
+        this.$store.commit(RootMutations.SET_USERS, data)
+      )
+    }
+  }
+
+  get specialisations(): Specialisation[] {
+    return this.$store.state.specialisations
+  }
+
+  get lifestyles(): LifeStyle[] {
+    return this.$store.state.lifestyles
+  }
+
+  get users(): User[] {
+    return this.$store.state.users
   }
 
   deleteShop() {

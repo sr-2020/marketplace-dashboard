@@ -1,21 +1,25 @@
 <template>
   <div class="autocomplete">
-    <input v-if="!single" type="text" v-model="filter" @focus="open = true" />
-    <div v-else class="select"></div>
-    <div class="selected-list" v-show="value.length > 0 && !single">
+    <input class="--select"
+           v-model="filter"
+           @focus="open = true" />
+    <div class="selected-list"
+         v-show="value.length > 0 && !single">
       <span
         class="selected-list__chip"
         v-for="li of selectedList"
         :key="li[idKey]"
       >
         {{ li.name }}&nbsp;<span
-          class="selected-list__cross"
-          @click="onItemSelect(li)"
-          >x</span
-        >
+        class="selected-list__cross"
+        @click="onItemSelect(li)"
+      >x</span
+      >
       </span>
     </div>
-    <ul class="options__wrapper" v-show="open">
+    <ul class="options__wrapper"
+        ref="dropdownRef"
+        v-show="open">
       <li
         v-for="li of list"
         :class="[{ selected: selected(li[idKey]) }]"
@@ -29,17 +33,40 @@
 </template>
 
 <script lang="ts">
-import { Prop, Vue } from 'vue-property-decorator'
+import { Prop, Ref, Vue, Watch } from 'vue-property-decorator'
 
 export default class SrAutocomplete extends Vue {
+  @Ref('dropdownRef') dropdownRef!: HTMLElement
   @Prop({ default: false }) single!: boolean
   @Prop({ default: [] }) options!: any[]
   @Prop({ default: '' }) idKey!: string
-  @Prop({ default: [] }) value!: number[] | number
+  @Prop({ default: [] }) value!: number[] | { [key: string]: any }
+
+  open = false
+  filter = ''
+
+  @Watch('open')
+  visibleChange(open: boolean) {
+    if (open) {
+      document.body.addEventListener('click', this.outsideClickHandler)
+    } else {
+      document.body.removeEventListener('click', this.outsideClickHandler)
+    }
+  }
+
+  mounted() {
+    if (this.single && 'name' in this.value) {
+      this.filter = this.value.name
+    }
+  }
 
   onItemSelect(item: any) {
     if (this.single) {
       this.$emit('change', item)
+      this.open = false
+      if ('name' in item) {
+        this.filter = item.name || ''
+      }
     }
     if (this.value instanceof Array) {
       if (this.value.indexOf(item[this.idKey]) !== -1) {
@@ -54,11 +81,17 @@ export default class SrAutocomplete extends Vue {
     }
   }
 
+  get selectedItem() {
+    return this.options.find(el => el[this.idKey] === this.value)
+  }
+
   selected(id: number) {
     if (this.value instanceof Array) {
       return this.value.indexOf(id) !== -1
     }
-    return this.value === id
+    if (this.idKey in this.value) {
+      return this.value[this.idKey] === id
+    }
   }
 
   get selectedList() {
@@ -69,18 +102,25 @@ export default class SrAutocomplete extends Vue {
     })
   }
 
-  open = false
-  filter = ''
+  outsideClickHandler(event: MouseEvent) {
+    if (
+      !this.dropdownRef.contains(event.target as Node) &&
+      !(event.target as HTMLElement).classList.contains('--select')
+    ) {
+      this.open = false
+    }
+  }
 
   get list() {
     return this.options.filter(el =>
-      new RegExp(this.filter.toLowerCase()).test(el.name.toLowerCase())
+      new RegExp(this.filter?.toLowerCase()).test(el.name?.toLowerCase())
     )
   }
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less"
+       scoped>
 @import '~@/assets/components/input';
 
 .autocomplete {
@@ -91,6 +131,10 @@ export default class SrAutocomplete extends Vue {
   input,
   .select {
     .input();
+  }
+
+  .select {
+    cursor: pointer;
   }
 
   .selected-list {
@@ -116,7 +160,7 @@ export default class SrAutocomplete extends Vue {
 
   .options__wrapper {
     padding: 0;
-    margin-top: 0;
+    margin-top: 8px;
     background-color: var(--accent-sec);
     border-radius: 4px;
     max-height: 250px;
