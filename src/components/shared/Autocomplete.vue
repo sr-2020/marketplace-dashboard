@@ -40,7 +40,7 @@ export default class SrAutocomplete extends Vue {
   @Prop({ default: false }) single!: boolean
   @Prop({ default: [] }) options!: any[]
   @Prop({ default: '' }) idKey!: string
-  @Prop({ default: [] }) value!: number[] | { [key: string]: any } | null
+  @Prop({ default: [] }) value!: number[] | number | { [key: string]: any } | null
 
   open = false
   filter = ''
@@ -55,14 +55,21 @@ export default class SrAutocomplete extends Vue {
   }
 
   mounted() {
-    if (this.value !== null && this.single && 'name' in this.value) {
+    if (
+      this.value !== null &&
+      this.single &&
+      typeof this.value === 'object' &&
+      'name' in this.value
+    ) {
       this.filter = this.value.name
+    }
+    if( typeof this.value === 'number') {
+      this.filter = this.options.find(el => el[this.idKey] === this.value).name
     }
   }
 
   onItemSelect(item: any) {
     if (this.single) {
-      console.log(item)
       this.$emit('change', item)
       this.open = false
       if ('name' in item) {
@@ -82,15 +89,15 @@ export default class SrAutocomplete extends Vue {
     }
   }
 
-  get selectedItem() {
-    return this.options.find(el => el[this.idKey] === this.value)
-  }
-
   selected(id: number) {
-    if (this.value instanceof Array) {
+    if (Array.isArray(this.value)) {
       return this.value.indexOf(id) !== -1
     }
-    if (this.value !== null && this.idKey in this.value) {
+    if (
+      this.value !== null &&
+      typeof this.value == 'object' &&
+      this.idKey in this.value
+    ) {
       return this.value[this.idKey] === id
     }
   }
@@ -113,8 +120,9 @@ export default class SrAutocomplete extends Vue {
   }
 
   get list() {
-    return this.options.filter(el =>
-      new RegExp(this.filter?.toLowerCase()).test(el.name?.toLowerCase())
+    return this.options.filter(el =>{
+         return  new RegExp(this.filter).test(el.name)
+    }
     )
   }
 }

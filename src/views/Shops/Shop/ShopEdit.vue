@@ -34,8 +34,8 @@
         :single="true"
         :options="users"
         :value="dto._owner"
-        id-key="modelId"
-        @change="dto._owner = $event"
+        id-key="id"
+        @change="dto._owner = $event.id"
       />
     </div>
 
@@ -77,7 +77,6 @@ import DeleteWarn from '@/components/shared/DeleteWarn.vue'
 import SrAutocomplete from '@/components/shared/Autocomplete.vue'
 import { AlertController } from '@/utils/alertService'
 import { Specialisation } from '@/store/products/types'
-import { RootMutations } from '@/store/mutations'
 import { LifeStyle } from '@/store/types'
 import { User } from '@/store/user/types'
 
@@ -92,29 +91,6 @@ export default class ShopEdit extends Vue {
 
   mounted() {
     this.dto = new ShopDTO(this?.item)
-    const storeSpecialisations = this.$store.state.specialisations
-    const storeLifestyles = this.$store.state.lifestyles
-    const storeUsers = this.$store.state.users
-
-    if (storeSpecialisations.length === 0) {
-      HttpAdapter.get<Specialisation[]>([
-        'a-specialisations'
-      ]).subscribe(({ data }) =>
-        this.$store.commit(RootMutations.SET_SPECIALISATIONS, data)
-      )
-    }
-
-    if (storeLifestyles.length === 0) {
-      HttpAdapter.get<LifeStyle[]>(['a-lifestyles']).subscribe(({ data }) =>
-        this.$store.commit(RootMutations.SET_LIFESTYLES, data)
-      )
-    }
-
-    if (storeUsers.length === 0) {
-      HttpAdapter.get<User[]>(['a-users']).subscribe(({ data }) =>
-        this.$store.commit(RootMutations.SET_USERS, data)
-      )
-    }
   }
 
   get specialisations(): Specialisation[] {
@@ -152,6 +128,7 @@ export default class ShopEdit extends Vue {
       this.errorHandler
     )
   }
+
   deleteShop() {
     if(this.dto) {
       HttpAdapter.delete(['a-del-shop'], { shopid: this.dto.id}).subscribe(

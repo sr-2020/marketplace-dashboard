@@ -1,6 +1,5 @@
 import { ResponseModel } from '@/utils/httpAdapter'
 import { Shop } from '@/store/organisations/types'
-import { UserState } from '@/store/user/types'
 import { LifeStyle } from "@/store/types";
 
 export class ShopDTO {
@@ -18,7 +17,7 @@ export class ShopDTO {
     return this._specialisations
   }
 
-  get owner(): UserState | null{
+  get owner(): number | null{
     return this._owner
   }
 
@@ -32,7 +31,7 @@ export class ShopDTO {
 
   _id = 0
   _name = ''
-  _owner: UserState | null = null
+  _owner: number | null = null
   _specialisations?: number[] = []
   _lifestyle: LifeStyle = {}
   _balance = 0
@@ -60,7 +59,7 @@ export class ShopDTO {
       shopId: this.id,
       name: this.name,
       balance: this.balance,
-      owner: Number(this.owner?.modelId) || null,
+      owner: this.owner || null,
       lifestyle: this.lifestyle?.id || null,
       specialisations: this.specialisations
     }
@@ -70,7 +69,7 @@ export class ShopDTO {
     return {
       name: this.name,
       balance: this.balance,
-      owner: this.owner?.modelId || null,
+      owner: this.owner || null,
       lifestyle: this.lifestyle?.id || null,
       specialisations: this.specialisations
     }
