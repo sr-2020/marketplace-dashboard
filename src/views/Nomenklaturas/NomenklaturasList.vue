@@ -10,7 +10,7 @@ export default class NomenklaturasList extends List<Nomenklatura> {
   listName = 'Номенклатуры'
 
   mounted() {
-    this.grabData(['a-nomenklaturas'])
+    this.grabData('nomenklaturas')
   }
 }
 </script>

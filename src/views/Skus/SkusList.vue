@@ -7,7 +7,7 @@ export default class SkusList extends List<Sku> {
   listItem = SkusListItem
   listName = 'SKU'
   mounted() {
-    this.grabData(['a-skus'])
+    this.grabData('skus')
   }
 }
 </script>

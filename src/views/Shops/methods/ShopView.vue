@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import { Prop, Vue } from 'vue-property-decorator'
-import { ShopDTO } from '@/views/Shops/Shop/ShopDTO'
+import { ShopDTO } from '@/views/Shops/methods/ShopDTO'
 import HttpAdapter, { ResponseModel } from '@/utils/httpAdapter'
 import { Shop } from '@/store/organisations/types'
 import { Specialisation } from '@/store/products/types'

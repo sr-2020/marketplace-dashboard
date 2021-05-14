@@ -1,6 +1,5 @@
 <template>
-  <div class="edit-window"
-       v-if="dto">
+  <div class="edit-window" v-if="dto">
     <h2 v-if="!item">Добавление магазина</h2>
 
     <div class="form-field">
@@ -57,11 +56,12 @@
       @decline="delInit = false"
     />
     <div class="actions">
-      <button v-if="item && !delInit"
-              @click="delInit = true">
+      <button v-if="item && !delInit" @click="delInit = true">
         Удалить
       </button>
-      <button @click="item ? editShop() : addShop()" :disabled="processing">{{ item ? 'Изменить' : 'Добавить'}}</button>
+      <button @click="item ? editShop() : addShop()" :disabled="processing">
+        {{ item ? 'Изменить' : 'Добавить' }}
+      </button>
     </div>
   </div>
 </template>
@@ -70,7 +70,7 @@
 import { Prop, Vue } from 'vue-property-decorator'
 import HttpAdapter, { ResponseModel } from '@/utils/httpAdapter'
 import { Shop } from '@/store/organisations/types'
-import { ShopDTO } from '@/views/Shops/Shop/ShopDTO'
+import { ShopDTO } from '@/views/Shops/methods/ShopDTO'
 import { Options } from 'vue-class-component'
 import DeleteWarn from '@/components/shared/DeleteWarn.vue'
 import SrAutocomplete from '@/components/shared/Autocomplete.vue'
@@ -106,14 +106,11 @@ export default class ShopEdit extends Vue {
 
   addShop() {
     this.processing = true
-    HttpAdapter.post(['a-add-shop'], this.dto?.getAddDto()).subscribe(
-      () => {
-        this.processing = false
-        AlertController.addAlert('Магазин добавлен успешно', '', 'success')
-        this.$router.push('/shops')
-      },
-      this.errorHandler
-    )
+    HttpAdapter.post(['a-add-shop'], this.dto?.getAddDto()).subscribe(() => {
+      this.processing = false
+      AlertController.addAlert('Магазин добавлен успешно', '', 'success')
+      this.$router.push('/shops')
+    }, this.errorHandler)
   }
 
   editShop() {
@@ -129,17 +126,17 @@ export default class ShopEdit extends Vue {
   }
 
   deleteShop() {
-    if(this.dto) {
-      HttpAdapter.delete(['a-del-shop'], { shopid: this.dto.id}).subscribe(
+    if (this.dto) {
+      HttpAdapter.delete(['a-del-shop'], { shopid: this.dto.id }).subscribe(
         () => {
           AlertController.addAlert(
             'Успешно',
-            `Магазин с ID: ${ this.dto?.id } удален`,
+            `Магазин с ID: ${this.dto?.id} удален`,
             'success'
           )
           this.delInit = false
         },
-      this.errorHandler
+        this.errorHandler
       )
     }
   }
@@ -151,8 +148,7 @@ export default class ShopEdit extends Vue {
 }
 </script>
 
-<style lang="less"
-       scoped>
+<style lang="less" scoped>
 @import '~@/assets/components/edit-styles';
 
 .edit-window {

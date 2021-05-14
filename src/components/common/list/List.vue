@@ -30,6 +30,7 @@ import HttpAdapter from '@/utils/httpAdapter'
 import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 import { Options, Vue } from 'vue-class-component'
+import { updateEntity } from "@/utils/dictionaryService";
 
 @Options({
   components: { Loader }
@@ -43,13 +44,18 @@ export default class List<DataType> extends Vue {
   isAddAllowed = false
   private unsubscriber$ = new Subject<void>()
 
-  grabData(commands: string[]) {
-    HttpAdapter.get<DataType[]>(commands)
+  grabData( key: string) {
+    if(key && this.$store.state[key].length !== 0) {
+      this.list = this.$store.state[key]
+      this.loading = false
+      return
+    }
+    HttpAdapter.get<DataType[]>(['a-' + key])
       .pipe(takeUntil(this.unsubscriber$))
       .subscribe(
         ({ data }) => {
           this.loading = false
-          this.list = data
+          updateEntity<DataType[]>(key, this, () => this.list = data)
         },
         () => (this.loading = false)
       )

@@ -10,7 +10,7 @@ export default class CorporationList extends List<Corporation> {
   listName = 'Корпорации'
 
   mounted() {
-    this.grabData(['a-corporations'])
+    this.grabData('corporations')
   }
 }
 </script>

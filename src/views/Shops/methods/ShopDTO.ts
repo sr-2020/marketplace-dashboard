@@ -1,7 +1,7 @@
 import { ResponseModel } from '@/utils/httpAdapter'
 import { Shop } from '@/store/organisations/types'
 
-export class ShopDTO {
+export class ShopDTO  {
   rawData: Shop | undefined
 
   get balance(): number | undefined {

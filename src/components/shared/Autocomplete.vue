@@ -126,7 +126,7 @@ export default class SrAutocomplete extends Vue {
       return this.options
     }
     return this.options.filter(el =>{
-         return  new RegExp(this.filter).test(el.name)
+         return  new RegExp(this.filter, 'i').test(el.name)
     }
     )
   }

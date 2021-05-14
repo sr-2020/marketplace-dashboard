@@ -11,7 +11,7 @@ export default class ShopsList extends List<Shop> {
   listName = 'Магазины'
 
   mounted() {
-    this.grabData(['a-shops'])
+    this.grabData('shops')
   }
 }
 </script>

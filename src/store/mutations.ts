@@ -1,14 +1,12 @@
 import { MutationTree } from 'vuex'
 import { LifeStyle, RootState } from '@/store/types'
-import { Specialisation } from '@/store/products/types'
+import { Nomenklatura, Sku, Specialisation } from '@/store/products/types'
 import { User } from '@/store/user/types'
+import { Corporation, Shop } from '@/store/organisations/types'
 
 export enum RootMutations {
   NAVBAR_TOGGLE = 'NAVBAR_TOGGLE',
-  CHANGE_THEME = 'CHANGE_THEME',
-  SET_SPECIALISATIONS = 'SET_SPECIALISATIONS',
-  SET_LIFESTYLES = 'SET_LIFESTYLES',
-  SET_USERS = 'SET_USERS'
+  CHANGE_THEME = 'CHANGE_THEME'
 }
 
 export const mutations: MutationTree<RootState> = {
@@ -18,6 +16,18 @@ export const mutations: MutationTree<RootState> = {
   CHANGE_THEME(state) {
     state.theme.changeTheme()
   },
+  SET_CORPORATIONS(state, payload: Corporation[]) {
+    state.corporations = payload
+  },
+  SET_SKUS(state, payload: Sku[]) {
+    state.skus = payload
+  },
+  SET_SHOPS(state, payload: Shop[]) {
+    state.shops = payload
+  },
+  SET_NOMEMKLATURAS(state, payload: Nomenklatura[]) {
+    state.nomenklaturas = payload
+  },
   SET_SPECIALISATIONS(state, payload: Specialisation[]) {
     state.specialisations = payload
   },
@@ -26,5 +36,5 @@ export const mutations: MutationTree<RootState> = {
   },
   SET_USERS(state, payload: User[]) {
     state.users = payload
-  }
+  },
 }
