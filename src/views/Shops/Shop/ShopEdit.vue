@@ -49,7 +49,6 @@
         id-key="specialisationId"
       />
     </div>
-    {{dto.getChangeDto()}}
     <delete-warn
       v-if="delInit"
       :dto="dto"
@@ -62,8 +61,7 @@
               @click="delInit = true">
         Удалить
       </button>
-      <button v-if="item" @click="editShop">Изменить</button>
-      <button v-else @click="addShop" :disabled='processing'>Добавить</button>
+      <button @click="item ? editShop() : addShop()" :disabled="processing">{{ item ? 'Изменить' : 'Добавить'}}</button>
     </div>
   </div>
 </template>
