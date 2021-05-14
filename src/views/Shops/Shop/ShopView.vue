@@ -12,7 +12,7 @@
 
     <div class="field-row">
       <div class="title">Лайфстайл:</div>
-      <div class="value">{{ dto.lifestyle?.name }}</div>
+      <div class="value">{{ getLifestyle(dto.lifestyle)?.name }}</div>
     </div>
 
     <div class="field-row">
@@ -38,6 +38,7 @@ import HttpAdapter, { ResponseModel } from '@/utils/httpAdapter'
 import { Shop } from '@/store/organisations/types'
 import { Specialisation } from '@/store/products/types'
 import { User } from '@/store/user/types'
+import { LifeStyle } from "@/store/types";
 
 export default class ShopView extends Vue {
   @Prop() item!: ResponseModel<Shop>
@@ -61,6 +62,10 @@ export default class ShopView extends Vue {
 
   getOwner(ownerId: number): User {
     return this.$store.state.users.find((user: User) => user.id === ownerId)
+  }
+
+  getLifestyle(lifestyleId: number): LifeStyle {
+    return this.$store.state.lifestyles.find((ls: LifeStyle) => ls.id ===  lifestyleId)
   }
 }
 </script>

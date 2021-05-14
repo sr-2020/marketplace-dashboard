@@ -39,6 +39,7 @@ export default class SrAutocomplete extends Vue {
   @Ref('dropdownRef') dropdownRef!: HTMLElement
   @Prop({ default: false }) single!: boolean
   @Prop({ default: [] }) options!: any[]
+  @Prop( {default: false}) filterDisabled!: boolean;
   @Prop({ default: '' }) idKey!: string
   @Prop({ default: [] }) value!: number[] | number | { [key: string]: any } | null
 
@@ -70,11 +71,12 @@ export default class SrAutocomplete extends Vue {
 
   onItemSelect(item: any) {
     if (this.single) {
-      this.$emit('change', item)
+      this.$emit('change', item[this.idKey])
       this.open = false
       if ('name' in item) {
         this.filter = item.name || ''
       }
+      return
     }
     if (this.value instanceof Array) {
       if (this.value.indexOf(item[this.idKey]) !== -1) {
@@ -120,6 +122,9 @@ export default class SrAutocomplete extends Vue {
   }
 
   get list() {
+    if(this.filterDisabled) {
+      return this.options
+    }
     return this.options.filter(el =>{
          return  new RegExp(this.filter).test(el.name)
     }

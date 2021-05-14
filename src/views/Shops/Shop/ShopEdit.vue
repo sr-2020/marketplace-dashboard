@@ -22,6 +22,7 @@
       <sr-autocomplete
         :options="lifestyles"
         :single="true"
+        :filter-disabled="true"
         id-key="id"
         :value="dto._lifestyle"
         @change="dto._lifestyle = $event"
@@ -35,7 +36,7 @@
         :options="users"
         :value="dto._owner"
         id-key="id"
-        @change="dto._owner = $event.id"
+        @change="dto._owner = $event"
       />
     </div>
 
@@ -48,7 +49,7 @@
         id-key="specialisationId"
       />
     </div>
-
+    {{dto.getChangeDto()}}
     <delete-warn
       v-if="delInit"
       :dto="dto"
