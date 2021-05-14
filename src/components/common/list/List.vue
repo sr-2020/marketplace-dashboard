@@ -1,10 +1,17 @@
 <template>
   <loader v-if="loading" />
-  <div class="row list-row" v-else>
+  <div class="row list-row"
+       v-else>
     <h2 class="col-m-3 title">
-      {{ listName }} <button v-if="isAddAllowed" @click="navigateToItem('add')">Добавить</button> <button v-if="false">Добавить пакетом</button>
+      {{ listName }}
+      <button v-if="isAddAllowed"
+              @click="navigateToItem('add')">
+        Добавить
+      </button>
+      <button v-if="false">Добавить пакетом</button>
     </h2>
-    <div class="col-m-3" v-if="list.length > 0">
+    <div class="col-m-3"
+         v-if="list.length > 0">
       <template v-if="listItem">
         <component
           v-for="i in list"
@@ -18,7 +25,8 @@
         Добавьте компонент списка
       </template>
     </div>
-    <div class="col-m-3" v-else-if="list.length === 0">
+    <div class="col-m-3"
+         v-else-if="list.length === 0">
       Данные отсутствуют
     </div>
   </div>
@@ -26,11 +34,9 @@
 
 <script lang="ts">
 import Loader from '@/components/shared/Loader.vue'
-import HttpAdapter from '@/utils/httpAdapter'
 import { Subject } from 'rxjs'
-import { takeUntil } from 'rxjs/operators'
 import { Options, Vue } from 'vue-class-component'
-import { updateEntity } from "@/utils/dictionaryService";
+import { updateEntity } from '@/utils/dictionaryService'
 
 @Options({
   components: { Loader }
@@ -38,34 +44,47 @@ import { updateEntity } from "@/utils/dictionaryService";
 export default class List<DataType> extends Vue {
   listItem!: unknown // TODO: Разобраться с типом и переписать позже
   loading = true
-  list: DataType[] = []
+  customList: DataType[] = []
+  key = ''
   listName = ''
   preventNavigation = false
   isAddAllowed = false
   private unsubscriber$ = new Subject<void>()
 
-  grabData( key: string) {
-    if(key && this.$store.state[key].length !== 0) {
-      this.list = this.$store.state[key]
+  private grabData() {
+    const store = this.$store
+    if (this.key && store.state[this.key].length !== 0) {
+
       this.loading = false
       return
     }
-    HttpAdapter.get<DataType[]>(['a-' + key])
-      .pipe(takeUntil(this.unsubscriber$))
-      .subscribe(
-        ({ data }) => {
-          this.loading = false
-          updateEntity<DataType[]>(key, this, () => this.list = data)
-        },
-        () => (this.loading = false)
-      )
+
+    updateEntity<DataType>(this.key, {
+      store,
+      callback: () => {
+        this.loading = false
+      }
+    })
   }
 
+  mounted() {
+    if(this.key) {
+      this.grabData()
+    }
+  }
+
+  get list(): DataType[] {
+    if(this.key) {
+      return  this.$store.state[this.key]
+    } else {
+      return this.customList
+    }
+  }
   navigateToItem(id: number | 'add') {
     if (this.preventNavigation) {
       return
     }
-    this.$router.push({ path: this.$route.path + `/${id}` })
+    this.$router.push({ path: this.$route.path + `/${ id }` })
   }
 
   destroyed() {
@@ -75,15 +94,16 @@ export default class List<DataType> extends Vue {
 }
 </script>
 
-<style scoped lang="less">
-@import "~@/assets/components/button";
+<style scoped
+       lang="less">
+@import '~@/assets/components/button';
 
 .list-row {
   .button();
+
   .title {
     display: flex;
     justify-content: space-between;
   }
 }
-
 </style>

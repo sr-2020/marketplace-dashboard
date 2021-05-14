@@ -11,7 +11,7 @@ export default class LogsList extends List<AlertMsg> {
   preventNavigation = true
 
   mounted() {
-    this.list = this.$store.state.logs.alerts
+    this.customList = this.$store.state.logs.alerts
     this.loading = false
   }
 }

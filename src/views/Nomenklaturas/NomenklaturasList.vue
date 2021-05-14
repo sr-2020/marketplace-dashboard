@@ -8,9 +8,6 @@ import { Options } from 'vue-class-component'
 export default class NomenklaturasList extends List<Nomenklatura> {
   listItem = NomenklaturasListItem
   listName = 'Номенклатуры'
-
-  mounted() {
-    this.grabData('nomenklaturas')
-  }
+  key = 'nomenklaturas'
 }
 </script>

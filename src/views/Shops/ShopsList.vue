@@ -9,9 +9,7 @@ export default class ShopsList extends List<Shop> {
   listItem = ShopsListItem
   isAddAllowed = true
   listName = 'Магазины'
+  key = 'shops'
 
-  mounted() {
-    this.grabData('shops')
-  }
 }
 </script>

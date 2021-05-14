@@ -9,9 +9,6 @@ export default class SpecialisationsList extends List<Specialisation> {
   listItem = SpecialisationsListItem
   listName = 'Специализации'
   isAddAllowed = true
-
-  mounted() {
-    this.grabData('specialisations' )
-  }
+  key = 'specialisations'
 }
 </script>

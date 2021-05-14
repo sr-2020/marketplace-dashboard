@@ -1,11 +1,9 @@
 <template>
-  <div id="app"
-       ref="rootOfApp">
+  <div id="app" ref="rootOfApp">
     <status-bar></status-bar>
     <nav-bar></nav-bar>
     <alert></alert>
-    <div class="content-wrapper"
-         :class="{ blur: !navBarHidden }">
+    <div class="content-wrapper" :class="{ blur: !navBarHidden }">
       <router-view />
     </div>
   </div>
@@ -36,10 +34,6 @@ import StatusBar from '@/components/common/StatusBar.vue'
 import NavBar from '@/components/common/NavBar.vue'
 import Alert from '@/components/shared/Alert.vue'
 import { Options, Vue } from 'vue-class-component'
-import { Specialisation } from '@/store/products/types'
-import { LifeStyle } from '@/store/types'
-import { User } from '@/store/user/types'
-import { updateEntity } from '@/utils/dictionaryService'
 
 @Options({
   components: {
@@ -49,12 +43,6 @@ import { updateEntity } from '@/utils/dictionaryService'
   }
 })
 export default class App extends Vue {
-  mounted() {
-    updateEntity<Specialisation>('specialisations', this)
-    updateEntity<LifeStyle>('lifestyles', this)
-    updateEntity<User>('users', this)
-  }
-
   get navBarHidden() {
     return this.$store.state.navbarState
   }

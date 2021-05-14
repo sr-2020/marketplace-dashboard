@@ -25,7 +25,7 @@ export const mutations: MutationTree<RootState> = {
   SET_SHOPS(state, payload: Shop[]) {
     state.shops = payload
   },
-  SET_NOMEMKLATURAS(state, payload: Nomenklatura[]) {
+  SET_NOMENKLATURAS(state, payload: Nomenklatura[]) {
     state.nomenklaturas = payload
   },
   SET_SPECIALISATIONS(state, payload: Specialisation[]) {

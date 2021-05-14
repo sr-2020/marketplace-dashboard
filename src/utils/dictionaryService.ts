@@ -1,17 +1,21 @@
-import { Vue } from 'vue-property-decorator'
 import HttpAdapter from '@/utils/httpAdapter'
+import { Store } from 'vuex'
 
 export function updateEntity<T>(
   name: string,
-  vueInstance: Vue,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  callback = () => {}
+  options: {
+    store: Store<any>;
+    force?: boolean;
+    callback?: (data: T[]) => void;
+  }
 ) {
-  const state = vueInstance.$store.state[name]
-  if (state.length === 0) {
+  const state = options.store.state[name]
+  if (state.length === 0 || options.force) {
     HttpAdapter.get<T[]>([`a-${name}`]).subscribe(({ data }) => {
-      vueInstance.$store.commit(`SET_${name.toUpperCase()}`, data)
-      callback()
+      options.store.commit(`SET_${name.toUpperCase()}`, data)
+      if (options.callback) {
+        options.callback(data)
+      }
     })
   }
 }
