@@ -1,6 +1,7 @@
 import { BaseEntity, BaseNamedEntity } from '../types'
 
 export interface UserState extends BaseNamedEntity {
+  id: number;
   name: string;
   modelId: number;
   rights?: UserRights;
@@ -8,6 +9,7 @@ export interface UserState extends BaseNamedEntity {
 }
 
 export interface User extends BaseNamedEntity {
+  id: number;
   name: string;
   modelId: number;
   rights?: UserRights;

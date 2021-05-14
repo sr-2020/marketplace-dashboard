@@ -12,20 +12,18 @@
 
     <div class="field-row">
       <div class="title">Лайфстайл:</div>
-      <div class="value">{{ dto.lifestyle?.name }}</div>
+      <div class="value">{{ getLifestyle(dto.lifestyle)?.name }}</div>
     </div>
 
     <div class="field-row">
       <div class="title">Владелец:</div>
-      <div class="value">{{ getOwner(dto.owner.name) }}</div>
+      <div class="value">{{ getOwner(dto.owner)?.name }}</div>
     </div>
 
-    <div class="field-row"
-         v-if="dto.specialisations">
+    <div class="field-row" v-if="dto.specialisations">
       <div class="title">Специализации:</div>
       <div class="value">
-        <div v-for="(id, idx) of dto.specialisations"
-             :key="idx">
+        <div v-for="(id, idx) of dto.specialisations" :key="idx">
           {{ getSpec(id) }}
         </div>
       </div>
@@ -39,7 +37,8 @@ import { ShopDTO } from '@/views/Shops/Shop/ShopDTO'
 import HttpAdapter, { ResponseModel } from '@/utils/httpAdapter'
 import { Shop } from '@/store/organisations/types'
 import { Specialisation } from '@/store/products/types'
-import { UserState } from "@/store/user/types";
+import { User } from '@/store/user/types'
+import { LifeStyle } from "@/store/types";
 
 export default class ShopView extends Vue {
   @Prop() item!: ResponseModel<Shop>
@@ -48,6 +47,7 @@ export default class ShopView extends Vue {
 
   mounted() {
     this.dto = new ShopDTO(this.item)
+
     HttpAdapter.get<Specialisation[]>(['a-specialisations']).subscribe(
       ({ data }) => {
         this.specialisations = data
@@ -60,15 +60,17 @@ export default class ShopView extends Vue {
     return spec ? spec.name : ''
   }
 
-  getOwner(owner: UserState) {
-    return owner ? owner.name : ''
+  getOwner(ownerId: number): User {
+    return this.$store.state.users.find((user: User) => user.id === ownerId)
+  }
+
+  getLifestyle(lifestyleId: number): LifeStyle {
+    return this.$store.state.lifestyles.find((ls: LifeStyle) => ls.id ===  lifestyleId)
   }
 }
 </script>
 
-<style scoped
-       lang="less">
-
+<style scoped lang="less">
 .field-table {
   display: table-row;
 }

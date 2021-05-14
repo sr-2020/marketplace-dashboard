@@ -1,8 +1,7 @@
 import { BaseNamedEntity, LifeStyle } from "../types";
-import { UserState } from '../user/types'
 
 export interface Organisation extends BaseNamedEntity {
-  owner?: UserState;
+  owner?: number;
 }
 
 //its immutable entity

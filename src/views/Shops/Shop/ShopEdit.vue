@@ -22,6 +22,7 @@
       <sr-autocomplete
         :options="lifestyles"
         :single="true"
+        :filter-disabled="true"
         id-key="id"
         :value="dto._lifestyle"
         @change="dto._lifestyle = $event"
@@ -34,7 +35,7 @@
         :single="true"
         :options="users"
         :value="dto._owner"
-        id-key="modelId"
+        id-key="id"
         @change="dto._owner = $event"
       />
     </div>
@@ -48,7 +49,6 @@
         id-key="specialisationId"
       />
     </div>
-
     <delete-warn
       v-if="delInit"
       :dto="dto"
@@ -61,8 +61,7 @@
               @click="delInit = true">
         Удалить
       </button>
-      <button v-if="item" @click="editShop">Изменить</button>
-      <button v-else @click="addShop" :disabled='processing'>Добавить</button>
+      <button @click="item ? editShop() : addShop()" :disabled="processing">{{ item ? 'Изменить' : 'Добавить'}}</button>
     </div>
   </div>
 </template>
@@ -77,7 +76,6 @@ import DeleteWarn from '@/components/shared/DeleteWarn.vue'
 import SrAutocomplete from '@/components/shared/Autocomplete.vue'
 import { AlertController } from '@/utils/alertService'
 import { Specialisation } from '@/store/products/types'
-import { RootMutations } from '@/store/mutations'
 import { LifeStyle } from '@/store/types'
 import { User } from '@/store/user/types'
 
@@ -92,29 +90,6 @@ export default class ShopEdit extends Vue {
 
   mounted() {
     this.dto = new ShopDTO(this?.item)
-    const storeSpecialisations = this.$store.state.specialisations
-    const storeLifestyles = this.$store.state.lifestyles
-    const storeUsers = this.$store.state.users
-
-    if (storeSpecialisations.length === 0) {
-      HttpAdapter.get<Specialisation[]>([
-        'a-specialisations'
-      ]).subscribe(({ data }) =>
-        this.$store.commit(RootMutations.SET_SPECIALISATIONS, data)
-      )
-    }
-
-    if (storeLifestyles.length === 0) {
-      HttpAdapter.get<LifeStyle[]>(['a-lifestyles']).subscribe(({ data }) =>
-        this.$store.commit(RootMutations.SET_LIFESTYLES, data)
-      )
-    }
-
-    if (storeUsers.length === 0) {
-      HttpAdapter.get<User[]>(['a-users']).subscribe(({ data }) =>
-        this.$store.commit(RootMutations.SET_USERS, data)
-      )
-    }
   }
 
   get specialisations(): Specialisation[] {
@@ -152,6 +127,7 @@ export default class ShopEdit extends Vue {
       this.errorHandler
     )
   }
+
   deleteShop() {
     if(this.dto) {
       HttpAdapter.delete(['a-del-shop'], { shopid: this.dto.id}).subscribe(

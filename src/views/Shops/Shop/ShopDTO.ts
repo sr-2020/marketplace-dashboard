@@ -1,7 +1,5 @@
 import { ResponseModel } from '@/utils/httpAdapter'
 import { Shop } from '@/store/organisations/types'
-import { UserState } from '@/store/user/types'
-import { LifeStyle } from "@/store/types";
 
 export class ShopDTO {
   rawData: Shop | undefined
@@ -10,7 +8,7 @@ export class ShopDTO {
     return this._balance
   }
 
-  get lifestyle(): LifeStyle | undefined {
+  get lifestyle(): number | null{
     return this._lifestyle
   }
 
@@ -18,7 +16,7 @@ export class ShopDTO {
     return this._specialisations
   }
 
-  get owner(): UserState | null{
+  get owner(): number | null{
     return this._owner
   }
 
@@ -32,9 +30,9 @@ export class ShopDTO {
 
   _id = 0
   _name = ''
-  _owner: UserState | null = null
+  _owner: number | null = null
   _specialisations?: number[] = []
-  _lifestyle: LifeStyle = {}
+  _lifestyle: number | null = null
   _balance = 0
 
   constructor( resp: ResponseModel<Shop> | undefined) {
@@ -47,7 +45,7 @@ export class ShopDTO {
     this._name = data?.name || ''
     this._owner = data?.owner || null
     this._balance = data?.balance || 0
-    this._lifestyle = data?.lifestyle || {}
+    this._lifestyle = data?.lifestyle?.id || null
     this._specialisations = data?.specialisations || []
   }
 
@@ -60,8 +58,8 @@ export class ShopDTO {
       shopId: this.id,
       name: this.name,
       balance: this.balance,
-      owner: Number(this.owner?.modelId) || null,
-      lifestyle: this.lifestyle?.id || null,
+      owner: this.owner || null,
+      lifestyle: this.lifestyle || null,
       specialisations: this.specialisations
     }
   }
@@ -70,8 +68,8 @@ export class ShopDTO {
     return {
       name: this.name,
       balance: this.balance,
-      owner: this.owner?.modelId || null,
-      lifestyle: this.lifestyle?.id || null,
+      owner: this.owner || null,
+      lifestyle: this.lifestyle || null,
       specialisations: this.specialisations
     }
   }
