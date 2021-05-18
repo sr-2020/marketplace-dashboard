@@ -1,10 +1,10 @@
-import { Observable } from 'rxjs'
+import { EMPTY, Observable } from 'rxjs'
 import { fromPromise } from 'rxjs/internal-compatibility'
-import { pluck } from 'rxjs/operators'
-import axios, { AxiosRequestConfig } from 'axios'
+import { catchError, pluck } from 'rxjs/operators'
+import axios, { AxiosError, AxiosRequestConfig } from "axios";
 
-export interface ResponseModel<Model> {
-  data: Model;
+export interface ResponseModel<M> {
+  data: M;
   status: boolean;
   message: string | null;
 }
@@ -21,7 +21,7 @@ export default class HttpAdapter {
         ...this.getOptions(),
         params,
       })
-    ).pipe(pluck('data'))
+    ).pipe(catchError(this._unauthorizedResolver), pluck('data'))
   }
 
   static delete<R>(
@@ -35,7 +35,7 @@ export default class HttpAdapter {
           params,
         }
       )
-    ).pipe(pluck('data'))
+    ).pipe(catchError(this._unauthorizedResolver), pluck('data'))
   }
 
   static patch<P, R>(
@@ -47,7 +47,7 @@ export default class HttpAdapter {
         HttpAdapter._convertCommandsToUri(commands),
         payload
       )
-    ).pipe(pluck('data'))
+    ).pipe(catchError(this._unauthorizedResolver), pluck('data'))
   }
 
   static post<P, R>(
@@ -59,17 +59,29 @@ export default class HttpAdapter {
         HttpAdapter._convertCommandsToUri(commands),
         payload
       )
-    ).pipe(pluck('data'))
+    ).pipe(catchError(this._unauthorizedResolver), pluck('data'))
   }
 
   private static getOptions(): AxiosRequestConfig {
-    const header = {
-      'x-user-id': '44043',
+    const headers: { [key: string]: any } = {}
+
+    if (process.env.NODE_ENV === 'development') {
+      headers["x-user-id"] = '44043'
     }
-    return { ...header, withCredentials: true }
+
+    return { headers, withCredentials: true }
   }
 
   private static _convertCommandsToUri(commands: string[]): string {
     return HttpAdapter._endpoint + commands.join('/')
+  }
+
+  private static _unauthorizedResolver<R>(err: AxiosError<ResponseModel<R>>) {
+    console.log(err)
+    if(err.response?.status === 403) {
+      const redirectedFrom = document.location.href
+      document.location.href = `http://web.evarun.ru/login?externalUrl=${redirectedFrom}`
+    }
+    return EMPTY
   }
 }

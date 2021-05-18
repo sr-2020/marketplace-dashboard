@@ -7,8 +7,11 @@ export interface ProductType extends BaseNamedEntity {
 }
 
 export interface Specialisation extends ProductType {
+  productTypeId: number;
+  productTypeName: string;
   specialisationName: string;
   specialisationId: number;
+  instantConsume: boolean;
 }
 
 export interface Nomenklatura extends Specialisation {

@@ -10,6 +10,5 @@ export default class ShopsList extends List<Shop> {
   isAddAllowed = true
   listName = 'Магазины'
   key = 'shops'
-
 }
 </script>

@@ -78,7 +78,6 @@ import { AlertController } from '@/utils/alertService'
 import { Specialisation } from '@/store/products/types'
 import { LifeStyle } from '@/store/types'
 import { User } from '@/store/user/types'
-import { updateEntity } from "@/utils/dictionaryService";
 
 @Options({
   components: { DeleteWarn, SrAutocomplete }
@@ -91,10 +90,6 @@ export default class ShopEdit extends Vue {
 
   mounted() {
     this.dto = new ShopDTO(this?.item)
-    const store = this.$store
-    updateEntity<Specialisation>('specialisations', { store })
-    updateEntity<LifeStyle>('lifestyles', { store })
-    updateEntity<User>('users', { store })
   }
 
   get specialisations(): Specialisation[] {
