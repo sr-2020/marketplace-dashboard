@@ -44,8 +44,7 @@
           @change="dto._lifestyle = $event"
         />
       </div>
-{{dto._lifestyle}}
-      {{dto.getAddDto()}}
+
       <div class="form-field">
         <label>Владелец: </label>
         <sr-autocomplete
