@@ -1,68 +1,95 @@
 <template>
-  <div class="edit-window" v-if="dto">
+  <div class="edit-window"
+       v-if="dto">
     <h2 v-if="!item">Добавление магазина</h2>
+    <template v-if="locationStep">
+      <h3>Введите локацию</h3>
+      <div class="form-field">
+        <label>Локация</label>
+        <input v-model="dto._location" />
+        <button @click="locationStep = false"
+                :disabled="!dto._location">
+                Далее
+        </button>
+      </div>
+    </template>
+    <template v-else>
+      <div class="form-field"
+           v-if="dto.id !== 0">
+        <label>ID: {{ dto.id }}</label>
+      </div>
 
-    <div class="form-field">
-      <label v-if="dto.id !== 0">ID: {{ dto.id }}</label>
-    </div>
+      <div class="form-field">
+        <label>Локация: {{ dto.location ? dto.location : 'Локация отсутствует' }}</label>
+      </div>
 
-    <div class="form-field">
-      <label>Название: </label>
-      <input v-model="dto._name" />
-    </div>
+      <div class="form-field">
+        <label>Название: </label>
+        <input v-model="dto._name" />
+      </div>
 
-    <div class="form-field">
-      <label>Баланс: </label>
-      <input v-model="dto._balance" />
-    </div>
+      <div class="form-field">
+        <label>Баланс: </label>
+        <input v-model="dto._balance" />
+      </div>
 
-    <div class="form-field">
-      <label>Лайфстайл: </label>
-      <sr-autocomplete
-        :options="lifestyles"
-        :single="true"
-        :filter-disabled="true"
-        id-key="id"
-        :value="dto._lifestyle"
-        @change="dto._lifestyle = $event"
+      <div class="form-field">
+        <label>Лайфстайл: </label>
+        <sr-autocomplete
+          :options="lifestyles"
+          :single="true"
+          :filter-disabled="true"
+          id-key="id"
+          :value="dto._lifestyle"
+          @change="dto._lifestyle = $event"
+        />
+      </div>
+{{dto._lifestyle}}
+      {{dto.getAddDto()}}
+      <div class="form-field">
+        <label>Владелец: </label>
+        <sr-autocomplete
+          :single="true"
+          :options="users"
+          :value="dto._owner"
+          id-key="id"
+          @change="dto._owner = $event"
+        />
+      </div>
+
+      <div class="form-field">
+        <label>Специализации: </label>
+        <sr-autocomplete
+          :value="dto._specialisations"
+          @change="dto._specialisations = $event"
+          :options="specialisations"
+          id-key="specialisationId"
+        />
+      </div>
+
+      <div class="form-field">
+        <label>Комментарий: </label>
+        <textarea v-model="dto._comment" />
+      </div>
+
+      <delete-warn
+        v-if="delInit"
+        :dto="dto"
+        entity-name="магазин"
+        @accept="deleteShop"
+        @decline="delInit = false"
       />
-    </div>
-
-    <div class="form-field">
-      <label>Владелец: </label>
-      <sr-autocomplete
-        :single="true"
-        :options="users"
-        :value="dto._owner"
-        id-key="id"
-        @change="dto._owner = $event"
-      />
-    </div>
-
-    <div class="form-field">
-      <label>Специализации: </label>
-      <sr-autocomplete
-        :value="dto._specialisations"
-        @change="dto._specialisations = $event"
-        :options="specialisations"
-        id-key="specialisationId"
-      />
-    </div>
-    <delete-warn
-      v-if="delInit"
-      :dto="dto"
-      entity-name="магазин"
-      @accept="deleteShop"
-      @decline="delInit = false"
-    />
-    <div class="actions">
-      <button v-if="item && !delInit" @click="delInit = true">
-        Удалить
-      </button>
-      <button @click="item ? editShop() : addShop()" :disabled="processing">
-        {{ item ? 'Изменить' : 'Добавить' }}
-      </button>
-    </div>
+      <div class="actions">
+        <button v-if="item && !delInit"
+                @click="delInit = true">
+          Удалить
+        </button>
+        <button @click="item ? editShop() : addShop()"
+                :disabled="processing">
+          {{ item ? 'Изменить' : 'Добавить' }}
+        </button>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -84,11 +111,16 @@ import { User } from '@/store/user/types'
 })
 export default class ShopEdit extends Vue {
   @Prop() item!: ResponseModel<Shop>
+  @Prop() isAdd!: boolean
+  locationStep = false
   delInit = false
   dto: null | ShopDTO = null
   processing = false
 
   mounted() {
+    if (this.isAdd) {
+      this.locationStep = true
+    }
     this.dto = new ShopDTO(this?.item)
   }
 
@@ -131,7 +163,7 @@ export default class ShopEdit extends Vue {
         () => {
           AlertController.addAlert(
             'Успешно',
-            `Магазин с ID: ${this.dto?.id} удален`,
+            `Магазин с ID: ${ this.dto?.id } удален`,
             'success'
           )
           this.delInit = false
@@ -148,7 +180,8 @@ export default class ShopEdit extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less"
+       scoped>
 @import '~@/assets/components/edit-styles';
 
 .edit-window {

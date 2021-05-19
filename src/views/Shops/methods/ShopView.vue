@@ -6,6 +6,11 @@
     </div>
 
     <div class="field-row">
+      <div class="title">Локация:</div>
+      <div class="value">{{ dto.location ? dto.location : 'Локация отсутствует' }}</div>
+    </div>
+
+    <div class="field-row">
       <div class="title">Название:</div>
       <div class="value">{{ dto.name }}</div>
     </div>
@@ -27,6 +32,11 @@
           {{ getSpec(id) }}
         </div>
       </div>
+    </div>
+
+    <div class="field-row">
+      <div class="title">Комментарий:</div>
+      <div class="value">{{ dto.comment }}</div>
     </div>
   </div>
 </template>

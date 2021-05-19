@@ -1,7 +1,7 @@
 import { EMPTY, Observable } from 'rxjs'
 import { fromPromise } from 'rxjs/internal-compatibility'
 import { catchError, pluck } from 'rxjs/operators'
-import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosRequestConfig } from 'axios'
 
 export interface ResponseModel<M> {
   data: M;
@@ -32,6 +32,7 @@ export default class HttpAdapter {
       axios.delete<ResponseModel<R>>(
         HttpAdapter._convertCommandsToUri(commands),
         {
+          ...this.getOptions(),
           params,
         }
       )
@@ -45,7 +46,10 @@ export default class HttpAdapter {
     return fromPromise(
       axios.patch<ResponseModel<R>>(
         HttpAdapter._convertCommandsToUri(commands),
-        payload
+        payload,
+        {
+          ...this.getOptions(),
+        }
       )
     ).pipe(catchError(this._unauthorizedResolver), pluck('data'))
   }
@@ -57,7 +61,10 @@ export default class HttpAdapter {
     return fromPromise(
       axios.post<ResponseModel<R>>(
         HttpAdapter._convertCommandsToUri(commands),
-        payload
+        payload,
+        {
+          ...this.getOptions(),
+        }
       )
     ).pipe(catchError(this._unauthorizedResolver), pluck('data'))
   }
@@ -78,9 +85,9 @@ export default class HttpAdapter {
 
   private static _unauthorizedResolver<R>(err: AxiosError<ResponseModel<R>>) {
     console.log(err)
-    if(err.response?.status === 403) {
+    if (err.response?.status === 403) {
       const redirectedFrom = document.location.href
-      document.location.href = `http://web.evarun.ru/login?externalUrl=${redirectedFrom}`
+      // document.location.href = `http://web.evarun.ru/login?externalUrl=${redirectedFrom}`
     }
     return EMPTY
   }
