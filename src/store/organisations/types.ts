@@ -11,6 +11,8 @@ export interface Corporation extends Organisation {
 
 export interface Shop extends Organisation {
   lifestyle: LifeStyle;
+  comment: string | null;
   balance: number;
+  location: string | null;
   specialisations?: number[];
 }

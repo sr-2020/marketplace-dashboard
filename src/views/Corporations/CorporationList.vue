@@ -8,9 +8,6 @@ import { Options } from 'vue-class-component'
 export default class CorporationList extends List<Corporation> {
   listItem = CorporationListItem
   listName = 'Корпорации'
-
-  mounted() {
-    this.grabData(['a-corporations'])
-  }
+  key = 'corporations'
 }
 </script>

@@ -8,10 +8,7 @@ import { Options } from 'vue-class-component'
 export default class SpecialisationsList extends List<Specialisation> {
   listItem = SpecialisationsListItem
   listName = 'Специализации'
-  preventNavigation = true
-
-  mounted() {
-    this.grabData(['a-specialisations'])
-  }
+  isAddAllowed = true
+  key = 'specialisations'
 }
 </script>

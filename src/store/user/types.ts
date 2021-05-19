@@ -1,13 +1,5 @@
 import { BaseEntity, BaseNamedEntity } from '../types'
 
-export interface UserState extends BaseNamedEntity {
-  id: number;
-  name: string;
-  modelId: number;
-  rights?: UserRights;
-  balance?: number;
-}
-
 export interface User extends BaseNamedEntity {
   id: number;
   name: string;

@@ -6,8 +6,6 @@ import SkusListItem from './SkusListItem.vue'
 export default class SkusList extends List<Sku> {
   listItem = SkusListItem
   listName = 'SKU'
-  mounted() {
-    this.grabData(['a-skus'])
-  }
+  key = 'skus'
 }
 </script>

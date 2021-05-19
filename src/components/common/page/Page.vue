@@ -12,6 +12,7 @@
          v-if="isEditable">
       <component v-if="editComponent"
                  :is="editComponent"
+                 :is-add="isAdd"
                  :item="item" />
     </div>
     <div class="col-m-3"

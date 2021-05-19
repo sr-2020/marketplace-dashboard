@@ -6,6 +6,11 @@
     </div>
 
     <div class="field-row">
+      <div class="title">Локация:</div>
+      <div class="value">{{ dto.location ? dto.location : 'Локация отсутствует' }}</div>
+    </div>
+
+    <div class="field-row">
       <div class="title">Название:</div>
       <div class="value">{{ dto.name }}</div>
     </div>
@@ -28,35 +33,33 @@
         </div>
       </div>
     </div>
+
+    <div class="field-row">
+      <div class="title">Комментарий:</div>
+      <div class="value">{{ dto.comment }}</div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Prop, Vue } from 'vue-property-decorator'
-import { ShopDTO } from '@/views/Shops/Shop/ShopDTO'
-import HttpAdapter, { ResponseModel } from '@/utils/httpAdapter'
+import { ShopDTO } from '@/views/Shops/methods/ShopDTO'
+import { ResponseModel } from '@/utils/httpAdapter'
 import { Shop } from '@/store/organisations/types'
-import { Specialisation } from '@/store/products/types'
 import { User } from '@/store/user/types'
 import { LifeStyle } from "@/store/types";
+import { Specialisation } from "@/store/products/types";
 
 export default class ShopView extends Vue {
   @Prop() item!: ResponseModel<Shop>
   dto = {}
-  specialisations: Specialisation[] = []
 
   mounted() {
     this.dto = new ShopDTO(this.item)
-
-    HttpAdapter.get<Specialisation[]>(['a-specialisations']).subscribe(
-      ({ data }) => {
-        this.specialisations = data
-      }
-    )
   }
 
   getSpec(id: number) {
-    const spec = this.specialisations.find(el => el.specialisationId === id)
+    const spec = this.$store.state.specialisations.find((el: Specialisation) => el.specialisationId === id)
     return spec ? spec.name : ''
   }
 

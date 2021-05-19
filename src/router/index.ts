@@ -71,12 +71,8 @@ const routes: Array<RouteRecordRaw> = [
     component: Logs,
   },
   {
-    path: '/404',
+    path: '/:pathMatch(.*)*',
     component: NotFound,
-  },
-  {
-    path: '/*',
-    redirect: '/404',
   },
 ]
 
