@@ -4,7 +4,6 @@ import Corporations from '@/views/Corporations/Corporations.vue'
 import Shops from '@/views/Shops/Shops.vue'
 import Specialisations from '@/views/Specialisations/Specialisations.vue'
 import ShopsList from '@/views/Shops/ShopsList.vue'
-import Actions from '@/views/Actions.vue'
 import NotFound from '@/components/common/NotFound.vue'
 import CorporationList from '@/views/Corporations/CorporationList.vue'
 import SpecialisationsList from '@/views/Specialisations/SpecialisationsList.vue'
@@ -22,24 +21,25 @@ function getChildRoutes(list: any, page: any): RouteRecordRaw[] {
   return [
     {
       path: '',
-      component: list,
+      component: list
     },
     {
       path: 'add',
       meta: { add: true },
-      component: page,
+      component: page
     },
     {
       path: ':id',
-      component: page,
-    },
+      component: page
+    }
   ]
 }
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    component: Actions,
+    redirect: '/shops',
+    // component: Actions,
   },
   {
     path: '/shops',

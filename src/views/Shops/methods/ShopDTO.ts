@@ -67,13 +67,8 @@ export class ShopDTO {
 
   public getChangeDto() {
     return {
-      balance: this.balance,
-      comment: this.comment,
-      lifestyle: this.lifestyle || null,
-      name: this.name,
-      owner: this.owner || null,
       shopId: this.id,
-      specialisations: this.specialisations
+      ...this.getAddDto()
     }
   }
 

@@ -9,7 +9,7 @@
         <input v-model="dto._location" />
         <button @click="locationStep = false"
                 :disabled="!dto._location">
-                Далее
+          Далее
         </button>
       </div>
     </template>
@@ -20,7 +20,10 @@
       </div>
 
       <div class="form-field">
-        <label>Локация: {{ dto.location ? dto.location : 'Локация отсутствует' }}</label>
+        <label
+        >Локация:
+          {{ dto.location ? dto.location : 'Локация отсутствует' }}</label
+        >
       </div>
 
       <div class="form-field">
@@ -104,6 +107,7 @@ import { AlertController } from '@/utils/alertService'
 import { Specialisation } from '@/store/products/types'
 import { LifeStyle } from '@/store/types'
 import { User } from '@/store/user/types'
+import { updateEntity } from '@/utils/dictionaryService'
 
 @Options({
   components: { DeleteWarn, SrAutocomplete }
@@ -137,21 +141,16 @@ export default class ShopEdit extends Vue {
 
   addShop() {
     this.processing = true
-    HttpAdapter.post(['a-add-shop'], this.dto?.getAddDto()).subscribe(() => {
-      this.processing = false
-      AlertController.addAlert('Магазин добавлен успешно', '', 'success')
-      this.$router.push('/shops')
-    }, this.errorHandler)
+    HttpAdapter.post(['a-add-shop'], this.dto?.getAddDto()).subscribe(
+      () => this.onActionSuccess('Магазин добавлен'),
+      this.errorHandler
+    )
   }
 
   editShop() {
     this.processing = true
     HttpAdapter.patch(['a-edit-shop'], this.dto?.getChangeDto()).subscribe(
-      () => {
-        this.processing = false
-        AlertController.addAlert('Магазин изменен успешно', '', 'success')
-        this.$router.push(`/shops`)
-      },
+      () => this.onActionSuccess('Магазин изменен'),
       this.errorHandler
     )
   }
@@ -159,17 +158,17 @@ export default class ShopEdit extends Vue {
   deleteShop() {
     if (this.dto) {
       HttpAdapter.delete(['a-del-shop'], { shopid: this.dto.id }).subscribe(
-        () => {
-          AlertController.addAlert(
-            'Успешно',
-            `Магазин с ID: ${ this.dto?.id } удален`,
-            'success'
-          )
-          this.delInit = false
-        },
+        () => this.onActionSuccess(`Магазин с ID: ${ this.dto?.id } удален`),
         this.errorHandler
       )
     }
+  }
+
+  private onActionSuccess(msg: string) {
+    AlertController.addAlert('Успешно', msg, 'success')
+    this.delInit = this.processing = false
+    updateEntity('shops', { store: this.$store })
+    this.$router.push(`/shops`)
   }
 
   errorHandler(err: ResponseModel<any>) {
