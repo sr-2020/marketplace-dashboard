@@ -89,8 +89,10 @@ import DeleteWarn from '@/components/shared/DeleteWarn.vue'
 import SrAutocomplete from '@/components/shared/Autocomplete.vue'
 import { AlertController } from '@/utils/alertService'
 import { Nomenklatura, Specialisation } from '@/store/products/types'
-import { NomenklaturaDTO } from '@/views/Nomenklaturas/Methods/NomenklaturaDTO'
+import { NomenklaturaDTO } from '@/views/Nomenklaturas/methods/NomenklaturaDTO'
 import { LifeStyle } from '@/store/types'
+import { updateEntity } from "@/utils/dictionaryService";
+import Nomenklaturas from "@/views/Nomenklaturas/Nomenklaturas.vue";
 
 @Options({
   components: { DeleteWarn, SrAutocomplete }
@@ -136,7 +138,7 @@ export default class NomenklaturaEdit extends Vue {
   deleteEntity() {
     if (this.dto) {
       HttpAdapter.delete(['a-del-nomenklatura'], {
-        specialisationid: this.dto.id
+        nomenklaturaid: this.dto.id
       }).subscribe(
         () =>
           this.onActionSuccess(`Номенклатура с ID: ${ this.dto?.id } удалена`),
@@ -147,8 +149,9 @@ export default class NomenklaturaEdit extends Vue {
 
   private onActionSuccess(msg: string) {
     AlertController.addAlert('Успешно', msg, 'success')
+    updateEntity<Nomenklaturas>('nomenklaturas', { store: this.$store, force: true })
     this.delInit = this.processing = false
-    this.$router.push(`/specs`)
+    this.$router.push(`/nomenklaturas`)
   }
 
   errorHandler(err: ResponseModel<any>) {

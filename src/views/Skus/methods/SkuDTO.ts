@@ -12,22 +12,28 @@ export class SkuDTO {
     return this._name
   }
 
-  get nomenclatureId(): number {
-    return this._nomenclatureId
+  get nomenklaturaId(): number {
+    return this._nomenklaturaId
   }
 
   get corporationId(): number {
     return this._corporationId;
   }
+
   get count(): number {
     return this._count;
   }
 
+  get enabled(): boolean {
+    return this._enabled;
+  }
+
   _id = 0
   _name = ''
-  _nomenclatureId = 0
+  _nomenklaturaId = 0
   _count = 0
   _corporationId = 0
+  _enabled = false
 
   constructor(resp: ResponseModel<Sku> | undefined) {
     this.rawData = resp?.data
@@ -39,7 +45,8 @@ export class SkuDTO {
     this._name = data?.name || ''
     this._count = data?.count || 0
     this._corporationId = data?.corporationId || 0
-    this._nomenclatureId = data?.nomenklaturaId || 0
+    this._nomenklaturaId = data?.nomenklaturaId || 0
+    this._enabled = data?.enabled || false
   }
 
   public reset() {
@@ -55,7 +62,11 @@ export class SkuDTO {
 
   public getAddDto() {
     return {
-      name: this.name
+      name: this.name,
+      nomenklaturaId: this.nomenklaturaId,
+      corporationId: this.corporationId,
+      count: this.count,
+      enabled: this.enabled
     }
   }
 }

@@ -49,6 +49,7 @@ import SrAutocomplete from '@/components/shared/Autocomplete.vue'
 import { AlertController } from '@/utils/alertService'
 import { SpecialisationDTO } from '@/views/Specialisations/methods/SpecialisationDTO'
 import { ProductType, Specialisation } from '@/store/products/types'
+import { updateEntity } from "@/utils/dictionaryService";
 
 @Options({
   components: { DeleteWarn, SrAutocomplete }
@@ -102,6 +103,10 @@ export default class SpecialisationEdit extends Vue {
   private onActionSuccess(msg: string) {
     AlertController.addAlert('Успешно', msg, 'success')
     this.delInit = this.processing = false
+    updateEntity<Specialisation>('specialisations', {
+      store: this.$store,
+      force: true
+    })
     this.$router.push(`/specs`)
   }
 

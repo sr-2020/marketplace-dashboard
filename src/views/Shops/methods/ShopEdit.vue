@@ -102,6 +102,7 @@ import { AlertController } from '@/utils/alertService'
 import { Specialisation } from '@/store/products/types'
 import { LifeStyle } from '@/store/types'
 import { User } from '@/store/user/types'
+import { updateEntity } from "@/utils/dictionaryService";
 
 @Options({
   components: { DeleteWarn, SrAutocomplete }
@@ -160,6 +161,7 @@ export default class ShopEdit extends Vue {
 
   private onActionSuccess(msg: string) {
     AlertController.addAlert('Успешно', msg, 'success')
+    updateEntity<Shop>('shops', {store: this.$store, force: true})
     this.delInit = this.processing = false
     this.$router.push(`/shops`)
   }

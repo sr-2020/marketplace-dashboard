@@ -11,6 +11,37 @@
       <input v-model="dto._name" />
     </div>
 
+    <div class="form-field">
+      <label>Количество: </label>
+      <input v-model="dto._count" />
+    </div>
+
+    <div class="form-field">
+      <label>Номенклатура: </label>
+      <sr-autocomplete
+        :single="true"
+        :options="nomenklaturas"
+        :value="dto._nomenklaturaId"
+        id-key="id"
+        @change="dto._nomenklatureId = $event"
+      />
+    </div>
+
+    <div class="form-field">
+      <label>Корпорация: </label>
+      <sr-autocomplete
+        :single="true"
+        :options="corporations"
+        :value="dto._corporationId"
+        id-key="id"
+        @change="dto._corporationId = $event"
+      />
+    </div>
+
+    <div class="form-field">
+      <label> Активна: <input v-model="dto._enabled" type="checkbox"/></label>
+    </div>
+
     <delete-warn
       v-if="delInit"
       :dto="dto"
@@ -37,7 +68,9 @@ import DeleteWarn from '@/components/shared/DeleteWarn.vue'
 import SrAutocomplete from '@/components/shared/Autocomplete.vue'
 import { AlertController } from '@/utils/alertService'
 import { SkuDTO } from '@/views/Skus/methods/SkuDTO'
-import { ProductType, Sku } from '@/store/products/types'
+import { Nomenklatura, Sku } from '@/store/products/types'
+import { Corporation } from '@/store/organisations/types'
+import { updateEntity } from '@/utils/dictionaryService'
 
 @Options({
   components: { DeleteWarn, SrAutocomplete }
@@ -53,8 +86,12 @@ export default class SkuEdit extends Vue {
     this.dto = new SkuDTO(this?.item)
   }
 
-  get productTypes(): ProductType[] {
-    return this.$store.state.producttypes
+  get nomenklaturas(): Nomenklatura[] {
+    return this.$store.state.nomenklaturas
+  }
+
+  get corporations(): Corporation[] {
+    return this.$store.state.corporations
   }
 
   add() {
@@ -76,7 +113,7 @@ export default class SkuEdit extends Vue {
   deleteEntity() {
     if (this.dto) {
       HttpAdapter.delete(['a-del-sku'], {
-        specialisationid: this.dto.id
+        skuid: this.dto.id
       }).subscribe(
         () => this.onActionSuccess(`Товар с ID: ${this.dto?.id} удален`),
         this.errorHandler
@@ -86,8 +123,9 @@ export default class SkuEdit extends Vue {
 
   private onActionSuccess(msg: string) {
     AlertController.addAlert('Успешно', msg, 'success')
+    updateEntity<Sku>('skus', { store: this.$store, force: true })
     this.delInit = this.processing = false
-    this.$router.push(`/specs`)
+    this.$router.push(`/skus`)
   }
 
   errorHandler(err: ResponseModel<any>) {
