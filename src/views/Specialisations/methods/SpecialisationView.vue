@@ -9,36 +9,45 @@
       <div class="title">Название:</div>
       <div class="value">{{ dto.name }}</div>
     </div>
+
+    <div class="field-row">
+      <div class="title">ProductType:</div>
+      <div class="value">{{ getProductType(dto.productTypeId)?.name }}</div>
+    </div>
+
+    <div class="field-row">
+      <div class="title">Используется мгновенно:</div>
+      <div class="value">{{ dto.instantConsume ? 'да' : 'нет' }}</div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Prop, Vue } from 'vue-property-decorator'
 import { ResponseModel } from '@/utils/httpAdapter'
-import { Specialisation } from '@/store/products/types'
-import { User } from '@/store/user/types'
-import { LifeStyle } from "@/store/types";
-import { SpecialisationDTO } from "@/views/Specialisations/methods/SpecialisationDTO";
+import { ProductType, Specialisation } from '@/store/products/types'
+import { LifeStyle } from '@/store/types'
+import { SpecialisationDTO } from '@/views/Specialisations/methods/SpecialisationDTO'
 
 export default class SpecialisationView extends Vue {
   @Prop() item!: ResponseModel<Specialisation>
   dto = {}
 
   mounted() {
+    console.log(this.item)
     this.dto = new SpecialisationDTO(this.item)
   }
 
-  getSpec(id: number) {
-    const spec = this.$store.state.specialisations.find((el: Specialisation) => el.specialisationId === id)
-    return spec ? spec.name : ''
-  }
-
-  getOwner(ownerId: number): User {
-    return this.$store.state.users.find((user: User) => user.id === ownerId)
+  getProductType(productTypeId: number): ProductType {
+    return this.$store.state.producttypes.find(
+      (type: ProductType) => type.id === productTypeId
+    )
   }
 
   getLifestyle(lifestyleId: number): LifeStyle {
-    return this.$store.state.lifestyles.find((ls: LifeStyle) => ls.id ===  lifestyleId)
+    return this.$store.state.lifestyles.find(
+      (ls: LifeStyle) => ls.id === lifestyleId
+    )
   }
 }
 </script>

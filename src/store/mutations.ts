@@ -1,6 +1,6 @@
 import { MutationTree } from 'vuex'
 import { LifeStyle, RootState } from '@/store/types'
-import { Nomenklatura, Sku, Specialisation } from '@/store/products/types'
+import { Nomenklatura, ProductType, Sku, Specialisation } from "@/store/products/types";
 import { User } from '@/store/user/types'
 import { Corporation, Shop } from '@/store/organisations/types'
 
@@ -27,6 +27,9 @@ export const mutations: MutationTree<RootState> = {
   },
   SET_NOMENKLATURAS(state, payload: Nomenklatura[]) {
     state.nomenklaturas = payload
+  },
+  SET_PRODUCTTYPES(state, payload: ProductType[]) {
+    state.producttypes = payload
   },
   SET_SPECIALISATIONS(state, payload: Specialisation[]) {
     state.specialisations = payload
