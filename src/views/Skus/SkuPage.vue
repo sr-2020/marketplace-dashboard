@@ -9,6 +9,7 @@ export default class SkuPage extends Page<Sku> {
   canBeModified = true
   viewComponent = SkuView
   editComponent = SkuEdit
+  link = 'skus'
 
   mounted() {
     if (this.isAdd) {

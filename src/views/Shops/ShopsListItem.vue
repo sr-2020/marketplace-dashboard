@@ -2,7 +2,7 @@
   <div class="list__item">
     <div>Название: {{ item.name }}</div>
     <div>Баланс: {{ item.balance }}</div>
-    <div v-if="item.owner">Владелец: {{ ownerName(item.owner)?.name }}</div>
+    <div v-if="item.owner">Владелец: {{ getOwner(item.owner)?.name }}</div>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ import { User } from "@/store/user/types";
 
 @Options({})
 export default class ShopsListItem extends ListItem<Shop> {
-  ownerName(ownerId: number) {
+  getOwner(ownerId: number) {
     return this.$store.state.users.find((user: User) => user.id == ownerId)
   }
 }
