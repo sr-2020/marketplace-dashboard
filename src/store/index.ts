@@ -10,6 +10,7 @@ const store: StoreOptions<RootState> = {
     lifestyles: [],
     navbarState: true,
     nomenklaturas: [],
+    producttypes: [],
     shops: [],
     skus: [],
     specialisations: [],

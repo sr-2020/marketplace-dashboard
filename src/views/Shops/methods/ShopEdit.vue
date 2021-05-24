@@ -1,26 +1,26 @@
 <template>
-  <div class="edit-window"
-       v-if="dto">
+  <div class="edit-window" v-if="dto">
     <h2 v-if="!item">Добавление магазина</h2>
     <template v-if="locationStep">
       <h3>Введите локацию</h3>
       <div class="form-field">
         <label>Локация</label>
         <input v-model="dto._location" />
-        <button @click="locationStep = false"
-                :disabled="!dto._location">
-                Далее
+        <button @click="locationStep = false" :disabled="!dto._location">
+          Далее
         </button>
       </div>
     </template>
     <template v-else>
-      <div class="form-field"
-           v-if="dto.id !== 0">
+      <div class="form-field" v-if="dto.id !== 0">
         <label>ID: {{ dto.id }}</label>
       </div>
 
       <div class="form-field">
-        <label>Локация: {{ dto.location ? dto.location : 'Локация отсутствует' }}</label>
+        <label
+          >Локация:
+          {{ dto.location ? dto.location : 'Локация отсутствует' }}</label
+        >
       </div>
 
       <div class="form-field">
@@ -75,16 +75,14 @@
         v-if="delInit"
         :dto="dto"
         entity-name="магазин"
-        @accept="deleteShop"
+        @accept="deleteEntity"
         @decline="delInit = false"
       />
       <div class="actions">
-        <button v-if="item && !delInit"
-                @click="delInit = true">
+        <button v-if="item && !delInit" @click="delInit = true">
           Удалить
         </button>
-        <button @click="item ? editShop() : addShop()"
-                :disabled="processing">
+        <button @click="item ? edit() : add()" :disabled="processing">
           {{ item ? 'Изменить' : 'Добавить' }}
         </button>
       </div>
@@ -104,6 +102,7 @@ import { AlertController } from '@/utils/alertService'
 import { Specialisation } from '@/store/products/types'
 import { LifeStyle } from '@/store/types'
 import { User } from '@/store/user/types'
+import { updateEntity } from "@/utils/dictionaryService";
 
 @Options({
   components: { DeleteWarn, SrAutocomplete }
@@ -135,41 +134,36 @@ export default class ShopEdit extends Vue {
     return this.$store.state.users
   }
 
-  addShop() {
+  add() {
     this.processing = true
-    HttpAdapter.post(['a-add-shop'], this.dto?.getAddDto()).subscribe(() => {
-      this.processing = false
-      AlertController.addAlert('Магазин добавлен успешно', '', 'success')
-      this.$router.push('/shops')
-    }, this.errorHandler)
-  }
-
-  editShop() {
-    this.processing = true
-    HttpAdapter.patch(['a-edit-shop'], this.dto?.getChangeDto()).subscribe(
-      () => {
-        this.processing = false
-        AlertController.addAlert('Магазин изменен успешно', '', 'success')
-        this.$router.push(`/shops`)
-      },
+    HttpAdapter.post(['a-add-shop'], this.dto?.getAddDto()).subscribe(
+      () => this.onActionSuccess('Магазин добавлен'),
       this.errorHandler
     )
   }
 
-  deleteShop() {
+  edit() {
+    this.processing = true
+    HttpAdapter.patch(['a-edit-shop'], this.dto?.getChangeDto()).subscribe(
+      () => this.onActionSuccess('Магазин изменен'),
+      this.errorHandler
+    )
+  }
+
+  deleteEntity() {
     if (this.dto) {
       HttpAdapter.delete(['a-del-shop'], { shopid: this.dto.id }).subscribe(
-        () => {
-          AlertController.addAlert(
-            'Успешно',
-            `Магазин с ID: ${ this.dto?.id } удален`,
-            'success'
-          )
-          this.delInit = false
-        },
+        () => this.onActionSuccess(`Магазин с ID: ${this.dto?.id} удален`),
         this.errorHandler
       )
     }
+  }
+
+  private onActionSuccess(msg: string) {
+    AlertController.addAlert('Успешно', msg, 'success')
+    updateEntity<Shop>('shops', {store: this.$store, force: true})
+    this.delInit = this.processing = false
+    this.$router.push(`/shops`)
   }
 
   errorHandler(err: ResponseModel<any>) {
@@ -179,8 +173,7 @@ export default class ShopEdit extends Vue {
 }
 </script>
 
-<style lang="less"
-       scoped>
+<style lang="less" scoped>
 @import '~@/assets/components/edit-styles';
 
 .edit-window {

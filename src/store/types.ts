@@ -1,5 +1,5 @@
 import { ThemeSwitcher } from '@/utils/themeSwitcher'
-import { Nomenklatura, Sku, Specialisation } from "@/store/products/types";
+import { Nomenklatura, ProductType, Sku, Specialisation } from "@/store/products/types";
 import { User } from "@/store/user/types";
 import { Corporation, Shop } from "@/store/organisations/types";
 
@@ -9,6 +9,7 @@ export interface RootState {
   users: User[];
   skus: Sku[];
   nomenklaturas: Nomenklatura[];
+  producttypes: ProductType[];
   corporations: Corporation[];
   shops: Shop[];
   specialisations: Specialisation[];

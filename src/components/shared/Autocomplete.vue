@@ -13,8 +13,9 @@
         {{ li.name }}&nbsp;<span
         class="selected-list__cross"
         @click="onItemSelect(li)"
-      >x</span
       >
+          x
+        </span>
       </span>
     </div>
     <ul class="options__wrapper"
@@ -39,9 +40,13 @@ export default class SrAutocomplete extends Vue {
   @Ref('dropdownRef') dropdownRef!: HTMLElement
   @Prop({ default: false }) single!: boolean
   @Prop({ default: [] }) options!: any[]
-  @Prop( {default: false}) filterDisabled!: boolean;
+  @Prop({ default: false }) filterDisabled!: boolean
   @Prop({ default: '' }) idKey!: string
-  @Prop({ default: [] }) value!: number[] | number | { [key: string]: any } | null
+  @Prop({ default: [] }) value!:
+    | number[]
+    | number
+    | { [key: string]: any }
+    | null
 
   open = false
   filter = ''
@@ -64,8 +69,8 @@ export default class SrAutocomplete extends Vue {
     ) {
       this.filter = this.value.name
     }
-    if( typeof this.value === 'number') {
-      this.filter = this.options.find(el => el[this.idKey] === this.value).name
+    if (typeof this.value === 'number') {
+      this.filter = this.options.find(el => el[this.idKey] === this.value)?.name
     }
   }
 
@@ -122,13 +127,12 @@ export default class SrAutocomplete extends Vue {
   }
 
   get list() {
-    if(this.filterDisabled) {
+    if (this.filterDisabled) {
       return this.options
     }
-    return this.options.filter(el =>{
-         return  new RegExp(this.filter, 'i').test(el.name)
-    }
-    )
+    return this.options.filter(el => {
+      return new RegExp(this.filter, 'i').test(el.name)
+    })
   }
 }
 </script>
@@ -139,6 +143,7 @@ export default class SrAutocomplete extends Vue {
 
 .autocomplete {
   display: flex;
+  position: relative;
   flex-direction: column;
   max-width: 360px;
 
@@ -173,12 +178,16 @@ export default class SrAutocomplete extends Vue {
   }
 
   .options__wrapper {
+    position: absolute;
+    top: 100%;
+    width: 100%;
     padding: 0;
     margin-top: 8px;
     background-color: var(--accent-sec);
     border-radius: 4px;
     max-height: 250px;
     overflow-y: scroll;
+    z-index: 100;
 
     li {
       padding: 4px 12px;

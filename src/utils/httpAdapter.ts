@@ -86,7 +86,7 @@ export default class HttpAdapter {
   private static _unauthorizedResolver<R>(err: AxiosError<ResponseModel<R>>) {
     if (err.response?.status === 403) {
       const redirectedFrom = document.location.href
-      document.location.href = `http://web.evarun.ru/login?externalurl=${redirectedFrom}`
+      document.location.href = `http://web.evarun.ru/login?externalUrl=${redirectedFrom}`
     }
     return EMPTY
   }

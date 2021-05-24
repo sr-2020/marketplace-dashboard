@@ -5,6 +5,7 @@ import SkusListItem from './SkusListItem.vue'
 
 export default class SkusList extends List<Sku> {
   listItem = SkusListItem
+  isAddAllowed = true
   listName = 'SKU'
   key = 'skus'
 }

@@ -18,7 +18,7 @@ import { Options, Vue } from 'vue-class-component'
 @Options({})
 export default class NavBar extends Vue {
   private p_links = [
-    { name: 'Действия', link: '/' },
+    // { name: 'Действия', link: '/' },
     { name: 'Магазины', link: '/shops' },
     { name: 'Корпорации', link: '/corps' },
     { name: 'Товары', link: '/skus' },
