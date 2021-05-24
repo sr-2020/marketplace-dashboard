@@ -1,11 +1,13 @@
 <script lang="ts">
 import Page from '../../components/common/page/Page.vue'
 import { Corporation } from '@/store/organisations/types'
-import { Options } from 'vue-class-component'
+import CorporationView from "@/views/Corporations/methods/CorporationView.vue";
 
-@Options({})
 export default class CorporationPage extends Page<Corporation> {
   pageName = 'Корпорация'
+  canBeModified = false
+  viewComponent = CorporationView
+  link = 'corps'
 
   mounted() {
     this.grabDataById(['a-corporation'], 'corporationId')

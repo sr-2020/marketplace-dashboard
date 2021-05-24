@@ -9,7 +9,7 @@ export default class SpecialisationPage extends Page<Specialisation> {
   canBeModified = true
   viewComponent = SpecialisationView
   editComponent = SpecialisationEdit
-
+  link = 'specs'
   mounted() {
     if (this.isAdd) {
       this.isLoading = false

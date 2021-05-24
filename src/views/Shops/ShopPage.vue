@@ -11,6 +11,7 @@ export default class ShopPage extends Page<Shop> {
   canBeModified = true
   viewComponent = ShopView
   editComponent = ShopEdit
+  link = 'shops'
 
   mounted() {
     if(this.isAdd) {

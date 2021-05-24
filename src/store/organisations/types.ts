@@ -6,7 +6,9 @@ export interface Organisation extends BaseNamedEntity {
 
 //its immutable entity
 export interface Corporation extends Organisation {
-  logoUrl: string;
+  corporationUrl: string;
+  lastKPI: number;
+  currentKPI: number;
 }
 
 export interface Shop extends Organisation {

@@ -3,17 +3,23 @@
        v-if="!isLoading">
     <h1 class="col-m-3 title">
       {{ pageName }}
-      <button v-if="isModifiable"
-              @click="isEdit = !isEdit">{{isEdit ? 'Отменить' : 'Изменить'}}
-      </button>
+      <div>
+        <button v-if="isModifiable"
+                @click="isEdit = !isEdit">
+          {{ isEdit ? 'Отменить' : 'Изменить' }}
+        </button>
+        <button @click="backToList">Назад</button>
+      </div>
     </h1>
 
     <div class="col-m-3"
          v-if="isEditable">
-      <component v-if="editComponent"
-                 :is="editComponent"
-                 :is-add="isAdd"
-                 :item="item" />
+      <component
+        v-if="editComponent"
+        :is="editComponent"
+        :is-add="isAdd"
+        :item="item"
+      />
     </div>
     <div class="col-m-3"
          v-else>
@@ -41,6 +47,11 @@ export default class Page<T> extends Vue {
   isLoading = true
   editComponent: unknown = null
   viewComponent: unknown = null
+  link = ''
+
+  backToList() {
+    this.$router.push(`/${ this.link }`)
+  }
 
   beforeCreate() {
     this.isAdd = !!this.$route?.meta?.add
@@ -73,6 +84,7 @@ export default class Page<T> extends Vue {
   display: flex;
   justify-content: space-between;
 }
+
 button {
   height: 32px;
   color: var(--font-prim);

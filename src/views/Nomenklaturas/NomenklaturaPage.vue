@@ -11,6 +11,7 @@ export default class NomenklaturaPage extends Page<Nomenklatura> {
   canBeModified = true
   viewComponent = NomenklaturaView
   editComponent = NomenklaturaEdit
+  link = 'nomenklaturas'
 
   mounted() {
     if (this.isAdd) {
