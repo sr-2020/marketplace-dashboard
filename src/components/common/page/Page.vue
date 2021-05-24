@@ -4,7 +4,7 @@
     <h1 class="col-m-3 title">
       {{ pageName }}
       <button v-if="isModifiable"
-              @click="isEdit = !isEdit">Изменить
+              @click="isEdit = !isEdit">{{isEdit ? 'Отменить' : 'Изменить'}}
       </button>
     </h1>
 

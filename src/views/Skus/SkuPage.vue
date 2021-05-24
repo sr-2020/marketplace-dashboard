@@ -1,14 +1,21 @@
 <script lang="ts">
 import Page from '@/components/common/page/Page.vue'
 import { Sku } from '@/store/products/types'
-import { Options } from 'vue-class-component'
+import SkuView from '@/views/Skus/methods/SkuView.vue'
+import SkuEdit from "@/views/Skus/methods/SkuEdit.vue";
 
-@Options({})
 export default class SkuPage extends Page<Sku> {
-  pageName = 'Товары'
+  pageName = 'SKU'
+  canBeModified = true
+  viewComponent = SkuView
+  editComponent = SkuEdit
 
   mounted() {
-    this.grabDataById(['a-sku'], 'skuid')
+    if (this.isAdd) {
+      this.isLoading = false
+    } else {
+      this.grabDataById(['a-sku'], 'skuid')
+    }
   }
 }
 </script>

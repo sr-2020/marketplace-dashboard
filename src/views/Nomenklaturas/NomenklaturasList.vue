@@ -8,6 +8,7 @@ import { Options } from 'vue-class-component'
 export default class NomenklaturasList extends List<Nomenklatura> {
   listItem = NomenklaturasListItem
   listName = 'Номенклатуры'
+  isAddAllowed = true
   key = 'nomenklaturas'
 }
 </script>

@@ -27,14 +27,13 @@ import { Prop, Vue } from 'vue-property-decorator'
 import { ResponseModel } from '@/utils/httpAdapter'
 import { ProductType, Specialisation } from '@/store/products/types'
 import { LifeStyle } from '@/store/types'
-import { SpecialisationDTO } from '@/views/Specialisations/methods/SpecialisationDTO'
+import { SpecialisationDTO } from './SpecialisationDTO'
 
 export default class SpecialisationView extends Vue {
   @Prop() item!: ResponseModel<Specialisation>
   dto = {}
 
   mounted() {
-    console.log(this.item)
     this.dto = new SpecialisationDTO(this.item)
   }
 

@@ -1,6 +1,6 @@
 <template>
   <div class="edit-window" v-if="dto">
-    <h2 v-if="!item">Добавление специализации</h2>
+    <h2 v-if="!item">Добавление номенклатуры</h2>
 
     <div class="form-field" v-if="dto.id !== 0">
       <label>ID: {{ dto.id }}</label>
@@ -11,21 +11,10 @@
       <input v-model="dto._name" />
     </div>
 
-    <div class="form-field">
-      <label>Тип продукта: </label>
-      <sr-autocomplete
-        :single="true"
-        :options="productTypes"
-        :value="dto._productTypeId"
-        id-key="id"
-        @change="dto._productTypeId = $event"
-      />
-    </div>
-
     <delete-warn
       v-if="delInit"
       :dto="dto"
-      entity-name="специализацию"
+      entity-name="sku"
       @accept="deleteEntity"
       @decline="delInit = false"
     />
@@ -47,21 +36,21 @@ import { Options } from 'vue-class-component'
 import DeleteWarn from '@/components/shared/DeleteWarn.vue'
 import SrAutocomplete from '@/components/shared/Autocomplete.vue'
 import { AlertController } from '@/utils/alertService'
-import { SpecialisationDTO } from '@/views/Specialisations/methods/SpecialisationDTO'
-import { ProductType, Specialisation } from '@/store/products/types'
+import { Nomenklatura, ProductType } from '@/store/products/types'
+import { NomenklaturaDTO } from '@/views/Nomenklaturas/Methods/NomenklaturaDTO'
 
 @Options({
   components: { DeleteWarn, SrAutocomplete }
 })
-export default class SpecialisationEdit extends Vue {
-  @Prop() item!: ResponseModel<Specialisation>
+export default class NomenklaturaEdit extends Vue {
+  @Prop() item!: ResponseModel<Nomenklatura>
   @Prop() isAdd!: boolean
   delInit = false
-  dto: null | SpecialisationDTO = null
+  dto: null | NomenklaturaDTO = null
   processing = false
 
   mounted() {
-    this.dto = new SpecialisationDTO(this?.item)
+    this.dto = new NomenklaturaDTO(this?.item)
   }
 
   get productTypes(): ProductType[] {
@@ -70,8 +59,8 @@ export default class SpecialisationEdit extends Vue {
 
   add() {
     this.processing = true
-    HttpAdapter.post(['a-add-specialisation'], this.dto?.getAddDto()).subscribe(
-      () => this.onActionSuccess('Специализация добавлена'),
+    HttpAdapter.post(['a-add-nomenklatura'], this.dto?.getAddDto()).subscribe(
+      () => this.onActionSuccess('Номенклатура добавлена'),
       this.errorHandler
     )
   }
@@ -79,21 +68,21 @@ export default class SpecialisationEdit extends Vue {
   edit() {
     this.processing = true
     HttpAdapter.patch(
-      ['a-edit-specialisation'],
+      ['a-edit-nomenklatura'],
       this.dto?.getChangeDto()
     ).subscribe(
-      () => this.onActionSuccess('Специализация изменена'),
+      () => this.onActionSuccess('Номенклатура изменена'),
       this.errorHandler
     )
   }
 
   deleteEntity() {
     if (this.dto) {
-      HttpAdapter.delete(['a-del-specialisation'], {
+      HttpAdapter.delete(['a-del-nomenklatura'], {
         specialisationid: this.dto.id
       }).subscribe(
         () =>
-          this.onActionSuccess(`Специализация с ID: ${this.dto?.id} удалена`),
+          this.onActionSuccess(`Номенклатура с ID: ${this.dto?.id} удалена`),
         this.errorHandler
       )
     }
