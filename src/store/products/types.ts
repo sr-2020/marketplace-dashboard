@@ -18,7 +18,7 @@ export interface Nomenklatura extends Specialisation {
   nomenklaturaId: number;
   nomenklaturaName: string;
   code: string;
-  lifestyleId: number;
+  lifeStyleId: number;
   basePrice: number;
   baseCount: number;
   description: string;

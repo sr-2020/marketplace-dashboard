@@ -26,7 +26,6 @@
 import { Prop, Vue } from 'vue-property-decorator'
 import { ResponseModel } from '@/utils/httpAdapter'
 import { ProductType, Specialisation } from '@/store/products/types'
-import { LifeStyle } from '@/store/types'
 import { SpecialisationDTO } from './SpecialisationDTO'
 
 export default class SpecialisationView extends Vue {
@@ -42,30 +41,12 @@ export default class SpecialisationView extends Vue {
       (type: ProductType) => type.id === productTypeId
     )
   }
-
-  getLifestyle(lifestyleId: number): LifeStyle {
-    return this.$store.state.lifestyles.find(
-      (ls: LifeStyle) => ls.id === lifestyleId
-    )
-  }
 }
 </script>
 
 <style scoped lang="less">
-.field-table {
-  display: table-row;
-}
-
+@import '~@/assets/components/view-styles';
 .field-row {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 8px;
-
-  .title {
-    width: 20%;
-  }
-
-  .value {
-  }
+  .view-styles();
 }
 </style>

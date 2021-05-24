@@ -75,14 +75,14 @@
         v-if="delInit"
         :dto="dto"
         entity-name="магазин"
-        @accept="deleteShop"
+        @accept="deleteEntity"
         @decline="delInit = false"
       />
       <div class="actions">
         <button v-if="item && !delInit" @click="delInit = true">
           Удалить
         </button>
-        <button @click="item ? editShop() : addShop()" :disabled="processing">
+        <button @click="item ? edit() : add()" :disabled="processing">
           {{ item ? 'Изменить' : 'Добавить' }}
         </button>
       </div>
@@ -133,7 +133,7 @@ export default class ShopEdit extends Vue {
     return this.$store.state.users
   }
 
-  addShop() {
+  add() {
     this.processing = true
     HttpAdapter.post(['a-add-shop'], this.dto?.getAddDto()).subscribe(
       () => this.onActionSuccess('Магазин добавлен'),
@@ -141,7 +141,7 @@ export default class ShopEdit extends Vue {
     )
   }
 
-  editShop() {
+  edit() {
     this.processing = true
     HttpAdapter.patch(['a-edit-shop'], this.dto?.getChangeDto()).subscribe(
       () => this.onActionSuccess('Магазин изменен'),
@@ -149,7 +149,7 @@ export default class ShopEdit extends Vue {
     )
   }
 
-  deleteShop() {
+  deleteEntity() {
     if (this.dto) {
       HttpAdapter.delete(['a-del-shop'], { shopid: this.dto.id }).subscribe(
         () => this.onActionSuccess(`Магазин с ID: ${this.dto?.id} удален`),

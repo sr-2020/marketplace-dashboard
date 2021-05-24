@@ -74,20 +74,9 @@ export default class ShopView extends Vue {
 </script>
 
 <style scoped lang="less">
-.field-table {
-  display: table-row;
-}
-
+@import '~@/assets/components/view-styles';
 .field-row {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 8px;
-
-  .title {
-    width: 20%;
-  }
-
-  .value {
-  }
+  .view-styles()
 }
 </style>
+
