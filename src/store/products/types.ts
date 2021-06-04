@@ -32,4 +32,6 @@ export interface Sku extends Nomenklatura {
   count: number;
   corporationId: number;
   enabled: boolean;
+  skuBasePrice: number | null;
+  skuBaseCount: number | null;
 }
