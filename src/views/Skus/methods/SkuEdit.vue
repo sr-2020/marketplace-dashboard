@@ -17,6 +17,16 @@
     </div>
 
     <div class="form-field">
+      <label>Базовое количество: </label>
+      <input v-model.number="dto._skuBaseCount" />
+    </div>
+
+      <div class="form-field">
+      <label>Базовая цена: </label>
+      <input v-model.number="dto._skuBasePrice" />
+    </div>
+
+    <div class="form-field">
       <label>Номенклатура: </label>
       <sr-autocomplete
         :single="true"
