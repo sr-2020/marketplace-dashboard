@@ -1,40 +1,32 @@
 <template>
-  <div id="status-bar">
+  <div id="status-bar"
+       v-if="session">
     <div class="container">
       <div class="row">
         <div class="col-m-1 col-t-2 col-d-3 item-wrap">
-          <div class="name">{{ name }}</div>
-          <div class="icon-wrapper">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M0.666748 7.99999C0.666748 12.0501 3.94999 15.3333 8.00008 15.3333C12.0502 15.3333 15.3334 12.0501 15.3334 7.99999C15.3334 3.9499 12.0502 0.666656 8.00008 0.666656C3.94999 0.666656 0.666748 3.9499 0.666748 7.99999ZM14.0001 7.99999C14.0001 11.3137 11.3138 14 8.00007 14C4.68636 14 2.00007 11.3137 2.00007 7.99999C2.00007 4.68628 4.68636 1.99999 8.00007 1.99999C11.3138 1.99999 14.0001 4.68628 14.0001 7.99999ZM8.66916 9.33222H9.33539V10.6656H6.66873V9.33222H7.33539V7.99889H6.66873V6.66555H8.66916V9.33222ZM8.6672 5.33222C8.6672 5.70041 8.36863 5.99889 8.00032 5.99889C7.63201 5.99889 7.33343 5.70041 7.33343 5.33222C7.33343 4.96403 7.63201 4.66555 8.00032 4.66555C8.36863 4.66555 8.6672 4.96403 8.6672 5.33222Z"
-                fill="white"
-              />
-            </svg>
-          </div>
+          <div class="name">{{ session.personName }}</div>
         </div>
 
         <div
           class="col-m-1 col-t-2 col-d-3 item-wrap"
           :class="{ '--centered': isMobile }"
         >
-          {{ status }}
-          <span v-if="isMobile" class="status"> </span>
+          {{ session.deploy }}
+          <span v-if="isMobile"
+                class="status"> </span>
         </div>
 
-        <div v-if="!isMobile" class="cos-m-1 col-t-1 col-d-2 item-wrap">
-          Игра: Online <span class="status"></span>
+        <div v-if="!isMobile"
+             class="cos-m-1 col-t-1 col-d-2 item-wrap">
+          Игра: {{ session.cycle.isActive ? 'Online' : 'Offline' }}
+          <span
+            class="status"
+            :class="{ offline: !session.cycle.isActive }"
+          ></span>
         </div>
         <div class="col-m-1 col-t-1 col-d-2 item-wrap --f-end">
-          <div class="icon-wrapper" @click="changeTheme">
+          <div class="icon-wrapper"
+               @click="changeTheme">
             <svg
               width="20"
               height="20"
@@ -59,11 +51,12 @@
 <script lang="ts">
 import { RootMutations } from '@/store/mutations'
 import { Options, Vue } from 'vue-class-component'
+import HttpAdapter from '@/utils/httpAdapter'
+import { Session } from '@/store/types'
+import { take } from 'rxjs/operators'
 
 @Options({})
 export default class StatusBar extends Vue {
-  name = 'Марьяна (Мастер) Шадоуран'
-  private status_ = ''
   private isMobile_ = false
 
   set isMobile(bool: boolean) {
@@ -74,18 +67,11 @@ export default class StatusBar extends Vue {
     return this.isMobile_
   }
 
-  set status(str: string) {
-    this.status_ = str
+
+  get session(): Session | null {
+    return this.$store.state.session
   }
 
-  get status() {
-    return this.status_
-  }
-
-  cycle = {
-    p: 2,
-    c: 10,
-  }
 
   created() {
     this.isMobile_ = window.innerHeight < 667
@@ -93,8 +79,20 @@ export default class StatusBar extends Vue {
     this.resized()
   }
 
+  mounted() {
+    this.updateSession()
+  }
+
   destroyed() {
     window.removeEventListener('resize', this.resizeEventHandler.bind(this))
+  }
+
+  updateSession() {
+    HttpAdapter.get<Session>(['a-session'])
+      .pipe(take(1))
+      .subscribe(({ data: session }) => {
+        this.$store.commit(RootMutations.SET_SESSION, session)
+      })
   }
 
   private resizeEventHandler = () => {
@@ -107,14 +105,12 @@ export default class StatusBar extends Vue {
 
   resized() {
     this.isMobile = window.innerWidth < 667
-    this.status = this.isMobile
-      ? `П: ${this.cycle.p} Ц: ${this.cycle.c}`
-      : `Период: ${this.cycle.p} Цикл ${this.cycle.c}`
   }
 }
 </script>
 
-<style scoped lang="less">
+<style scoped
+       lang="less">
 #status-bar {
   width: 100%;
   height: 24px;
@@ -147,6 +143,10 @@ export default class StatusBar extends Vue {
   min-width: 12px;
   margin-left: 4px;
   background: var(--alert-success);
+
+  &.offline {
+    background: var(--alert-error);
+  }
 }
 
 .item-wrap {
