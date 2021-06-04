@@ -16,6 +16,16 @@
     </div>
 
     <div class="field-row">
+      <div class="title">Базовое количество:</div>
+      <div class="value">{{ dto.skuBaseCount }}</div>
+    </div>
+    
+    <div class="field-row">
+      <div class="title">Базовая цена:</div>
+      <div class="value">{{ dto.skuBasePrice }}</div>
+    </div>
+
+    <div class="field-row">
       <div class="title">Корпорация:</div>
       <div class="value">{{ getCorporation(dto.corporationId)?.name }}</div>
     </div>

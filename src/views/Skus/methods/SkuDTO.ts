@@ -24,6 +24,14 @@ export class SkuDTO {
     return this._count;
   }
 
+  get skuBaseCount(): number  | null {
+    return this._skuBaseCount
+  }
+
+  get skuBasePrice(): number | null {
+    return this._skuBasePrice
+  }
+
   get enabled(): boolean {
     return this._enabled;
   }
@@ -32,6 +40,8 @@ export class SkuDTO {
   _name = ''
   _nomenklaturaId = 0
   _count = 0
+  _skuBasePrice: number | null = null
+  _skuBaseCount: number | null = null
   _corporationId = 0
   _enabled = false
 
@@ -44,6 +54,8 @@ export class SkuDTO {
     this._id = data?.id || 0
     this._name = data?.name || ''
     this._count = data?.count || 0
+    this._skuBasePrice = data?.skuBasePrice || null
+    this._skuBaseCount = data?.skuBaseCount || null
     this._corporationId = data?.corporationId || 0
     this._nomenklaturaId = data?.nomenklaturaId || 0
     this._enabled = data?.enabled || false
@@ -64,8 +76,10 @@ export class SkuDTO {
     return {
       name: this.name,
       nomenklaturaId: this.nomenklaturaId,
-      corporationId: this.corporationId,
+      corporation: this.corporationId,
       count: this.count,
+      skuBasePrice: this.skuBasePrice,
+      skuBaseCount: this.skuBaseCount,
       enabled: this.enabled
     }
   }
