@@ -4,7 +4,7 @@
       <nav class="navbar col-m-3">
         <span class="link-list">
           <router-link v-for="l in links" :to="l.link" :key="l.name">
-            {{ l.name }}
+           {{ l.name }}
           </router-link>
         </span>
       </nav>
@@ -19,6 +19,7 @@ import { Options, Vue } from 'vue-class-component'
 export default class NavBar extends Vue {
   private p_links = [
     // { name: 'Действия', link: '/' },
+    {name: 'Информация', link: '/'},
     { name: 'Магазины', link: '/shops' },
     { name: 'Корпорации', link: '/corps' },
     { name: 'Товары', link: '/skus' },
@@ -75,7 +76,7 @@ export default class NavBar extends Vue {
   a {
     color: var(--font-prim);
     text-decoration: unset;
-    transition-property: color, font-size;
+    transition-property: color;
     transition-duration: 0.3s;
     transition-timing-function: ease-in-out;
     margin-right: 0.3em;
@@ -92,10 +93,6 @@ export default class NavBar extends Vue {
     &:hover {
       color: var(--accent);
     }
-  }
-
-  a:hover {
-    font-size: 2em;
   }
 }
 </style>

@@ -16,6 +16,7 @@ import NomenklaturaPage from '@/views/Nomenklaturas/NomenklaturaPage.vue'
 import Skus from '@/views/Skus/Skus.vue'
 import SkusList from '@/views/Skus/SkusList.vue'
 import SkuPage from '@/views/Skus/SkuPage.vue'
+import SrSession from '@/views/Session.vue'
 
 function getChildRoutes(list: any, page: any): RouteRecordRaw[] {
   return [
@@ -38,8 +39,7 @@ function getChildRoutes(list: any, page: any): RouteRecordRaw[] {
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/shops',
-    // component: Actions,
+    component: SrSession,
   },
   {
     path: '/shops',

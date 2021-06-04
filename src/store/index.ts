@@ -14,6 +14,7 @@ const store: StoreOptions<RootState> = {
     shops: [],
     skus: [],
     specialisations: [],
+    session: null,
     theme: new ThemeSwitcher(window, document),
     users: [],
   },
