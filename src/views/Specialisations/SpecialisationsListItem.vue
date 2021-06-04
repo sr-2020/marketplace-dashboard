@@ -1,6 +1,5 @@
 <template>
   <div class="list__item">
-    <div>Тип скидки: {{ item.discountType }}</div>
     <div>Номер специализации: {{ item.specialisationId }}</div>
     <div>Название специализации: {{ item.specialisationName }}</div>
   </div>
