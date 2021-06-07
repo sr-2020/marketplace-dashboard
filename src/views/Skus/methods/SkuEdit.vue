@@ -33,7 +33,7 @@
         :options="nomenklaturas"
         :value="dto._nomenklaturaId"
         id-key="id"
-        @change="dto._nomenklatureId = $event"
+        @change="dto._nomenklaturaId = $event"
       />
     </div>
 
