@@ -1,5 +1,6 @@
 <template>
   <div class="list__item">
+    <div>Локация: {{item.location}}</div>
     <div>Название: {{ item.name }}</div>
     <div>Баланс: {{ item.balance }}</div>
     <div v-if="item.owner">Владелец: {{ getOwner(item.owner)?.name }}</div>
