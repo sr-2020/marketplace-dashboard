@@ -47,7 +47,7 @@ const routes: Array<RouteRecordRaw> = [
     children: getChildRoutes(ShopsList, ShopPage),
   },
   {
-    path: '/corps',
+    path: '/corporations',
     component: Corporations,
     children: getChildRoutes(CorporationList, CorporationPage),
   },
@@ -57,7 +57,7 @@ const routes: Array<RouteRecordRaw> = [
     children: getChildRoutes(SkusList, SkuPage),
   },
   {
-    path: '/specs',
+    path: '/specialisations',
     component: Specialisations,
     children: getChildRoutes(SpecialisationsList, SpecialisationPage),
   },

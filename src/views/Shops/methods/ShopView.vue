@@ -7,7 +7,9 @@
 
     <div class="field-row">
       <div class="title">Локация:</div>
-      <div class="value">{{ dto.location ? dto.location : 'Локация отсутствует' }}</div>
+      <div class="value">
+        {{ dto.location ? dto.location : 'Локация отсутствует' }}
+      </div>
     </div>
 
     <div class="field-row">
@@ -22,14 +24,20 @@
 
     <div class="field-row">
       <div class="title">Владелец:</div>
-      <div class="value">{{ getOwner(dto.owner)?.name }}</div>
+      <div class="value">
+        <sr-entity-link :to="getOwner(dto.owner)?.id" type="user">
+          {{ getOwner(dto.owner)?.name }}
+        </sr-entity-link>
+      </div>
     </div>
 
     <div class="field-row" v-if="dto.specialisations">
       <div class="title">Специализации:</div>
       <div class="value">
         <div v-for="(id, idx) of dto.specialisations" :key="idx">
-          {{ getSpec(id) }}
+          <sr-entity-link type="specialisation" :to="id"
+            >{{ getSpec(id) }}
+          </sr-entity-link>
         </div>
       </div>
     </div>
@@ -47,9 +55,12 @@ import { ShopDTO } from '@/views/Shops/methods/ShopDTO'
 import { ResponseModel } from '@/utils/httpAdapter'
 import { Shop } from '@/store/organisations/types'
 import { User } from '@/store/user/types'
-import { LifeStyle } from "@/store/types";
-import { Specialisation } from "@/store/products/types";
+import { LifeStyle } from '@/store/types'
+import { Specialisation } from '@/store/products/types'
+import { Options } from 'vue-class-component'
+import SrEntityLink from '@/components/shared/Link.vue'
 
+@Options({ components: { SrEntityLink } })
 export default class ShopView extends Vue {
   @Prop() item!: ResponseModel<Shop>
   dto = {}
@@ -59,7 +70,9 @@ export default class ShopView extends Vue {
   }
 
   getSpec(id: number) {
-    const spec = this.$store.state.specialisations.find((el: Specialisation) => el.specialisationId === id)
+    const spec = this.$store.state.specialisations.find(
+      (el: Specialisation) => el.specialisationId === id
+    )
     return spec ? spec.name : ''
   }
 
@@ -68,15 +81,17 @@ export default class ShopView extends Vue {
   }
 
   getLifestyle(lifestyleId: number): LifeStyle {
-    return this.$store.state.lifestyles.find((ls: LifeStyle) => ls.id ===  lifestyleId)
+    return this.$store.state.lifestyles.find(
+      (ls: LifeStyle) => ls.id === lifestyleId
+    )
   }
 }
 </script>
 
 <style scoped lang="less">
 @import '~@/assets/components/view-styles';
+
 .field-row {
-  .view-styles()
+  .view-styles();
 }
 </style>
-

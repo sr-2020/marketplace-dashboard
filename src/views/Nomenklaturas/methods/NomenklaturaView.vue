@@ -23,7 +23,9 @@
     <div class="field-row">
       <div class="title">Специализация:</div>
       <div class="value">
-        {{ getSpecialisation(dto.specialisationId)?.name }}
+        <sr-entity-link type="specialisation" :to="dto.specialisationId">
+          {{ getSpecialisation(dto.specialisationId)?.name }}
+        </sr-entity-link>
       </div>
     </div>
 
@@ -50,7 +52,10 @@ import { ResponseModel } from '@/utils/httpAdapter'
 import { Nomenklatura, Specialisation } from '@/store/products/types'
 import { NomenklaturaDTO } from './NomenklaturaDTO'
 import { LifeStyle } from '@/store/types'
+import { Options } from 'vue-class-component'
+import SrEntityLink from '@/components/shared/Link.vue'
 
+@Options({ components: { SrEntityLink } })
 export default class NomenklaturaView extends Vue {
   @Prop() item!: ResponseModel<Nomenklatura>
   dto = {}
@@ -66,15 +71,17 @@ export default class NomenklaturaView extends Vue {
   }
 
   getLifestyle(lifestyleId: number): LifeStyle {
-    return this.$store.state.lifestyles.find((ls: LifeStyle) => ls.id ===  lifestyleId)
+    return this.$store.state.lifestyles.find(
+      (ls: LifeStyle) => ls.id === lifestyleId
+    )
   }
-
 }
 </script>
 
 <style scoped lang="less">
 @import '~@/assets/components/view-styles';
+
 .field-row {
-  .view-styles()
+  .view-styles();
 }
 </style>
