@@ -12,7 +12,10 @@
 
     <div class="field-row">
       <div class="title">Владелец:</div>
-      <div class="value">{{ getOwner(dto.ownerId)?.name }}</div>
+      <div class="value">
+        <sr-entity-link type="user" :to="dto.ownerId"></sr-entity-link>
+        {{ getOwner(dto.ownerId)?.name }}
+      </div>
     </div>
 
     <div class="field-row">
@@ -33,7 +36,10 @@ import { ResponseModel } from '@/utils/httpAdapter'
 import { CorporationDTO } from './CorporationDTO'
 import { Corporation } from '@/store/organisations/types'
 import { User } from '@/store/user/types'
+import { Options } from 'vue-class-component'
+import SrEntityLink from '@/components/shared/Link.vue'
 
+@Options({ components: { SrEntityLink } })
 export default class CorporationView extends Vue {
   @Prop() item!: ResponseModel<Corporation>
   dto = {}
@@ -50,6 +56,7 @@ export default class CorporationView extends Vue {
 
 <style scoped lang="less">
 @import '~@/assets/components/view-styles';
+
 .field-row {
   .view-styles();
 }

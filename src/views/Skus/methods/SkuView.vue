@@ -19,7 +19,7 @@
       <div class="title">Базовое количество:</div>
       <div class="value">{{ dto.skuBaseCount }}</div>
     </div>
-    
+
     <div class="field-row">
       <div class="title">Базовая цена:</div>
       <div class="value">{{ dto.skuBasePrice }}</div>
@@ -27,12 +27,20 @@
 
     <div class="field-row">
       <div class="title">Корпорация:</div>
-      <div class="value">{{ getCorporation(dto.corporationId)?.name }}</div>
+      <div class="value">
+        <sr-entity-link type="corporation" :to="dto.corporationId">
+          {{ getCorporation(dto.corporationId)?.name }}
+        </sr-entity-link>
+      </div>
     </div>
 
     <div class="field-row">
       <div class="title">Номенклатура:</div>
-      <div class="value">{{ getNomenklatura(dto.nomenklaturaId)?.name }}</div>
+      <div class="value">
+        <sr-entity-link :to="dto._nomenklaturaId" type="nomenklatura">
+          {{ getNomenklatura(dto.nomenklaturaId)?.name }}
+        </sr-entity-link>
+      </div>
     </div>
 
     <div class="field-row">
@@ -48,7 +56,10 @@ import { ResponseModel } from '@/utils/httpAdapter'
 import { Nomenklatura, Sku } from "@/store/products/types";
 import { SkuDTO } from './SkuDTO'
 import { Corporation } from "@/store/organisations/types";
+import { Options } from "vue-class-component";
+import SrEntityLink from "@/components/shared/Link.vue";
 
+@Options({ components: { SrEntityLink } })
 export default class SkuView extends Vue {
   @Prop() item!: ResponseModel<Sku>
   dto = {}

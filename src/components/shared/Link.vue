@@ -7,14 +7,14 @@
 <script lang="ts">
 import { Prop, Vue } from 'vue-property-decorator'
 
-export type SrEntity = 'user' | 'corporation'
+export type SrEntity = 'user' | 'corporation' | 'sku' | 'specialisation' | 'shop' | 'nomenklatura'
 
 export default class SrEntityLink extends Vue {
   @Prop({ default: '' }) type!: SrEntity
-  @Prop({ default: 0 }) entityId!: number
+  @Prop({ default: 0 }) to!: number
 
   onClick() {
-    this.$router.push(`/${this.type}s/${this.entityId}`)
+    this.$router.push(`/${this.type}s/${this.to}`)
   }
 }
 </script>

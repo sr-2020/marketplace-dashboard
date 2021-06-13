@@ -24,14 +24,20 @@
 
     <div class="field-row">
       <div class="title">Владелец:</div>
-      <div class="value">{{ getOwner(dto.owner)?.name }}></div>
+      <div class="value">
+        <sr-entity-link :to="getOwner(dto.owner)?.id" type="user">
+          {{ getOwner(dto.owner)?.name }}
+        </sr-entity-link>
+      </div>
     </div>
 
     <div class="field-row" v-if="dto.specialisations">
       <div class="title">Специализации:</div>
       <div class="value">
         <div v-for="(id, idx) of dto.specialisations" :key="idx">
-          <sr-entity-link type="specialisation" :entity-id="id">{{ getSpec(id) }}</sr-entity-link>
+          <sr-entity-link type="specialisation" :to="id"
+            >{{ getSpec(id) }}
+          </sr-entity-link>
         </div>
       </div>
     </div>
