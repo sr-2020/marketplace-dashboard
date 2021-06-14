@@ -5,7 +5,7 @@ import { User } from '@/store/user/types'
 
 export default class UserPage extends Page<User> {
   pageName = 'Пользователи'
-  canBeModified = true
+  canBeModified = false
   link = 'users'
   
   mounted() {
