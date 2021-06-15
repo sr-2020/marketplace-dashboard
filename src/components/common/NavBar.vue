@@ -19,12 +19,13 @@ import { Options, Vue } from 'vue-class-component'
 export default class NavBar extends Vue {
   private p_links = [
     // { name: 'Действия', link: '/' },
-    {name: 'Информация', link: '/'},
+    { name: 'Информация', link: '/'},
     { name: 'Магазины', link: '/shops' },
     { name: 'Корпорации', link: '/corporations' },
     { name: 'Товары', link: '/skus' },
     { name: 'Специализации', link: '/specialisations' },
     { name: 'Номеклатура', link: '/nomenklaturas' },
+    { name: 'Пользователи', link: '/users'},
   ]
 
   get links() {

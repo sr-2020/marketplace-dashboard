@@ -17,6 +17,9 @@ import Skus from '@/views/Skus/Skus.vue'
 import SkusList from '@/views/Skus/SkusList.vue'
 import SkuPage from '@/views/Skus/SkuPage.vue'
 import SrSession from '@/views/Session.vue'
+import Users from '@/views/Users/Users.vue'
+import UsersList from '@/views/Users/UsersList.vue'
+import UserPage from '@/views/Users/UserPage.vue'
 
 function getChildRoutes(list: any, page: any): RouteRecordRaw[] {
   return [
@@ -71,9 +74,15 @@ const routes: Array<RouteRecordRaw> = [
     component: Logs,
   },
   {
+    path: '/users',
+    component: Users,
+    children: getChildRoutes(UsersList, UserPage),
+  },
+  {
     path: '/:pathMatch(.*)*',
     component: NotFound,
   },
+  
 ]
 
 const router = createRouter({
