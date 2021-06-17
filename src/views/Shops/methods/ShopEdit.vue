@@ -51,7 +51,7 @@
           :single="true"
           :options="users"
           :value="dto._owner"
-          id-key="id"
+          id-key="modelId"
           @change="dto._owner = $event"
         />
       </div>

@@ -70,7 +70,7 @@ export default class SrAutocomplete extends Vue {
       this.filter = this.value.name
     }
     if (typeof this.value === 'number') {
-      this.filter = this.options.find(el => el[this.idKey] === this.value)?.name
+      this.filter = this.options.find(el => el[this.idKey] == this.value)?.name
     }
   }
 

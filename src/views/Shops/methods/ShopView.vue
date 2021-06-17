@@ -25,18 +25,22 @@
     <div class="field-row">
       <div class="title">Владелец:</div>
       <div class="value">
-        <sr-entity-link :to="getOwner(dto.owner)?.id" type="user">
+        <sr-entity-link :to="getOwner(dto.owner)?.modelId"
+                        type="user">
           {{ getOwner(dto.owner)?.name }}
         </sr-entity-link>
       </div>
     </div>
 
-    <div class="field-row" v-if="dto.specialisations">
+    <div class="field-row"
+         v-if="dto.specialisations">
       <div class="title">Специализации:</div>
       <div class="value">
-        <div v-for="(id, idx) of dto.specialisations" :key="idx">
-          <sr-entity-link type="specialisation" :to="id"
-            >{{ getSpec(id) }}
+        <div v-for="(id, idx) of dto.specialisations"
+             :key="idx">
+          <sr-entity-link type="specialisation"
+                          :to="id"
+          >{{ getSpec(id) }}
           </sr-entity-link>
         </div>
       </div>
@@ -77,7 +81,7 @@ export default class ShopView extends Vue {
   }
 
   getOwner(ownerId: number): User {
-    return this.$store.state.users.find((user: User) => user.id === ownerId)
+    return this.$store.state.users.find((user: User) => user.modelId == ownerId)
   }
 
   getLifestyle(lifestyleId: number): LifeStyle {
@@ -88,7 +92,8 @@ export default class ShopView extends Vue {
 }
 </script>
 
-<style scoped lang="less">
+<style scoped
+       lang="less">
 @import '~@/assets/components/view-styles';
 
 .field-row {

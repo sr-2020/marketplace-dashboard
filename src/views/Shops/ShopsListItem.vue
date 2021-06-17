@@ -16,7 +16,7 @@ import { User } from "@/store/user/types";
 @Options({})
 export default class ShopsListItem extends ListItem<Shop> {
   getOwner(ownerId: number) {
-    return this.$store.state.users.find((user: User) => user.id == ownerId)
+    return this.$store.state.users.find((user: User) => user.modelId == ownerId)
   }
 }
 </script>
