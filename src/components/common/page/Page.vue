@@ -4,11 +4,14 @@
     <h1 class="col-m-3 title">
       {{ pageName }}
       <div>
-        <button v-if="isModifiable"
-                @click="isEdit = !isEdit">
+        <v-btn v-if="isModifiable"
+               size="small"
+               @click="isEdit = !isEdit">
           {{ isEdit ? 'Отменить' : 'Изменить' }}
-        </button>
-        <button @click="backToList">Назад</button>
+        </v-btn>
+        <v-btn size="small"
+               @click="backToList">Назад
+        </v-btn>
       </div>
     </h1>
 
@@ -86,10 +89,8 @@ export default class Page<T> extends Vue {
 }
 
 button {
-  height: 32px;
   color: var(--font-prim);
   border: 1px solid var(--accent-sec);
-  border-radius: 4px;
   background: var(--accent);
   cursor: pointer;
 
