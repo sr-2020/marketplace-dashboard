@@ -12,11 +12,11 @@ export class SkuDTO {
     return this._name
   }
 
-  get nomenklaturaId(): number {
+  get nomenklaturaId(): number | null {
     return this._nomenklaturaId
   }
 
-  get corporationId(): number {
+  get corporationId(): number | null {
     return this._corporationId;
   }
 
@@ -38,11 +38,11 @@ export class SkuDTO {
 
   _id = 0
   _name = ''
-  _nomenklaturaId = 0
+  _nomenklaturaId: number | null = 0
   _count = 0
   _skuBasePrice: number | null = null
   _skuBaseCount: number | null = null
-  _corporationId = 0
+  _corporationId: number | null = 0
   _enabled = false
 
   constructor(resp: ResponseModel<Sku> | undefined) {
@@ -56,8 +56,8 @@ export class SkuDTO {
     this._count = data?.count || 0
     this._skuBasePrice = data?.skuBasePrice || null
     this._skuBaseCount = data?.skuBaseCount || null
-    this._corporationId = data?.corporationId || 0
-    this._nomenklaturaId = data?.nomenklaturaId || 0
+    this._corporationId = data?.corporationId || null
+    this._nomenklaturaId = data?.nomenklaturaId || null
     this._enabled = data?.enabled || false
   }
 

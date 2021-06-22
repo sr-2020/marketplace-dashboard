@@ -44,7 +44,7 @@
 
     <div class="form-field">
       <label>Корпорация: </label>
-      <el-select v-model="dto._corporationId">
+      <el-select v-model="dto._corporationId" placeholder="Корпорация">
         <el-option
           v-for="c of corporations"
           :key="c.id"
