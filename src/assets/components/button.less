@@ -1,17 +1,15 @@
 .button() {
   button {
-    height: 32px;
-    width: fit-content;
     color: var(--font-prim);
-    border: 1px solid var(--accent-sec);
-    border-radius: 4px;
     background: var(--accent);
-    cursor: pointer;
+
+    &:not(:last-child) {
+      margin-right: 4px;
+    }
     &:disabled {
       color: var(--font-tet);
       border-color: var(--font-sec);
       background: var(--font-sec);
-      cursor: unset;
     }
   }
 }

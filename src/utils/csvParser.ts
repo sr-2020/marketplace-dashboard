@@ -39,7 +39,7 @@ export default class CsvParser<T = null> {
       this.onError(new Error('Row items length !== headers items length'), arr)
       return
     }
-    const convertedArr = arr.map((el) => this._convertRowTypes(el))
+    const convertedArr = arr.map(el => this._convertRowTypes(el))
     this.onParseEnd(this._prepareData(convertedArr))
   }
 
@@ -48,7 +48,7 @@ export default class CsvParser<T = null> {
       const reader = new FileReader()
       reader.readAsText(file)
       reader.onload = () => resolve(reader.result as string)
-      reader.onerror = (error) => reject(error)
+      reader.onerror = error => reject(error)
     })
   }
 
@@ -63,11 +63,11 @@ export default class CsvParser<T = null> {
       )
       throw Error('parse error')
     }
-    return rows.map((row) => row.split(','))
+    return rows.map(row => row.split(','))
   }
 
   private _prepareData(convertedArray: (boolean | number | string)[][]): T[] {
-    return convertedArray.map((row) => {
+    return convertedArray.map(row => {
       const obj: { [key: string]: boolean | number | string } = {}
       this._headers.forEach(({ name }, idx) => {
         obj[name] = row[idx]
@@ -128,7 +128,7 @@ export default class CsvParser<T = null> {
       return false
     }
     let valid = true
-    arr.forEach((row) => {
+    arr.forEach(row => {
       valid = row.length === this._headers.length
     })
     return valid
@@ -138,8 +138,12 @@ export default class CsvParser<T = null> {
     this._inputRef.click()
   }
 
-  public onParseEnd: (data: T[]) => void = () => {}
-  public onError: (err: Error, data?: any) => void = () => {}
+  public onParseEnd: (data: T[]) => void = () => {
+    console.warn('onParseEnd function not implemented')
+  }
+  public onError: (err: Error, data?: any) => void = () => {
+    console.warn('onParseEnd function not implemented')
+  }
 
   public removeListeners() {
     this._inputRef.removeEventListener('change', this._changeHandler)

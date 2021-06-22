@@ -3,18 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "vue-cli-service serve",
+    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build": "vue-cli-service build"
+    "start": "vue-cli-service serve"
   },
   "dependencies": {
+    "@mdi/font": "5.9.55",
     "axios": "^0.21.1",
     "core-js": "^3.9.1",
+    "element-plus": "^1.0.2-beta.48",
+    "roboto-fontface": "*",
     "rxjs": "^6.6.6",
     "vue": "^3.0.11",
     "vue-class-component": "^8.0.0-rc.1",
     "vue-property-decorator": "^10.0.0-rc.3",
     "vue-router": "^4.0.5",
+    "vuetify": "^3.0.0-alpha.0",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
@@ -35,8 +39,9 @@
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
     "prettier": "^1.19.1",
-    "sass": "^1.26.5",
-    "sass-loader": "^8.0.2",
-    "typescript": "~3.9.3"
+    "sass": "~1.32.0",
+    "sass-loader": "^10.0.0",
+    "typescript": "~3.9.3",
+    "vue-cli-plugin-vuetify": "~2.4.1"
   }
 }

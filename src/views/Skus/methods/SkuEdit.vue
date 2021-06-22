@@ -8,48 +8,54 @@
 
     <div class="form-field">
       <label>Название: </label>
-      <input v-model="dto._name" />
+      <el-input v-model="dto._name" />
     </div>
 
     <div class="form-field">
       <label>Количество: </label>
-      <input v-model="dto._count" />
+      <el-input v-model="dto._count" />
     </div>
 
     <div class="form-field">
       <label>Базовое количество: </label>
-      <input v-model.number="dto._skuBaseCount" />
+      <el-input v-model.number="dto._skuBaseCount" />
     </div>
 
-      <div class="form-field">
+    <div class="form-field">
       <label>Базовая цена: </label>
-      <input v-model.number="dto._skuBasePrice" />
+      <el-input v-model.number="dto._skuBasePrice" />
     </div>
 
     <div class="form-field">
       <label>Номенклатура: </label>
-      <sr-autocomplete
-        :single="true"
-        :options="nomenklaturas"
-        :value="dto._nomenklaturaId"
-        id-key="id"
-        @change="dto._nomenklaturaId = $event"
-      />
+      <el-select
+        filterable
+        v-model="dto._nomenklaturaId"
+        placeholder="Номенклатура"
+      >
+        <el-option
+          v-for="n of nomenklaturas"
+          :key="n.nomenklaturaId"
+          :value="n.nomenklaturaId"
+          :label="n.nomenklaturaName"
+        />
+      </el-select>
     </div>
 
     <div class="form-field">
       <label>Корпорация: </label>
-      <sr-autocomplete
-        :single="true"
-        :options="corporations"
-        :value="dto._corporationId"
-        id-key="id"
-        @change="dto._corporationId = $event"
-      />
+      <el-select v-model="dto._corporationId" placeholder="Корпорация">
+        <el-option
+          v-for="c of corporations"
+          :key="c.id"
+          :value="c.id"
+          :label="c.name"
+        />
+      </el-select>
     </div>
 
     <div class="form-field">
-      <label> Активна: <input v-model="dto._enabled" type="checkbox"/></label>
+      <el-checkbox label="SKU активен" border v-model="dto._enabled" />
     </div>
 
     <delete-warn
@@ -60,12 +66,12 @@
       @decline="delInit = false"
     />
     <div class="actions">
-      <button v-if="item && !delInit" @click="delInit = true">
+      <v-btn size="small" v-if="item && !delInit" @click="delInit = true">
         Удалить
-      </button>
-      <button @click="item ? edit() : add()" :disabled="processing">
+      </v-btn>
+      <v-btn size="small" @click="item ? edit() : add()" :disabled="processing">
         {{ item ? 'Изменить' : 'Добавить' }}
-      </button>
+      </v-btn>
     </div>
   </div>
 </template>
@@ -82,8 +88,17 @@ import { Nomenklatura, Sku } from '@/store/products/types'
 import { Corporation } from '@/store/organisations/types'
 import { updateEntity } from '@/utils/dictionaryService'
 
+import { ElCheckbox, ElInput, ElOption, ElSelect } from 'element-plus'
+
 @Options({
-  components: { DeleteWarn, SrAutocomplete }
+  components: {
+    DeleteWarn,
+    SrAutocomplete,
+    ElInput,
+    ElOption,
+    ElSelect,
+    ElCheckbox
+  }
 })
 export default class SkuEdit extends Vue {
   @Prop() item!: ResponseModel<Sku>
@@ -145,7 +160,7 @@ export default class SkuEdit extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import '~@/assets/components/edit-styles';
 
 .edit-window {

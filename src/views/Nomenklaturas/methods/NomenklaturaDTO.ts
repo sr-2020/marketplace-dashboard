@@ -28,11 +28,11 @@ export class NomenklaturaDTO {
     return this._basePrice
   }
 
-  get lifestyleId(): number {
+  get lifestyleId(): number | null {
     return this._lifestyleId
   }
 
-  get specialisationId(): number {
+  get specialisationId(): number | null {
     return this._specialisationId
   }
 
@@ -43,8 +43,8 @@ export class NomenklaturaDTO {
   _id = 0
   _name = ''
   _code = ''
-  _specialisationId = 0
-  _lifestyleId = 0
+  _specialisationId: number | null = 0
+  _lifestyleId: number | null = 0
   _basePrice = 0
   _baseCount = 0
   _description = ''
@@ -59,8 +59,8 @@ export class NomenklaturaDTO {
     this._id = data?.id || 0
     this._name = data?.name || ''
     this._code = data?.code || ''
-    this._specialisationId = data?.specialisationId || 0
-    this._lifestyleId = data?.lifeStyleId || 0
+    this._specialisationId = data?.specialisationId || null
+    this._lifestyleId = data?.lifeStyleId || null
     this._basePrice = data?.basePrice || 0
     this._baseCount = data?.baseCount || 0
     this._description = data?.description || ''

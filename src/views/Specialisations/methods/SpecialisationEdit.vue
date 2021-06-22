@@ -1,25 +1,29 @@
 <template>
-  <div class="edit-window" v-if="dto">
+  <div class="edit-window"
+       v-if="dto">
     <h2 v-if="!item">Добавление специализации</h2>
 
-    <div class="form-field" v-if="dto.id !== 0">
+    <div class="form-field"
+         v-if="dto.id !== 0">
       <label>ID: {{ dto.id }}</label>
     </div>
 
     <div class="form-field">
       <label>Название: </label>
-      <input v-model="dto._name" />
+      <el-input v-model="dto._name" />
     </div>
 
     <div class="form-field">
       <label>Тип продукта: </label>
-      <sr-autocomplete
-        :single="true"
-        :options="productTypes"
-        :value="dto._productTypeId"
-        id-key="id"
-        @change="dto._productTypeId = $event"
-      />
+      <el-select v-model="dto._productTypeId"
+                 placeholder="Тип продукта">
+        <el-option
+          v-for="p of productTypes"
+          :key="p.id"
+          :value="p.id"
+          :label="p.name"
+        />
+      </el-select>
     </div>
 
     <delete-warn
@@ -30,12 +34,16 @@
       @decline="delInit = false"
     />
     <div class="actions">
-      <button v-if="item && !delInit" @click="delInit = true">
+      <v-btn size="small"
+             v-if="item && !delInit"
+             @click="delInit = true">
         Удалить
-      </button>
-      <button @click="item ? edit() : add()" :disabled="processing">
+      </v-btn>
+      <v-btn size="small"
+             @click="item ? edit() : add()"
+             :disabled="processing">
         {{ item ? 'Изменить' : 'Добавить' }}
-      </button>
+      </v-btn>
     </div>
   </div>
 </template>
@@ -49,10 +57,11 @@ import SrAutocomplete from '@/components/shared/Autocomplete.vue'
 import { AlertController } from '@/utils/alertService'
 import { SpecialisationDTO } from '@/views/Specialisations/methods/SpecialisationDTO'
 import { ProductType, Specialisation } from '@/store/products/types'
-import { updateEntity } from "@/utils/dictionaryService";
+import { updateEntity } from '@/utils/dictionaryService'
+import { ElInput, ElOption, ElSelect } from 'element-plus'
 
 @Options({
-  components: { DeleteWarn, SrAutocomplete }
+  components: { DeleteWarn, SrAutocomplete, ElInput, ElOption, ElSelect }
 })
 export default class SpecialisationEdit extends Vue {
   @Prop() item!: ResponseModel<Specialisation>
@@ -94,7 +103,7 @@ export default class SpecialisationEdit extends Vue {
         specialisationid: this.dto.id
       }).subscribe(
         () =>
-          this.onActionSuccess(`Специализация с ID: ${this.dto?.id} удалена`),
+          this.onActionSuccess(`Специализация с ID: ${ this.dto?.id } удалена`),
         this.errorHandler
       )
     }
@@ -117,7 +126,7 @@ export default class SpecialisationEdit extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import '~@/assets/components/edit-styles';
 
 .edit-window {

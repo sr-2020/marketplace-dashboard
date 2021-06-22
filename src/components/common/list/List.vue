@@ -10,12 +10,12 @@
                v-model="filter" />
       </div>
       <div class="wrapper">
-        <button @click="reload">Обновить</button>
-        <button v-if="isAddAllowed"
+        <v-btn size="small" v-if="isAddAllowed"
                 @click="navigateToItem('add')">
           Добавить
-        </button>
-        <button v-if="false">Добавить пакетом</button>
+        </v-btn>
+        <v-btn size="small" v-if="false">Добавить пакетом</v-btn>
+        <v-btn size="small" @click="reload">Обновить</v-btn>
       </div>
     </div>
     <div class="col-m-3"
