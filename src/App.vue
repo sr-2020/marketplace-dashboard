@@ -1,17 +1,16 @@
 <template>
-  <div id="app"
-       ref="rootOfApp">
+  <div id="app" ref="rootOfApp">
     <status-bar></status-bar>
     <nav-bar></nav-bar>
-    <div class="content-wrapper"
-         :class="{ blur: !navBarHidden }">
-      <router-view/>
+    <alert></alert>
+    <div class="content-wrapper" :class="{ blur: !navBarHidden }">
+      <router-view />
     </div>
   </div>
 </template>
 
 <style lang="less">
-@import "assets/grid";
+@import 'assets/grid';
 
 #app {
   min-height: 100vh;
@@ -20,7 +19,7 @@
 
 .content-wrapper {
   padding-top: 8px;
-  transition: filter .3s ease-in-out;
+  transition: filter 0.3s ease-in-out;
 
   &.blur {
     min-height: 100%;
@@ -31,21 +30,21 @@
 </style>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import StatusBar from '@/components/StatusBar.vue'
-import NavBar from '@/components/NavBar.vue'
+import StatusBar from '@/components/common/StatusBar.vue'
+import NavBar from '@/components/common/NavBar.vue'
+import Alert from '@/components/shared/Alert.vue'
+import { Options, Vue } from 'vue-class-component'
 
-@Component({
+@Options({
   components: {
+    Alert,
     NavBar,
     StatusBar
   }
 })
 export default class App extends Vue {
-
   get navBarHidden() {
     return this.$store.state.navbarState
   }
 }
-
 </script>

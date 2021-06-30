@@ -1,21 +1,27 @@
-import Vue from 'vue'
-import Vuex, { StoreOptions } from 'vuex'
+import { createStore, StoreOptions } from 'vuex'
 import { RootState } from '@/store/types'
 import { mutations } from '@/store/mutations'
-import { user } from '@/store/user'
 import { ThemeSwitcher } from '@/utils/themeSwitcher'
-
-Vue.use(Vuex)
+import { logs } from '@/store/log'
 
 const store: StoreOptions<RootState> = {
   state: {
+    corporations: [],
+    lifestyles: [],
     navbarState: true,
-    theme: new ThemeSwitcher(window, document)
+    nomenklaturas: [],
+    producttypes: [],
+    shops: [],
+    skus: [],
+    specialisations: [],
+    session: null,
+    theme: new ThemeSwitcher(window, document),
+    users: [],
   },
   mutations,
   modules: {
-    user
-  }
+    logs,
+  },
 }
 
-export default new Vuex.Store<RootState>(store)
+export default createStore(store)

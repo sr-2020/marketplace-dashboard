@@ -1,33 +1,37 @@
-import { BaseNamedEntity, LifeStyles } from '../types'
-import { Corporation } from '../organisations/types'
+import { BaseNamedEntity } from "../types";
+
 //its immutable entity
 export interface ProductType extends BaseNamedEntity {
-  alias: string
-  discountType: 1 | 2
+  alias: string;
+  discountType: 1 | 2;
 }
 
-export interface Specialisation extends BaseNamedEntity {
-  productType?: ProductType
-  productTypeId: number
+export interface Specialisation extends ProductType {
+  productTypeId: number;
+  productTypeName: string;
+  specialisationName: string;
+  specialisationId: number;
+  instantConsume: boolean;
 }
 
-export interface Nomenklatura extends BaseNamedEntity {
-  code: string
-  lifestyle: LifeStyles
-  basePrice: number
-  baseCount: number
-  description: string
-  pictureUrl: string
-  secret: string
-  specialisation?: Specialisation
-  specialisationId: number
+export interface Nomenklatura extends Specialisation {
+  nomenklaturaId: number;
+  nomenklaturaName: string;
+  code: string;
+  lifeStyleId: number;
+  basePrice: number;
+  baseCount: number;
+  description: string;
+  pictureUrl: string;
+  secret: string;
 }
 
-export interface Sku extends BaseNamedEntity {
-  count: number
-  corporation?: Corporation
-  corporationId: number
-  nomenklatura?: Nomenklatura
-  nomenklaturaId: number
-  enabled: boolean
+export interface Sku extends Nomenklatura {
+  skuId: number;
+  skuName: string;
+  count: number;
+  corporationId: number;
+  enabled: boolean;
+  skuBasePrice: number | null;
+  skuBaseCount: number | null;
 }

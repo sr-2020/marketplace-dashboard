@@ -1,18 +1,20 @@
-import { BaseNamedEntity } from '../types'
-import { UserState } from '../user/types'
+import { BaseNamedEntity, LifeStyle } from "../types";
 
 export interface Organisation extends BaseNamedEntity {
-    owner?: UserState
-
+  owner?: number;
 }
 
 //its immutable entity
 export interface Corporation extends Organisation {
-    logoUrl: string
+  corporationUrl: string;
+  lastKPI: number;
+  currentKPI: number;
 }
 
 export interface Shop extends Organisation {
-    lifestyle: string
-    balance: number
-    specialisations?: number[]
+  lifestyle: LifeStyle;
+  comment: string | null;
+  balance: number;
+  location: string | null;
+  specialisations?: number[];
 }

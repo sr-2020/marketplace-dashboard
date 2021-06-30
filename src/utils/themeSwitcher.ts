@@ -1,7 +1,7 @@
 import { ColorTheme, THEME_DARK, THEME_LIGHT } from '@/assets/themes'
 import { BehaviorSubject } from 'rxjs'
 
-type ThemeType = 'dark' | 'light';
+type ThemeType = 'dark' | 'light'
 
 export class ThemeSwitcher {
   private _bodyRef: HTMLElement
@@ -10,11 +10,13 @@ export class ThemeSwitcher {
 
   constructor(window: Window, document: Document) {
     if (!document || !window) {
-      throw Error('Document or Window doesn\'t implemented!')
+      throw Error("Document or Window doesn't implemented!")
     }
     this._localStorage = window.localStorage
     this._bodyRef = document.body
-    this._selectedTheme$ = new BehaviorSubject<ThemeType>(this._selectCurrentTheme())
+    this._selectedTheme$ = new BehaviorSubject<ThemeType>(
+      this._selectCurrentTheme()
+    )
     this._selectedTheme$.subscribe(this._applyTheme.bind(this))
   }
 
@@ -48,9 +50,9 @@ export class ThemeSwitcher {
   }
 
   private _generateThemeString(theme: ColorTheme) {
-    let keys = Object.keys(theme)
+    const keys = Object.keys(theme)
     return keys.reduce((acc, key) => {
-      return `${ acc }${ key }: ${ theme[key] }; `
+      return `${acc}${key}: ${theme[key]}; `
     }, '')
   }
 }

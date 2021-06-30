@@ -1,29 +1,93 @@
-import { Observable } from 'rxjs'
+import { EMPTY, Observable } from 'rxjs'
 import { fromPromise } from 'rxjs/internal-compatibility'
-import { pluck } from 'rxjs/operators'
-import axios, { AxiosRequestConfig } from 'axios'
+import { catchError, pluck } from 'rxjs/operators'
+import axios, { AxiosError, AxiosRequestConfig } from 'axios'
 
-interface ResponseModel<Model> {
-  data: Model | Model[],
-  status: boolean,
+export interface ResponseModel<M> {
+  data: M
+  status: boolean
   message: string | null
 }
 
 export default class HttpAdapter {
-  static get<Response>(endPoint: string): Observable<ResponseModel<Response>> {
-    return fromPromise(axios.get<ResponseModel<Response>>(endPoint, { ...this.getOptions() }))
-      .pipe(pluck('data'))
+  private static readonly _endpoint: string | undefined = process.env.VUE_APP_API_URL;
+
+  static get<R>(
+    commands: string[],
+    params: { [key: string]: any } = {}
+  ): Observable<ResponseModel<R>> {
+    return fromPromise(
+      axios.get<ResponseModel<R>>(HttpAdapter._convertCommandsToUri(commands), {
+        ...this.getOptions(),
+        params,
+      })
+    ).pipe(catchError(this._unauthorizedResolver), pluck('data'))
   }
 
-  static post<Payload, Response>(endPoint: string, payload: Payload): Observable<ResponseModel<Response>> {
-    return fromPromise(axios.post<ResponseModel<Response>>(endPoint, payload))
-      .pipe(pluck('data'))
+  static delete<R>(
+    commands: string[],
+    params: { [key: string]: any } = {}
+  ): Observable<ResponseModel<R>> {
+    return fromPromise(
+      axios.delete<ResponseModel<R>>(
+        HttpAdapter._convertCommandsToUri(commands),
+        {
+          ...this.getOptions(),
+          params,
+        }
+      )
+    ).pipe(catchError(this._unauthorizedResolver), pluck('data'))
+  }
+
+  static patch<P, R>(
+    commands: string[],
+    payload: P
+  ): Observable<ResponseModel<R>> {
+    return fromPromise(
+      axios.patch<ResponseModel<R>>(
+        HttpAdapter._convertCommandsToUri(commands),
+        payload,
+        {
+          ...this.getOptions(),
+        }
+      )
+    ).pipe(catchError(this._unauthorizedResolver), pluck('data'))
+  }
+
+  static post<P, R>(
+    commands: string[],
+    payload: P
+  ): Observable<ResponseModel<R>> {
+    return fromPromise(
+      axios.post<ResponseModel<R>>(
+        HttpAdapter._convertCommandsToUri(commands),
+        payload,
+        {
+          ...this.getOptions(),
+        }
+      )
+    ).pipe(catchError(this._unauthorizedResolver), pluck('data'))
   }
 
   private static getOptions(): AxiosRequestConfig {
-    const header = {
-      'x-user-id': '44043'
+    const headers: { [key: string]: any } = {}
+
+    if (process.env.NODE_ENV === 'development') {
+      headers["x-user-id"] = '44043'
     }
-    return { ...header, withCredentials: true }
+
+    return { headers, withCredentials: true }
+  }
+
+  private static _convertCommandsToUri(commands: string[]): string {
+    return HttpAdapter._endpoint + commands.join('/')
+  }
+
+  private static _unauthorizedResolver<R>(err: AxiosError<ResponseModel<R>>) {
+    if (err.response?.status === 403) {
+      const redirectedFrom = document.location.href
+      document.location.href = `http://web.evarun.ru/login?externalUrl=${redirectedFrom}`
+    }
+    return EMPTY
   }
 }

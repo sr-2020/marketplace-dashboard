@@ -1,0 +1,10 @@
+helm
+dist
+node_modules
+.idea
+.github
+
+Dockerfile
+README.md
+Makefile
+package-lock.json

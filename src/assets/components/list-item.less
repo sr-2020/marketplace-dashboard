@@ -1,0 +1,20 @@
+.list-item() {
+  border: 2px solid var(--border);
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  background: var(--bg);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
+  &:hover {
+    background: var(--accent);
+  }
+
+  > *:not(:last-child) {
+    margin-right: 8px;
+  }
+}

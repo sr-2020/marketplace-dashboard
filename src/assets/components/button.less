@@ -1,0 +1,15 @@
+.button() {
+  button {
+    color: var(--font-prim);
+    background: var(--accent);
+
+    &:not(:last-child) {
+      margin-right: 4px;
+    }
+    &:disabled {
+      color: var(--font-tet);
+      border-color: var(--font-sec);
+      background: var(--font-sec);
+    }
+  }
+}

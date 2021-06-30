@@ -1,0 +1,33 @@
+@import "button";
+@import "input";
+
+.edit-style() {
+  .button();
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width: 50%;
+    label {
+      display: flex;
+      align-items: center;
+      width: fit-content;
+    }
+    label:not(:last-child) {
+      margin-bottom: 8px;
+    }
+    .el-input__inner {
+      color: var(--font-prim);
+      &:focus {
+        border: 2px solid var(--accent);
+      }
+      background: var(--bg);
+      border: 2px solid var(--accent-sec);
+      //.input();
+    }
+    textarea {
+      .text-area();
+    }
+  }
+}
