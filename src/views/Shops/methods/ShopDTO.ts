@@ -51,7 +51,7 @@ export class ShopDTO {
   }
 
   private setFields(data: Shop | undefined) {
-    this._balance = data?.balance || 0
+
     this._comment = data?.comment || ''
     this._id = data?.id || 0
     this._lifestyle = data?.lifestyle?.id || null
