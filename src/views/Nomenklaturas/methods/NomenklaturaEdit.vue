@@ -10,55 +10,63 @@
 
     <div class="form-field">
       <label>Название: </label>
-      <input v-model="dto._name" />
+      <el-input v-model="dto._name" />
     </div>
 
     <div class="form-field">
       <label>Код: </label>
-      <input v-model="dto._code" />
+      <el-input v-model="dto._code" />
     </div>
 
     <div class="form-field">
       <label>Ссылка на изображение: </label>
-      <input v-model="dto._pictureUrl" />
+      <el-input v-model="dto._pictureUrl" />
     </div>
 
     <div class="form-field">
       <label>Базовая цена: </label>
-      <input v-model.number="dto._basePrice" />
+      <el-input v-model.number="dto._basePrice" />
     </div>
 
     <div class="form-field">
       <label>Базовое количество: </label>
-      <input v-model.number="dto._baseCount" />
+      <el-input v-model.number="dto._baseCount" />
     </div>
 
     <div class="form-field">
       <label>Специализация: </label>
-      <sr-autocomplete
-        :single="true"
-        :options="specialisations"
-        :value="dto._specialisationId"
-        id-key="id"
-        @change="dto._specialisationId = $event"
-      />
+      <el-select
+        placeholder="Специализация"
+        filterable
+        v-model="dto._specialisationId"
+      >
+        <el-option
+          v-for="s of specialisations"
+          :key="s.specialisationId"
+          :value="s.specialisationId"
+          :label="s.specialisationName"
+        />
+      </el-select>
     </div>
 
     <div class="form-field">
       <label>Лайфстайл: </label>
-      <sr-autocomplete
-        :options="lifestyles"
-        :single="true"
-        :filter-disabled="true"
-        id-key="id"
-        :value="dto._lifestyleId"
-        @change="dto._lifestyleId = $event"
-      />
+      <el-select v-model="dto._lifestyleId"
+                 filterable
+                 placeholder="lifestyle">
+        <el-option
+          v-for="ls of lifestyles"
+          :key="ls.id"
+          :label="ls.name"
+          :value="ls.id"
+        />
+      </el-select>
     </div>
 
     <div class="form-field">
       <label>Описание: </label>
-      <textarea v-model="dto._description" />
+      <el-input type="textarea"
+                v-model="dto._description" />
     </div>
 
     <delete-warn
@@ -69,14 +77,16 @@
       @decline="delInit = false"
     />
     <div class="actions">
-      <button v-if="item && !delInit"
-              @click="delInit = true">
+      <v-btn size="small"
+             v-if="item && !delInit"
+             @click="delInit = true">
         Удалить
-      </button>
-      <button @click="item ? edit() : add()"
-              :disabled="processing">
+      </v-btn>
+      <v-btn size="small"
+             @click="item ? edit() : add()"
+             :disabled="processing">
         {{ item ? 'Изменить' : 'Добавить' }}
-      </button>
+      </v-btn>
     </div>
   </div>
 </template>
@@ -91,11 +101,12 @@ import { AlertController } from '@/utils/alertService'
 import { Nomenklatura, Specialisation } from '@/store/products/types'
 import { NomenklaturaDTO } from '@/views/Nomenklaturas/methods/NomenklaturaDTO'
 import { LifeStyle } from '@/store/types'
-import { updateEntity } from "@/utils/dictionaryService";
-import Nomenklaturas from "@/views/Nomenklaturas/Nomenklaturas.vue";
+import { updateEntity } from '@/utils/dictionaryService'
+import Nomenklaturas from '@/views/Nomenklaturas/Nomenklaturas.vue'
+import { ElInput, ElOption, ElSelect } from 'element-plus'
 
 @Options({
-  components: { DeleteWarn, SrAutocomplete }
+  components: { DeleteWarn, SrAutocomplete, ElInput, ElSelect, ElOption }
 })
 export default class NomenklaturaEdit extends Vue {
   @Prop() item!: ResponseModel<Nomenklatura>
@@ -149,7 +160,10 @@ export default class NomenklaturaEdit extends Vue {
 
   private onActionSuccess(msg: string) {
     AlertController.addAlert('Успешно', msg, 'success')
-    updateEntity<Nomenklaturas>('nomenklaturas', { store: this.$store, force: true })
+    updateEntity<Nomenklaturas>('nomenklaturas', {
+      store: this.$store,
+      force: true
+    })
     this.delInit = this.processing = false
     this.$router.push(`/nomenklaturas`)
   }
@@ -161,8 +175,7 @@ export default class NomenklaturaEdit extends Vue {
 }
 </script>
 
-<style lang="less"
-       scoped>
+<style lang="less">
 @import '~@/assets/components/edit-styles';
 
 .edit-window {

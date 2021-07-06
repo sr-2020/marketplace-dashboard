@@ -7,7 +7,7 @@ export default class CorporationPage extends Page<Corporation> {
   pageName = 'Корпорация'
   canBeModified = false
   viewComponent = CorporationView
-  link = 'corps'
+  link = 'corporations'
 
   mounted() {
     this.grabDataById(['a-corporation'], 'corporationId')

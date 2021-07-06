@@ -4,13 +4,13 @@ import { catchError, pluck } from 'rxjs/operators'
 import axios, { AxiosError, AxiosRequestConfig } from 'axios'
 
 export interface ResponseModel<M> {
-  data: M;
-  status: boolean;
-  message: string | null;
+  data: M
+  status: boolean
+  message: string | null
 }
 
 export default class HttpAdapter {
-  private static readonly _endpoint: string = process.env.VUE_APP_API_URL;
+  private static readonly _endpoint: string | undefined = process.env.VUE_APP_API_URL;
 
   static get<R>(
     commands: string[],
