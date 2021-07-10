@@ -1,6 +1,5 @@
-import {  User } from '@/store/user/types';
+import {  User, Sin } from '@/store/user/types';
 import { ResponseModel } from '@/utils/httpAdapter';
-import { Sin } from '@/store/user/types';
 
 export class UserDTO {
   rawData: Sin | undefined
