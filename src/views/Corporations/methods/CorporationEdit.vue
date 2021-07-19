@@ -1,8 +1,8 @@
 <template>
   <div v-if='dto'>
     <h2>Редактировать специализации</h2>
-    <div v-for='(s, idx) of dto.specialisations' :key='idx'>{{ s.specialisationName }}
-      <v-btn :disabled='processing' size="small" @click='delSpec(s.specialisationId)'>Удалить</v-btn>
+    <div v-for='(s, idx) of dto.specialisations' :key='idx'>{{ s.specialisationName }} {{s.ratio}}
+      <v-btn :disabled='processing' size='small' @click='delSpec(s.specialisationId)'>Удалить</v-btn>
     </div>
     <div class='form-field'>
       <el-select v-model='selectedSpec'
@@ -16,7 +16,8 @@
           :value='ls.specialisationId'
         />
       </el-select>
-      <v-btn size="small" :disabled='processing || selectedSpec === null' @click='addSpec(selectedSpec)'>Добавить</v-btn>
+      <el-input class='ratio-input' v-model='ratio' :disabled='processing' placeholder='ratio' />
+      <v-btn size='small' :disabled='isAddDisable()' @click='addSpec(selectedSpec)'>Добавить</v-btn>
     </div>
   </div>
 </template>
@@ -29,14 +30,15 @@ import HttpAdapter, { ResponseModel } from '@/utils/httpAdapter'
 import { Specialisation } from '@/store/products/types'
 import { AlertController } from '@/utils/alertService'
 import { Options } from 'vue-class-component'
-import { ElOption, ElSelect } from 'element-plus'
+import { ElInput, ElOption, ElSelect } from 'element-plus'
 
 @Options({
-  components: { ElSelect, ElOption }
+  components: { ElSelect, ElOption, ElInput }
 })
 export default class CorporationEdit extends Vue {
   dto: null | CorporationDTO = null
   selectedSpec: Specialisation | null = null
+  ratio: string | null = null
   processing = false
   @Prop() item!: ResponseModel<Corporation>
 
@@ -56,7 +58,7 @@ export default class CorporationEdit extends Vue {
       ratio: 0
     }).subscribe(() => {
         const idx = this.dto?.specialisations.findIndex(spec => spec.specialisationId === specialisation.specialisationId)
-        if(typeof idx === 'number') {
+        if (typeof idx === 'number') {
           this.dto?.specialisations.splice(idx, 1)
         }
         this.processing = false
@@ -65,17 +67,34 @@ export default class CorporationEdit extends Vue {
   }
 
   addSpec(specialisation: number) {
+    if(this.ratio === null) {
+      return
+    }
     this.processing = true
     HttpAdapter.post(['a-add-corp-specialisation'], {
       specialisation,
       corporation: this.dto?.id,
-      ratio: 0
+      ratio: +this.ratio.trim()
     }).subscribe(() => {
         this.dto?._specialisations.push(this.specialisations.find(s => s.specialisationId === specialisation) as Specialisation)
+        this.ratio = null
         this.selectedSpec = null
         this.processing = false
       },
       this.errorHandler)
+  }
+
+  isAddDisable() {
+    if(this.ratio === null) {
+      return true
+    }
+
+    const num = +this.ratio
+    if(isNaN(num)) {
+      return true
+    }
+
+    return this.processing || this.selectedSpec === null
   }
 
   errorHandler(err: ResponseModel<any>) {
@@ -103,6 +122,12 @@ button {
     cursor: unset;
   }
 }
+
+.ratio-input {
+  margin-top: 12px;
+  width: 80px;
+}
+
 
 .edit-window {
   .edit-style();
