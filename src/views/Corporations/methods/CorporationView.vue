@@ -42,7 +42,7 @@
       <div class="title">Специализации: </div>
       <div class="value">
         <div v-for='(s, idx) of dto.specialisations' :key='idx'>
-         {{getSpec(s)}}
+         {{s.specialisationName}}
       </div>
       </div>
     </div>

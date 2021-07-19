@@ -1,8 +1,8 @@
 <template>
   <div v-if='dto'>
     <h2>Редактировать специализации</h2>
-    <div v-for='(s, idx) of dto.specialisations' :key='idx'>{{ getSpec(s) }}
-      <v-btn :disabled='processing' size="small" @click='delSpec(s)'>Удалить</v-btn>
+    <div v-for='(s, idx) of dto.specialisations' :key='idx'>{{ s.specialisationName }}
+      <v-btn :disabled='processing' size="small" @click='delSpec(s.specialisationId)'>Удалить</v-btn>
     </div>
     <div class='form-field'>
       <el-select v-model='selectedSpec'
@@ -11,9 +11,9 @@
                  placeholder='Специализация'>
         <el-option
           v-for='ls of specialisations'
-          :key='ls.id'
-          :label='ls.name'
-          :value='ls.id'
+          :key='ls.specialisationId'
+          :label='ls.specialisationName'
+          :value='ls.specialisationId'
         />
       </el-select>
       <v-btn size="small" :disabled='processing || selectedSpec === null' @click='addSpec(selectedSpec)'>Добавить</v-btn>
@@ -36,7 +36,7 @@ import { ElOption, ElSelect } from 'element-plus'
 })
 export default class CorporationEdit extends Vue {
   dto: null | CorporationDTO = null
-  selectedSpec: number | null = null
+  selectedSpec: Specialisation | null = null
   processing = false
   @Prop() item!: ResponseModel<Corporation>
 
@@ -48,21 +48,14 @@ export default class CorporationEdit extends Vue {
     return this.$store.state.specialisations
   }
 
-  getSpec(id: number) {
-    const spec = this.$store.state.specialisations.find(
-      (el: Specialisation) => el.specialisationId === id
-    )
-    return spec ? spec.name : ''
-  }
-
-  delSpec(specialisation: number) {
+  delSpec(specialisation: Specialisation) {
     this.processing = true
     HttpAdapter.delete(['a-del-corp-specialisation'], {
       specialisation,
       corporation: this.dto?.id,
       ratio: 0
-    }).subscribe(el => {
-        const idx = this.dto?.specialisations.indexOf(specialisation)
+    }).subscribe(() => {
+        const idx = this.dto?.specialisations.findIndex(spec => spec.specialisationId === specialisation.specialisationId)
         if(typeof idx === 'number') {
           this.dto?.specialisations.splice(idx, 1)
         }
@@ -77,9 +70,8 @@ export default class CorporationEdit extends Vue {
       specialisation,
       corporation: this.dto?.id,
       ratio: 0
-    }).subscribe(el => {
-
-        this.dto?._specialisations.push(this.selectedSpec as number)
+    }).subscribe(() => {
+        this.dto?._specialisations.push(this.specialisations.find(s => s.specialisationId === specialisation) as Specialisation)
         this.selectedSpec = null
         this.processing = false
       },

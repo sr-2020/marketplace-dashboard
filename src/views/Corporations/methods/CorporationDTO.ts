@@ -1,5 +1,6 @@
 import { ResponseModel } from '@/utils/httpAdapter'
 import { Corporation } from '@/store/organisations/types'
+import { Specialisation } from '@/store/products/types'
 
 export class CorporationDTO {
   get currentSkuSold(): number {
@@ -31,7 +32,7 @@ export class CorporationDTO {
     return this._name
   }
 
-  get specialisations(): number[] {
+  get specialisations(): Specialisation[] {
     return this._specialisations
   }
 
@@ -41,7 +42,7 @@ export class CorporationDTO {
   _currentKPI = 0
   _lastSkuSold = 0
   _currentSkuSold = 0
-  _specialisations: number[] = []
+  _specialisations: Specialisation[] = []
   _ownerId = 0
 
   constructor(resp: ResponseModel<Corporation> | undefined) {
@@ -52,6 +53,7 @@ export class CorporationDTO {
   private setFields(data: Corporation | undefined) {
     this._id = data?.id || 0
     this._name = data?.name || ''
+    this._specialisations = data?.specialisations || []
     this._lastKPI = data?.lastKPI || 0
     this._currentKPI = data?.currentKPI || 0
     this._currentSkuSold = data?.currentSkuSold || 0
