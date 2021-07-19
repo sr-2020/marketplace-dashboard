@@ -13,7 +13,7 @@
     <div class="field-row">
       <div class="title">Владелец:</div>
       <div class="value">
-        <sr-entity-link type="user" :to="dto.ownerId"></sr-entity-link>
+        <sr-entity-link type="user" :to="dto.ownerId"/>
         {{ getOwner(dto.ownerId)?.name }}
       </div>
     </div>
@@ -76,7 +76,7 @@ export default class CorporationView extends Vue {
   }
 
   getOwner(ownerId: number): User {
-    return this.$store.state.users.find((user: User) => user.modelId == ownerId)
+    return this.$store.state.users.find((user: User) => user.modelId === ownerId)
   }
 
 }

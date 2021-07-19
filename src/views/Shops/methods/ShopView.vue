@@ -81,7 +81,7 @@ export default class ShopView extends Vue {
   }
 
   getOwner(ownerId: number): User {
-    return this.$store.state.users.find((user: User) => user.modelId == ownerId)
+    return this.$store.state.users.find((user: User) => user.modelId === ownerId)
   }
 
   getLifestyle(lifestyleId: number): LifeStyle {

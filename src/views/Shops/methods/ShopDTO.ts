@@ -28,7 +28,7 @@ export class ShopDTO {
     return this._specialisations
   }
 
-  get owner(): string | null {
+  get owner(): number | null {
     return this._owner
   }
 
@@ -42,7 +42,7 @@ export class ShopDTO {
   _lifestyle: number | null = null
   _location: string | null = null
   _name = ''
-  _owner: string | null = null
+  _owner: number | null = null
   _specialisations?: number[] = []
 
   constructor(resp: ResponseModel<Shop> | undefined) {
@@ -57,7 +57,7 @@ export class ShopDTO {
     this._lifestyle = data?.lifestyle?.id || null
     this._location = data?.location || null
     this._name = data?.name || ''
-    this._owner = data?.owner?.toString() || null
+    this._owner = data?.owner || null
     this._specialisations = data?.specialisations || []
   }
 
