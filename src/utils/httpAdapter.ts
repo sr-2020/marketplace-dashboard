@@ -26,7 +26,8 @@ export default class HttpAdapter {
 
   static delete<R>(
     commands: string[],
-    params: { [key: string]: any } = {}
+    params: { [key: string]: any } = {},
+    options: AxiosRequestConfig = {}
   ): Observable<ResponseModel<R>> {
     return fromPromise(
       axios.delete<ResponseModel<R>>(
@@ -34,6 +35,7 @@ export default class HttpAdapter {
         {
           ...this.getOptions(),
           params,
+          ...options
         }
       )
     ).pipe(catchError(this._unauthorizedResolver), pluck('data'))

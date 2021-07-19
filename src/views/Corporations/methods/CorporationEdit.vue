@@ -1,7 +1,7 @@
 <template>
   <div v-if='dto'>
     <h2>Редактировать специализации</h2>
-    <div v-for='(s, idx) of dto.specialisations' :key='idx'>{{ s.specialisationName }} {{s.ratio}}
+    <div v-for='(s, idx) of dto.specialisations' :key='idx'>{{ s.specialisationName }} Ratio: {{ s.ratio }}
       <v-btn :disabled='processing' size='small' @click='delSpec(s.specialisationId)'>Удалить</v-btn>
     </div>
     <div class='form-field'>
@@ -50,16 +50,20 @@ export default class CorporationEdit extends Vue {
     return this.$store.state.specialisations
   }
 
-  delSpec(specialisation: Specialisation) {
+  delSpec(specialisation: number) {
     this.processing = true
-    HttpAdapter.delete(['a-del-corp-specialisation'], {
-      specialisation,
-      corporation: this.dto?.id,
-      ratio: 0
+
+    HttpAdapter.delete(['a-del-corp-specialisation'], {}, {
+      data: {
+        specialisation,
+        corporation: this.dto?.id,
+        ratio: 0
+      }
     }).subscribe(() => {
-        const idx = this.dto?.specialisations.findIndex(spec => spec.specialisationId === specialisation.specialisationId)
+        const idx = this.dto?._specialisations.findIndex(spec => spec.specialisationId === specialisation)
+
         if (typeof idx === 'number') {
-          this.dto?.specialisations.splice(idx, 1)
+          this.dto?._specialisations.splice(idx, 1)
         }
         this.processing = false
       },
@@ -67,7 +71,7 @@ export default class CorporationEdit extends Vue {
   }
 
   addSpec(specialisation: number) {
-    if(this.ratio === null) {
+    if (this.ratio === null) {
       return
     }
     this.processing = true
@@ -76,7 +80,9 @@ export default class CorporationEdit extends Vue {
       corporation: this.dto?.id,
       ratio: +this.ratio.trim()
     }).subscribe(() => {
-        this.dto?._specialisations.push(this.specialisations.find(s => s.specialisationId === specialisation) as Specialisation)
+        const spec = this.specialisations.find(s => s.specialisationId === specialisation) as Specialisation
+        const ratio: number = this.ratio !== null ? +this.ratio : 0
+        this.dto?._specialisations.push({ ...spec, ratio })
         this.ratio = null
         this.selectedSpec = null
         this.processing = false
@@ -85,12 +91,12 @@ export default class CorporationEdit extends Vue {
   }
 
   isAddDisable() {
-    if(this.ratio === null) {
+    if (this.ratio === null) {
       return true
     }
 
     const num = +this.ratio
-    if(isNaN(num)) {
+    if (isNaN(num)) {
       return true
     }
 

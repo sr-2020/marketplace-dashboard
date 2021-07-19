@@ -8,6 +8,7 @@ export interface ProductType extends BaseNamedEntity {
 
 export interface Specialisation extends ProductType {
   productTypeId: number
+  ratio: number
   productTypeName: string
   specialisationName: string
   specialisationId: number
