@@ -3,7 +3,7 @@ import { BaseNamedEntity, LifeStyle } from "../types";
 export interface Organisation extends BaseNamedEntity {
   owner?: number
   specialisations?: number[]
-  "currentSkuSold": number
+  currentSkuSold: number
   "lastSkuSold": number
 }
 

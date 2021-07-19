@@ -75,9 +75,10 @@ export default class CorporationView extends Vue {
     return spec ? spec.name : ''
   }
 
-  getOwner(id: number): User {
-    return this.$store.state.users.find((user: User) => user.id === id)
+  getOwner(ownerId: number): User {
+    return this.$store.state.users.find((user: User) => user.modelId == ownerId)
   }
+
 }
 </script>
 
