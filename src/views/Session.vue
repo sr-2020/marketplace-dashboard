@@ -15,7 +15,12 @@
           </tr>
           <tr>
             <td>Пересчет товаров:</td>
-            <td>TBR</td>
+            <td>
+            <details>
+              <summary>JSON</summary>
+              <pre>{{session?.beatItems}}</pre>
+            </details>
+            </td>
           </tr>
         </table>
 
@@ -79,8 +84,12 @@
             </td>
           </tr>
           <tr>
-            <td>Начисления</td>
+            <td>Начисления по карме</td>
             <td>{{ charBeat.sumKarma }}</td>
+          </tr>
+          <tr>
+            <td>Начисления по абилкам</td>
+            <td>{{ charBeat.sumDividends }}</td>
           </tr>
           <tr>
             <td>Списания</td>
