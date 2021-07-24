@@ -1,5 +1,5 @@
 export interface ColorTheme {
-  [key: string]: string;
+  [key: string]: string
 }
 
 export const THEME_DARK: ColorTheme = {

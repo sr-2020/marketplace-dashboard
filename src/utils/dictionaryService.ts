@@ -4,9 +4,9 @@ import { Store } from 'vuex'
 export function updateEntity<T>(
   name: string,
   options: {
-    store: Store<any>;
-    force?: boolean;
-    callback?: (data: T[]) => void;
+    store: Store<any>
+    force?: boolean
+    callback?: (data: T[]) => void
   }
 ) {
   const state = options.store.state[name]

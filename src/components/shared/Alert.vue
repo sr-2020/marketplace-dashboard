@@ -22,7 +22,7 @@ import { AlertMsg } from '@/store/log/types'
 import { Options, Vue } from 'vue-class-component'
 
 interface SelfDestructiveAlertMsg extends AlertMsg {
-  timer: NodeJS.Timeout
+  timer: any
 }
 
 @Options({})
