@@ -48,16 +48,17 @@ export class ShopDTO {
   constructor(resp: ResponseModel<Shop> | undefined) {
     this.rawData = resp?.data
     this.setFields(this.rawData)
+
   }
 
   private setFields(data: Shop | undefined) {
-
     this._comment = data?.comment || ''
     this._id = data?.id || 0
     this._lifestyle = data?.lifestyle?.id || null
     this._location = data?.location || null
     this._name = data?.name || ''
     this._owner = data?.owner || null
+    this._balance = data?.balance || 0
     this._specialisations = data?.specialisations || []
   }
 
