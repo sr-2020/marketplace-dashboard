@@ -18,6 +18,11 @@
     </div>
 
     <div class="field-row">
+      <div class="title">Баланс:</div>
+      <div class="value">{{ dto.balance }} ¥</div>
+    </div>
+
+    <div class="field-row">
       <div class="title">Лайфстайл:</div>
       <div class="value">{{ getLifestyle(dto.lifestyle)?.name }}</div>
     </div>
