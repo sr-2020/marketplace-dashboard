@@ -36,7 +36,7 @@
 
       <div class="form-field">
         <label>Баланс: </label>
-        <el-input v-model="dto._balance" />
+        <el-input v-model.number="dto._balance" />
       </div>
 
       <div class="form-field">
